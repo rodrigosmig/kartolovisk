@@ -1,0 +1,10 @@
+
+# ignora os arquivos com extensões 
+*.sqlite
+# ignora quaisquer diretórios chamados "node_modules"
+node_modules/
+
+
+
+
+
