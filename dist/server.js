@@ -12,16 +12,15 @@ var _bodyParser = require('body-parser');
 
 var _bodyParser2 = _interopRequireDefault(_bodyParser);
 
-var _models = require('./models');
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var app = (0, _express2.default)();
-app.use('/', _routes2.default);
+var app = (0, _express2.default)(); // bookRouter
+
 
 app.use(_bodyParser2.default.urlencoded({ extended: true }));
 app.use(_bodyParser2.default.json());
+app.use('/', _routes2.default);
 
 app.listen(3000, function () {
-  console.log('Example app listening on port 3000!');
+	console.log('App na porta 3000!');
 });
