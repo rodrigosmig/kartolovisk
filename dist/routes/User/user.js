@@ -20,7 +20,6 @@ var _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-//./models
 var router = _express2.default.Router();
 
 router.route('/users').get(function (req, res) {
@@ -46,7 +45,6 @@ router.route('/users').get(function (req, res) {
 	});
 });
 
-// um usuario especifico
 router.route('/users/:user_id').get(function (req, res) {
 	_models.User.findById(req.params.user_id).then(function (user) {
 		if (user) {
@@ -55,20 +53,10 @@ router.route('/users/:user_id').get(function (req, res) {
 			res.json({ message: 'Usuário não existe' });
 		}
 	});
-}).delete(function (req, res) {
-	_models.User.findById(req.params.user_id).then(function (user) {
-		if (user) {
-			user.destroy().then(function (user) {
-				res.json({ message: 'Usuário deletado' });
-			});
-		} else {
-			res.json({ error: 'Usuário não encontrado' });
-		}
-	});
 });
 
 router.route('/auth').get(function (req, res) {
-	res.json({ message: 'teste' });
+	res.json({ message: 'olarr' });
 }).post(function (req, res) {
 	_models.User.findOne({ where: { nickname: req.body.nickname } }).then(function (user) {
 		if (user) {
