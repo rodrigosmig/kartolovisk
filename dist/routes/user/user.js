@@ -68,7 +68,7 @@ router.route('/users/:user_id').get(function (req, res) {
 });
 
 router.route('/auth').get(function (req, res) {
-	res.json({ message: 'teste' });
+	res.json({ message: 'olarr' });
 }).post(function (req, res) {
 	_models.User.findOne({ where: { nickname: req.body.nickname } }).then(function (user) {
 		if (user) {
