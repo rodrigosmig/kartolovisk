@@ -1,5 +1,5 @@
 import express from 'express';
-import {User} from './models'; //./models
+import {User} from '../modelos/models'; //./models
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 

@@ -8,7 +8,7 @@ var _express = require('express');
 
 var _express2 = _interopRequireDefault(_express);
 
-var _models = require('./models');
+var _models = require('../modelos/models');
 
 var _bcrypt = require('bcrypt');
 
