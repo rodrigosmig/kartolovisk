@@ -15,7 +15,6 @@ export let User = sequelize.define('user', {
 })
 
 export let Player= sequelize.define('player', {
-
 	name: Sequelize.STRING,
 	country: Sequelize.STRING,
 	position: Sequelize.STRING,
@@ -25,15 +24,19 @@ export let Player= sequelize.define('player', {
 })
   
 export let Event = sequelize.define('event', {
-
 	round: Sequelize.STRING,
 	type: Sequelize.STRING
 })
 
 export let Tipo = sequelize.define('tipo', {
-
 	name: Sequelize.STRING,
 	score: Sequelize.INTEGER
+})
+
+export let Team = sequelize.define('team', {
+	name: Sequelize.STRING,
+	formation: Sequelize.STRING
+	
 })
 
 Event.belongsTo(Tipo)
@@ -46,5 +49,6 @@ User.sync();
 Player.sync();
 Event.sync();
 Tipo.sync();
+Team.sync();
 
 

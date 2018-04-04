@@ -27,7 +27,7 @@ router.route('/players/:player_id')
 			if(player) {
 				res.json(player);
 			}else{
-				res.json({message: 'Jogador não cadastrato'});
+				res.json({message: 'Jogador não cadastrado'});
 			}
 		})
 	})	
@@ -36,10 +36,10 @@ router.route('/players/:player_id')
 		Player.findById(req.params.player_id).then(player =>{
 			if(player) {
 				player.destroy().then((player)=>{
-					res.json({message: 'Jogador Deletao'});
+					res.json({message: 'Jogador Deletado'});
 				})
 			}else{
-				res.json({error: 'Jogador não cadastrato'});
+				res.json({error: 'Jogador não cadastrado'});
 			}
 		})
 	})
@@ -47,11 +47,11 @@ router.route('/players/:player_id')
 	.put((req, res)=>{
 		Player.findById(req.params.player_id).then(player =>{
 			if(player){
-				player.update({namePlayer: req.body.namePlayer, country: req.body.country, position: req.body.position, picture: req.body.picture, score: req.body.score}).then((player)=>{
+				player.update({name: req.body.name, country: req.body.country, position: req.body.position, picture: req.body.picture, score: req.body.score}).then((player)=>{
 					res.json(player);
 				})
 			}else{
-				res.json({error: 'Jogador não cadastrato'});
+				res.json({error: 'Jogador não cadastrado'});
 			}
 		})
 	})
