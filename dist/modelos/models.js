@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.Tipo = exports.Event = exports.Player = exports.User = undefined;
+exports.Team = exports.Tipo = exports.Event = exports.Player = exports.User = undefined;
 
 var _sequelize = require('sequelize');
 
@@ -25,7 +25,6 @@ var User = exports.User = sequelize.define('user', {
 });
 
 var Player = exports.Player = sequelize.define('player', {
-
 	name: _sequelize2.default.STRING,
 	country: _sequelize2.default.STRING,
 	position: _sequelize2.default.STRING,
@@ -35,15 +34,19 @@ var Player = exports.Player = sequelize.define('player', {
 });
 
 var Event = exports.Event = sequelize.define('event', {
-
 	round: _sequelize2.default.STRING,
 	type: _sequelize2.default.STRING
 });
 
 var Tipo = exports.Tipo = sequelize.define('tipo', {
-
 	name: _sequelize2.default.STRING,
 	score: _sequelize2.default.INTEGER
+});
+
+var Team = exports.Team = sequelize.define('team', {
+	name: _sequelize2.default.STRING,
+	formation: _sequelize2.default.STRING
+
 });
 
 Event.belongsTo(Tipo);
@@ -56,3 +59,4 @@ User.sync();
 Player.sync();
 Event.sync();
 Tipo.sync();
+Team.sync();

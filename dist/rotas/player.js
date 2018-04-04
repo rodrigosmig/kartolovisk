@@ -32,27 +32,27 @@ router.route('/players/:player_id').get(function (req, res) {
 		if (player) {
 			res.json(player);
 		} else {
-			res.json({ message: 'Jogador não cadastrato' });
+			res.json({ message: 'Jogador não cadastrado' });
 		}
 	});
 }).delete(function (req, res) {
 	_models.Player.findById(req.params.player_id).then(function (player) {
 		if (player) {
 			player.destroy().then(function (player) {
-				res.json({ message: 'Jogador Deletao' });
+				res.json({ message: 'Jogador Deletado' });
 			});
 		} else {
-			res.json({ error: 'Jogador não cadastrato' });
+			res.json({ error: 'Jogador não cadastrado' });
 		}
 	});
 }).put(function (req, res) {
 	_models.Player.findById(req.params.player_id).then(function (player) {
 		if (player) {
-			player.update({ namePlayer: req.body.namePlayer, country: req.body.country, position: req.body.position, picture: req.body.picture, score: req.body.score }).then(function (player) {
+			player.update({ name: req.body.name, country: req.body.country, position: req.body.position, picture: req.body.picture, score: req.body.score }).then(function (player) {
 				res.json(player);
 			});
 		} else {
-			res.json({ error: 'Jogador não cadastrato' });
+			res.json({ error: 'Jogador não cadastrado' });
 		}
 	});
 });
