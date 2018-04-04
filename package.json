@@ -21,5 +21,13 @@
     "jsonwebtoken": "^8.2.0",
     "sequelize": "^4.33.4",
     "sqlite3": "^3.1.13"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rodrigosmig/dsc-project.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rodrigosmig/dsc-project/issues"
+  },
+  "homepage": "https://github.com/rodrigosmig/dsc-project#readme"
 }

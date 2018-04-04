@@ -14,22 +14,37 @@ export let User = sequelize.define('user', {
 	
 })
 
-export let Player= sequelize.define('player',{
-	
+export let Player= sequelize.define('player', {
+
+	name: Sequelize.STRING,
 	country: Sequelize.STRING,
 	position: Sequelize.STRING,
-	picture: Sequelize.IMAGE, //foto do jogador 
-	score: Sequelize.INTEGER //pontuação
+	//picture: Sequelize.IMAGE,
+	score: Sequelize.INTEGER
 
 })
   
-export let Event = sequelize.define('event',{
-	id_player: Event.hasOne(Player,{ foreignKey: ''}),
+export let Event = sequelize.define('event', {
+
 	round: Sequelize.STRING,
 	type: Sequelize.STRING
 })
 
-User.sync();
+export let Tipo = sequelize.define('tipo', {
 
+	name: Sequelize.STRING,
+	score: Sequelize.INTEGER
+})
+
+Event.belongsTo(Tipo)
+Tipo.hasMany(Event)
+
+Player.belongsTo(Event)
+Event.hasMany(Player)
+
+User.sync();
+Player.sync();
+Event.sync();
+Tipo.sync();
 
 

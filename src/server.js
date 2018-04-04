@@ -1,12 +1,14 @@
 import express from 'express';
-import rotas from './routes'; // bookRouter
+import UserRoute from './rotas/user';
+import PlayerRoute from './rotas/player';
 import bodyParser from 'body-parser';
 
 let app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use('/', rotas);
+app.use('/', UserRoute);
+app.use('/', PlayerRoute);
 
 
 app.listen(3000, () => {
