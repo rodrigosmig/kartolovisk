@@ -49,14 +49,32 @@ var Team = exports.Team = sequelize.define('team', {
 
 });
 
+// export let UserLeagueAssociation = sequelize.define('userLeague', {
+
+// })
+
+// export let League = sequelize.define('league', {
+// 	userList: Sequelize.STRING
+// })
+
 Event.belongsTo(Tipo);
 Tipo.hasMany(Event);
 
 Player.belongsTo(Event);
 Event.hasMany(Player);
 
+User.belongsTo(Team);
+Team.belongsTo(User);
+
+// User.hasMany(UserLeagueAssociation)
+// UserLeagueAssociation.belongsTo(User)
+
+// League.hasMany(UserLeagueAssociation)
+
 User.sync();
 Player.sync();
 Event.sync();
 Tipo.sync();
 Team.sync();
+// UserLeagueAssociation.sync();
+// League.sync();
