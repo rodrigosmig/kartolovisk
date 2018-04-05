@@ -31,7 +31,7 @@ router.route('/teams/:team_id')
 	})	
 
 	.delete((req, res)=>{
-		Team.findById(req.params.player_id).then(player =>{
+		Team.findById(req.params.player_id).then(team =>{
 			if(team) {
 				team.destroy().then((team)=>{
 					res.json({message: 'Jogador Deletado'});
@@ -43,7 +43,7 @@ router.route('/teams/:team_id')
 	})
 
 	.put((req, res)=>{
-		Team.findById(req.params.player_id).then(player =>{
+		Team.findById(req.params.player_id).then(team =>{
 			if(team){
 				team.update({name: req.body.name, formation: req.body.formation}).then((team)=>{
 					res.json(team);
