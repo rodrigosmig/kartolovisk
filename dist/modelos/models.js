@@ -36,6 +36,7 @@ var Player = exports.Player = sequelize.define('player', {
 var Event = exports.Event = sequelize.define('event', {
 	round: _sequelize2.default.STRING,
 	type: _sequelize2.default.STRING
+
 });
 
 var Tipo = exports.Tipo = sequelize.define('tipo', {

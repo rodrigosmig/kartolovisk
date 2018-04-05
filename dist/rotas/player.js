@@ -10,6 +10,10 @@ var _express2 = _interopRequireDefault(_express);
 
 var _models = require('../modelos/models');
 
+var _jsonwebtoken = require('jsonwebtoken');
+
+var _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var router = _express2.default.Router();
@@ -19,12 +23,18 @@ router.route('/players').get(function (req, res) {
 		res.send(players);
 	});
 }).post(function (req, res) {
+
+	var name = req.body.name;
 	var country = req.body.country;
 	var position = req.body.position;
-	var picture = req.body.picture;
+	//const picture = req.body.picture;
 	var score = req.body.score;
 
-	var dataPlayer = { country: country, position: position, picture: picture, score: score };
+	var data = { country: country, position: position, score: score };
+
+	_models.Player.create(data).then(function (players) {
+		res.json({ message: 'cadastro com sucesso!!' });
+	});
 });
 
 router.route('/players/:player_id').get(function (req, res) {

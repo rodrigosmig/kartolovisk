@@ -1,5 +1,6 @@
 import express from 'express';
 import {Player} from '../modelos/models';
+import jwt from 'jsonwebtoken';
 
 let router = express.Router();
 
@@ -12,12 +13,19 @@ router.route('/players')
 	})
 
 	.post((req, res)=>{
+		
+		const name= req.body.name;
 		const country = req.body.country;
 		const position = req.body.position;
-		const picture = req.body.picture;
+		//const picture = req.body.picture;
 		const score = req.body.score;
 
-		const dataPlayer = {country: country, position: position, picture: picture, score: score};
+		const data={country: country, position: position, score: score}
+
+		Player.create(data).then((players)=> {
+				res.json({message:'cadastro com sucesso!!'});
+		})
+		
 	})
 
 router.route('/players/:player_id')
