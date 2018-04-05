@@ -43,6 +43,18 @@ router.route('/users/:user_id')
 		})
 	})
 
+	.put((req, res)=>{
+		User.findById(req.params.user_id).then(user =>{
+			if (user) {
+				user.update({email: req.body.email, nickname: req.body.nickname, password: user.password}).then(() =>{
+					res.json(user);
+				})
+			} else{
+				res.json({error: 'erro na atualizacao'});
+			}
+		})
+	})
+
 	.delete((req, res) =>{
 		User.findById(req.params.user_id).then(user => {
 			if (user) {

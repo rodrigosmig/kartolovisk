@@ -55,6 +55,16 @@ router.route('/users/:user_id').get(function (req, res) {
 			res.json({ message: 'Usuário não existe' });
 		}
 	});
+}).put(function (req, res) {
+	_models.User.findById(req.params.user_id).then(function (user) {
+		if (user) {
+			user.update({ email: req.body.email, nickname: req.body.nickname, password: user.password }).then(function () {
+				res.json(user);
+			});
+		} else {
+			res.json({ error: 'erro na atualizacao' });
+		}
+	});
 }).delete(function (req, res) {
 	_models.User.findById(req.params.user_id).then(function (user) {
 		if (user) {

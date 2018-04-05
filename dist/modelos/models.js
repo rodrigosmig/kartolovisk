@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.League = exports.UserLeagueAssociation = exports.Team = exports.Tipo = exports.Event = exports.Player = exports.User = undefined;
+exports.Team = exports.Tipo = exports.Event = exports.Player = exports.User = undefined;
 
 var _sequelize = require('sequelize');
 
@@ -49,11 +49,13 @@ var Team = exports.Team = sequelize.define('team', {
 
 });
 
-var UserLeagueAssociation = exports.UserLeagueAssociation = sequelize.define('userLeague', {});
+// export let UserLeagueAssociation = sequelize.define('userLeague', {
 
-var League = exports.League = sequelize.define('league', {
-	userList: _sequelize2.default.STRING
-});
+// })
+
+// export let League = sequelize.define('league', {
+// 	userList: Sequelize.STRING
+// })
 
 Event.belongsTo(Tipo);
 Tipo.hasMany(Event);
@@ -64,15 +66,15 @@ Event.hasMany(Player);
 User.belongsTo(Team);
 Team.belongsTo(User);
 
-User.hasMany(UserLeagueAssociation);
-UserLeagueAssociation.belongsTo(User);
+// User.hasMany(UserLeagueAssociation)
+// UserLeagueAssociation.belongsTo(User)
 
-League.hasMany(UserLeagueAssociation);
+// League.hasMany(UserLeagueAssociation)
 
 User.sync();
 Player.sync();
 Event.sync();
 Tipo.sync();
 Team.sync();
-UserLeagueAssociation.sync();
-League.sync();
+// UserLeagueAssociation.sync();
+// League.sync();

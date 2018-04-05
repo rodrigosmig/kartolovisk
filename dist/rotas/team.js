@@ -34,7 +34,7 @@ router.route('/teams/:team_id').get(function (req, res) {
 		}
 	});
 }).delete(function (req, res) {
-	_models.Team.findById(req.params.player_id).then(function (team) {
+	_models.Team.findById(req.params.team_id).then(function (team) {
 		if (team) {
 			team.destroy().then(function (team) {
 				res.json({ message: 'Jogador Deletado' });
@@ -44,7 +44,7 @@ router.route('/teams/:team_id').get(function (req, res) {
 		}
 	});
 }).put(function (req, res) {
-	_models.Team.findById(req.params.player_id).then(function (team) {
+	_models.Team.findById(req.params.team_id).then(function (team) {
 		if (team) {
 			team.update({ name: req.body.name, formation: req.body.formation }).then(function (team) {
 				res.json(team);
