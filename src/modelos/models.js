@@ -26,6 +26,7 @@ export let Player= sequelize.define('player', {
 export let Event = sequelize.define('event', {
 	round: Sequelize.STRING,
 	type: Sequelize.STRING
+	
 })
 
 export let Tipo = sequelize.define('tipo', {

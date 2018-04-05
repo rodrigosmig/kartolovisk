@@ -5,6 +5,8 @@ import jwt from 'jsonwebtoken';
 
 let router = express.Router();
 
+
+
 router.route('/users')
 
 	.get((req, res)=>{
