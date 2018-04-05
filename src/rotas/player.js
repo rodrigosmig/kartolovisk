@@ -20,7 +20,7 @@ router.route('/players')
 		//const picture = req.body.picture;
 		const score = req.body.score;
 
-		const data={country: country, position: position, score: score}
+		const data={name: name,country: country, position: position, score: score}
 
 		Player.create(data).then((players)=> {
 				res.json({message:'cadastro com sucesso!!'});
