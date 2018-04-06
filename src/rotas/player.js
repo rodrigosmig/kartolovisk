@@ -55,7 +55,12 @@ router.route('/players/:player_id')
 	.put((req, res)=>{
 		Player.findById(req.params.player_id).then(player =>{
 			if(player){
-				player.update({name: req.body.name, country: req.body.country, position: req.body.position, picture: req.body.picture, score: req.body.score}).then((player)=>{
+				player.update({
+					name: req.body.name, 
+					country: req.body.country, 
+					position: req.body.position, 
+					score: req.body.score
+				}).then((player)=>{
 					res.json(player);
 				})
 			}else{

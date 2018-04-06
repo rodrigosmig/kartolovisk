@@ -25,7 +25,7 @@ router.route('/users')
 		const nickname = req.body.nickname;
 		const email =  req.body.email;
 
-		bcrypt.hash(req.body.password, 12).then((senha) =>{
+		bcrypt.hashSync(req.body.password, 12).then((senha) =>{
 			User.create({nickname: nickname, password: senha, email: email}).then((user)=>{
 				res.json({message: 'Usuário cadastrado'});
 			})
@@ -48,7 +48,13 @@ router.route('/users/:user_id')
 	.put((req, res)=>{
 		User.findById(req.params.user_id).then(user =>{
 			if (user) {
-				user.update({email: req.body.email, nickname: req.body.nickname, password: user.password}).then(() =>{
+				let senha = bcrypt.hashSync(req.body.password, 12);
+				console.log(senha);
+				user.update({
+					email: req.body.email, 
+					nickname: req.body.nickname, 
+					password: senha
+				}).then(() =>{
 					res.json(user);
 				})
 			} else{

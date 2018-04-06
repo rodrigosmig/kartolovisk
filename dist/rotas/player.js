@@ -58,7 +58,12 @@ router.route('/players/:player_id').get(function (req, res) {
 }).put(function (req, res) {
 	_models.Player.findById(req.params.player_id).then(function (player) {
 		if (player) {
-			player.update({ name: req.body.name, country: req.body.country, position: req.body.position, picture: req.body.picture, score: req.body.score }).then(function (player) {
+			player.update({
+				name: req.body.name,
+				country: req.body.country,
+				position: req.body.position,
+				score: req.body.score
+			}).then(function (player) {
 				res.json(player);
 			});
 		} else {

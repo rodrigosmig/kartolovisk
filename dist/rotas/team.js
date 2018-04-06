@@ -21,8 +21,13 @@ router.route('/teams').get(function (req, res) {
 }).post(function (req, res) {
 	var name = req.body.name;
 	var formation = req.body.formation;
+	var data = { name: req.body.name, formation: req.body.formation };
 
-	var dataPlayer = { name: req.body.name, formation: req.body.formation };
+	_models.Team.create(data).then(function (team) {
+		res.json({
+			message: 'Time cadastrado com sucesso!!'
+		});
+	});
 });
 
 router.route('/teams/:team_id').get(function (req, res) {
@@ -46,7 +51,10 @@ router.route('/teams/:team_id').get(function (req, res) {
 }).put(function (req, res) {
 	_models.Team.findById(req.params.team_id).then(function (team) {
 		if (team) {
-			team.update({ name: req.body.name, formation: req.body.formation }).then(function (team) {
+			team.update({
+				name: req.body.name,
+				formation: req.body.formation
+			}).then(function (team) {
 				res.json(team);
 			});
 		} else {
