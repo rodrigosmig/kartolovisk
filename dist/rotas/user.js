@@ -39,7 +39,7 @@ router.route('/users').get(function (req, res) {
 	var nickname = req.body.nickname;
 	var email = req.body.email;
 
-	_bcrypt2.default.hash(req.body.password, 12).then(function (senha) {
+	_bcrypt2.default.hashSync(req.body.password, 12).then(function (senha) {
 		_models.User.create({ nickname: nickname, password: senha, email: email }).then(function (user) {
 			res.json({ message: 'Usuário cadastrado' });
 		});
@@ -58,7 +58,13 @@ router.route('/users/:user_id').get(function (req, res) {
 }).put(function (req, res) {
 	_models.User.findById(req.params.user_id).then(function (user) {
 		if (user) {
-			user.update({ email: req.body.email, nickname: req.body.nickname, password: user.password }).then(function () {
+			var senha = _bcrypt2.default.hashSync(req.body.password, 12);
+			console.log(senha);
+			user.update({
+				email: req.body.email,
+				nickname: req.body.nickname,
+				password: senha
+			}).then(function () {
 				res.json(user);
 			});
 		} else {

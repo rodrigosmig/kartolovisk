@@ -25,37 +25,29 @@ export let Player= sequelize.define('player', {
   
 export let Event = sequelize.define('event', {
 	round: Sequelize.STRING,
-	type: Sequelize.STRING
 	
 })
 
 export let Tipo = sequelize.define('tipo', {
 	name: Sequelize.STRING,
-	score: Sequelize.INTEGER
+	score: Sequelize.INTEGER,
 })
 
 export let Team = sequelize.define('team', {
 	name: Sequelize.STRING,
 	formation: Sequelize.STRING
-	
 })
 
-// export let UserLeagueAssociation = sequelize.define('userLeague', {
-
-// })
-
-// export let League = sequelize.define('league', {
-// 	userList: Sequelize.STRING
-// })
-
-Event.belongsTo(Tipo)
+Tipo.hasOne(Event)
+Player.hasOne(Event)
+/* Event.belongsTo(Tipo)
 Tipo.hasMany(Event)
 
 Player.belongsTo(Event)
-Event.hasMany(Player)
+Event.hasMany(Player) */
 
-User.belongsTo(Team)
-Team.belongsTo(User)
+/* User.belongsTo(Team)
+Team.belongsTo(User) */
 
 // User.hasMany(UserLeagueAssociation)
 // UserLeagueAssociation.belongsTo(User)
