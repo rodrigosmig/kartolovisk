@@ -40,43 +40,24 @@ router.route('/events').get(function (req, res) {
 	});
 });
 
-/* router.route('/teams/:team_id')
-
-	.get((req, res)=>{
-		Team.findById(req.params.team_id).then(team => {
-			if(team) {
-				res.json(team);
-			}else{
-				res.json({message: 'Time não cadastrado'});
-			}
-		})
-	})	
-
-	.delete((req, res)=>{
-		Team.findById(req.params.team_id).then(team => {
-			if(team) {
-				team.destroy().then((team)=>{
-					res.json({message: 'Jogador Deletado'});
-				})
-			}else{
-				res.json({error: 'Time não cadastrado'});
-			}
-		})
-	})
-
-	.put((req, res)=>{
-		Team.findById(req.params.team_id).then(team => {
-			if(team){
-				team.update({
-					name: req.body.name, 
-					formation: req.body.formation
-				}).then((team) => {
-					res.json(team);
-				})
-			}else{
-				res.json({error: 'Time não cadastrado'});
-			}
-		})
-	}) */
+router.route('/events/:event_id').get(function (req, res) {
+	_models.Event.findById(req.params.event_id).then(function (event) {
+		if (event) {
+			res.json(event);
+		} else {
+			res.json({ message: 'Evento não cadastrado' });
+		}
+	});
+}).delete(function (req, res) {
+	_models.Event.findById(req.params.event_id).then(function (event) {
+		if (event) {
+			event.destroy().then(function (event) {
+				res.json({ message: 'Evento Deletado' });
+			});
+		} else {
+			res.json({ error: 'Evento não cadastrado' });
+		}
+	});
+});
 
 exports.default = router;
