@@ -30,7 +30,7 @@ router.route('/players').get(function (req, res) {
 	//const picture = req.body.picture;
 	var score = req.body.score;
 
-	var data = { country: country, position: position, score: score };
+	var data = { name: name, country: country, position: position, score: score };
 
 	_models.Player.create(data).then(function (players) {
 		res.json({ message: 'cadastro com sucesso!!' });
