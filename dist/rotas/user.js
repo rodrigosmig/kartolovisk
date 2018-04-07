@@ -36,14 +36,42 @@ router.route('/users').get(function (req, res) {
 	password
 */
 .post(function (req, res) {
+
 	var nickname = req.body.nickname;
 	var email = req.body.email;
 
-	_bcrypt2.default.hashSync(req.body.password, 12).then(function (senha) {
-		_models.User.create({ nickname: nickname, password: senha, email: email }).then(function (user) {
-			res.json({ message: 'Usuário cadastrado' });
-		});
+	_models.User.findOne({ where: { nickname: nickname }, attributes: ['id', ['nickname', 'email']] }).then(function (user) {
+		if (user) {
+			return res.send({ message: 'Esse nick já existe' });
+		} else {
+			_models.User.findOne({ where: { email: email }, attributes: ['id', ['nickname', 'email']] }).then(function (user) {
+				if (user) {
+					return res.json({ message: 'Esse email já existe' });
+				} else {
+					_bcrypt2.default.hash(req.body.password, 12).then(function (senha) {
+						_models.User.create({ nickname: nickname,
+							email: email,
+							password: senha
+						}).then(function (user) {
+							res.json({ message: "Usuário cadastrado" });
+						});
+					});
+				}
+			});
+		}
 	});
+
+	/*
+ 	SEM VERIFICAR NICK E SENHA
+ bcrypt.hash(req.body.password, 12).then((senha) =>{
+ 	User.create({
+ 		nickname: nickname,
+ 		password: senha, 
+ 		email: email
+ 	}).then((user)=>{
+ 		res.json({message: 'Usuário cadastrado'});
+ 	})
+ })*/
 });
 
 // um usuario especifico
@@ -56,10 +84,28 @@ router.route('/users/:user_id').get(function (req, res) {
 		}
 	});
 }).put(function (req, res) {
+	/*
+ User.findById(req.params.user_id).then(user =>{
+ 	if(user){
+ 		bcrypt.hashSync(req.body.password, 12).then((senha) =>{
+ 			user.update({
+ 				login: login, 
+ 				password: senha, 
+ 				email: email
+ 			}).then(()=>{
+ 				res.json({message: user});
+ 			})
+ 		})
+ 	}else{
+ 		res.json({error: 'erro na atualizacao'});
+ 	}
+ })
+ 	
+ 	SÓ FUNCIONA SE TIVER TODOS OS CAMPOS, esse que ta comentado foi um teste
+ 	e não funcionou*/
 	_models.User.findById(req.params.user_id).then(function (user) {
 		if (user) {
 			var senha = _bcrypt2.default.hashSync(req.body.password, 12);
-			console.log(senha);
 			user.update({
 				email: req.body.email,
 				nickname: req.body.nickname,
