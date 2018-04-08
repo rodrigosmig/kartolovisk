@@ -10,11 +10,20 @@ var _express2 = _interopRequireDefault(_express);
 
 var _models = require('../modelos/models');
 
-var _jsonwebtoken = require('jsonwebtoken');
-
-var _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var multer = require('multer');
+
+var storage = multer.diskStorage({
+	destination: function destination(req, file, cb) {
+		cb(null, './imagens/');
+	},
+	filename: function filename(req, file, cb) {
+		cb(null, new Date().toISOString() + file.originalname);
+	}
+});
+
+var upload = multer({ storage: storage });
 
 var router = _express2.default.Router();
 
@@ -22,18 +31,17 @@ router.route('/players').get(function (req, res) {
 	_models.Player.findAll().then(function (players) {
 		res.send(players);
 	});
-}).post(function (req, res) {
-
+}).post(upload.single('imagePlayer'), function (req, res, next) {
 	var name = req.body.name;
 	var country = req.body.country;
 	var position = req.body.position;
-	//const picture = req.body.picture;
 	var score = req.body.score;
+	var imagePlayer = req.file.path;
 
-	var data = { name: name, country: country, position: position, score: score };
+	var data = { name: name, country: country, position: position, score: score, imagePlayer: imagePlayer };
 
 	_models.Player.create(data).then(function (players) {
-		res.json({ message: 'cadastro com sucesso!!' });
+		res.json({ message: 'cadastro com sucesso!' });
 	});
 });
 

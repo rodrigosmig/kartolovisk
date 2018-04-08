@@ -28,9 +28,8 @@ var Player = exports.Player = sequelize.define('player', {
 	name: _sequelize2.default.STRING,
 	country: _sequelize2.default.STRING,
 	position: _sequelize2.default.STRING,
-	//picture: Sequelize.IMAGE,
-	score: _sequelize2.default.INTEGER
-
+	score: _sequelize2.default.INTEGER,
+	imagePlayer: _sequelize2.default.STRING
 });
 
 var Event = exports.Event = sequelize.define('event', {

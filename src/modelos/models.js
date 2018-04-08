@@ -18,9 +18,8 @@ export let Player= sequelize.define('player', {
 	name: Sequelize.STRING,
 	country: Sequelize.STRING,
 	position: Sequelize.STRING,
-	//picture: Sequelize.IMAGE,
-	score: Sequelize.INTEGER
-
+	score: Sequelize.INTEGER,
+	imagePlayer: Sequelize.STRING
 })
   
 export let Event = sequelize.define('event', {

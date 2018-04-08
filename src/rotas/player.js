@@ -1,6 +1,18 @@
 import express from 'express';
 import {Player} from '../modelos/models';
-import jwt from 'jsonwebtoken';
+
+const multer = require('multer');
+
+const storage = multer.diskStorage({
+	destination: function(req, file, cb){
+		cb(null, './imagens/');
+	},
+	filename: function(req, file, cb){
+		cb(null, new Date().toISOString() + file.originalname);
+	}
+});
+
+const upload = multer({ storage: storage });
 
 let router = express.Router();
 
@@ -12,18 +24,17 @@ router.route('/players')
 		})
 	})
 
-	.post((req, res)=>{
-		
+	.post( upload.single('imagePlayer'), (req, res, next)=>{
 		const name= req.body.name;
 		const country = req.body.country;
 		const position = req.body.position;
-		//const picture = req.body.picture;
 		const score = req.body.score;
+		const imagePlayer = req.file.path
 
-		const data={name: name,country: country, position: position, score: score}
+		const data={ name: name, country: country, position: position, score: score, imagePlayer: imagePlayer}
 
 		Player.create(data).then((players)=> {
-				res.json({message:'cadastro com sucesso!!'});
+			res.json({message:'cadastro com sucesso!'});
 		})
 		
 	})
