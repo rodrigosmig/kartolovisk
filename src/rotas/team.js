@@ -154,6 +154,19 @@ router.route('/teams/add_player')
 				})
 			})
 		})		
-	})	
+	})
+
+router.route('/teams/players/list')
+	.post((req, res)=>{
+		Team.findOne({
+			where: {
+				userId: req.body.user
+			}
+		}).then(team => {
+			team.getPlayers().then(players => {
+				res.json(players)
+			})
+		})
+	})
 
 export default router;
