@@ -1,7 +1,9 @@
 import express from 'express';
-import {User, Team} from '../modelos/models';
+import {User, Player, PlayerTeam, Team} from '../modelos/models';
+import Sequelize from 'sequelize';
 
 let router = express.Router();
+const Op = Sequelize.Op;
 
 router.route('/teams')
 
@@ -84,20 +86,34 @@ router.route('/teams/:team_id')
 		})
 	})
 
-router.route('/teams/add_player/:player_id')
-
+router.route('/teams/add_player')
 	.post((req, res)=>{
-		Team.findOne({
+		//procurar o jogador
+		Player.findOne({
 			where: {
-				id: req.params.user
+				id: req.body.player
 			}
-		}).then(team => {
-			if(team) {
-				res.json(team);
-			}else{
-				res.json({message: 'Time não cadastrado'});
-			}
-		})
+		}).then(newPlayer => {
+			//procura o time do usuário
+			Team.findOne({
+				where: {
+					userId: req.body.user
+				}
+			}).then(team => {
+				//verifica se o jogador já está no time
+				team.getPlayers({newPlayer}).then(inTeam => {
+					if(inTeam.length === 0) {
+						//adiciona o jogador ao time
+						newPlayer.addTeams(team).then(teste => {
+							res.json({message: 'Jogador adicionado ao time'});
+						})
+					}
+					else {
+						res.json({error: 'Jogador já está no time'});
+					}
+				})
+			})
+		})		
 	})	
 
 export default router;
