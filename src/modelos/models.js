@@ -55,8 +55,4 @@ Team.belongsTo(User) */
 
 // League.hasMany(UserLeagueAssociation)
 
-User.sync();
-Player.sync();
-Event.sync();
-Tipo.sync();
-Team.sync();
+sequelize.sync()
