@@ -21,25 +21,40 @@ router.route('/teams')
 		}).then(team => {
 			//Não permite usuário criar mais de um time
 			if(!team) {
-				const name = req.body.name;
-				const formation = req.body.formation;
-				const score = req.body.score;
-				const userId = req.body.userId;
-				const data = {
-					name: req.body.name, 
-					formation: req.body.formation,
-					score: req.body.score,
-					userId: req.body.userId,
-				};
-				
-				Team.create(data).then((team)=> {
-					res.json({
-						message:'Time cadastrado com sucesso!!'
-					});
-				})
+				Team.findOne({
+					where: {
+						name: req.body.name
+					}
+				}).then(isExists => {
+					//verifica se o nome do time já está sendo utilizado
+					if(!isExists) {
+						const name = req.body.name;
+						const formation = req.body.formation;
+						const score = req.body.score;
+						const userId = req.body.userId;
+						const data = {
+							name: req.body.name, 
+							formation: req.body.formation,
+							score: req.body.score,
+							userId: req.body.userId,
+						};						
+						Team.create(data).then((team)=> {
+							res.json({
+								message:'Time cadastrado com sucesso!!'
+							});
+						})
+					}
+					else {
+						res.json({
+							error: 'O nome do time já está sendo utilizado.'
+						});
+					}
+				})				
 			}
 			else {
-				res.json({error: 'Usuário já possui um time'});
+				res.json({
+					error: 'Usuário já possui um time'
+				});
 			}
 		})
 		
@@ -71,16 +86,41 @@ router.route('/teams/:team_id')
 
 	.put((req, res)=>{
 		Team.findById(req.params.team_id).then(team => {
-			if(team){
-				team.update({
-					name: req.body.name, 
-					formation: req.body.formation,
-					score: req.body.score,
-					userId: req.body.userId,
-				}).then((team) => {
-					res.json(team);
+			if(team) {
+				Team.findOne({
+					where: {
+						name: req.body.name
+					}
+				}).then(isExists => {
+					//verifica se o nome do time é o mesmo do nome enviado
+					if(team.name === req.body.name) {
+						team.update({
+							formation: req.body.formation,
+							score: req.body.score,
+						}).then((team) => {
+							res.json(team);
+						})
+					}
+					else {
+						//verifica se o nome do time já está sendo utilizado
+						if(!isExists) {
+							team.update({
+								name: req.body.name, 
+								formation: req.body.formation,
+								score: req.body.score,
+							}).then((team) => {
+								res.json(team);
+							})
+						}
+						else {
+							res.json({
+								error: 'O nome do time já está sendo utilizado.'
+							});
+						}
+					}
 				})
-			}else{
+			}
+			else{
 				res.json({error: 'Time não cadastrado'});
 			}
 		})
