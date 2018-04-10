@@ -1,5 +1,6 @@
 import express from 'express';
 import {Player} from '../modelos/models';
+import Sequelize from 'sequelize';
 
 const multer = require('multer');
 
@@ -15,6 +16,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 let router = express.Router();
+const Op = Sequelize.Op;
 
 router.route('/players')
 
@@ -37,6 +39,63 @@ router.route('/players')
 			res.json({message:'cadastro com sucesso!'});
 		})
 		
+	})
+
+router.route('/players/name')
+
+	.post((req,res)=>{
+		const namePlayer = "%" + req.body.name + "%";
+		Player.findAll({
+			where: {
+				name: {
+					[Op.like]: namePlayer
+				}
+			}
+		}).then(player =>{
+			if(player.length !== 0){
+				res.json(player)
+			}else{
+				res.json({message: "Nome não encontrado"});
+			}
+		})
+	})
+
+router.route('/players/country')
+	
+	.post((req, res)=>{
+		const countryPlayer = "%" + req.body.country + "%";
+		Player.findAll({
+			where: {
+				country: {
+					[Op.like]: countryPlayer
+				}
+			}
+		}).then(player =>{
+			if(player.length !== 0){
+				res.json(player)
+			}else{
+				res.json({message: "País não encontrado"});
+			}
+		})
+	})
+
+router.route('/players/position')
+	
+	.post((req, res)=>{
+		const positionPlayer = "%" + req.body.position + "%";
+		Player.findAll({
+			where: {
+				position: {
+					[Op.like]: positionPlayer
+				}
+			}
+		}).then(player =>{
+			if(player.length !== 0){
+				res.json(player)
+			}else{
+				res.json({message: "Posição não encontrado"});
+			}
+		})
 	})
 
 router.route('/players/:player_id')
