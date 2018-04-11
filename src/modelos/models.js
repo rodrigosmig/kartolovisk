@@ -51,8 +51,8 @@ Player.belongsToMany(Team, {through: 'PlayerTeam'})
 Team.belongsToMany(Player, {through: 'PlayerTeam'})
 
 //chave estrangeira de League
-League.belongsToMany(User, {through: 'UserLeague'})
-User.belongsToMany(League, {through: 'UserLeague'})
+League.belongsToMany(Team, {through: 'UserLeague'})
+Team.belongsToMany(League, {through: 'UserLeague'})
 League.belongsTo(User)
 
 

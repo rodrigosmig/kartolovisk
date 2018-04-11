@@ -44,18 +44,6 @@ router.route('/users')
 				})
 			}
 		})
-
-		/*
-			SEM VERIFICAR NICK E SENHA
-		bcrypt.hash(req.body.password, 12).then((senha) =>{
-			User.create({
-				nickname: nickname,
-				password: senha, 
-				email: email
-			}).then((user)=>{
-				res.json({message: 'Usuário cadastrado'});
-			})
-		})*/
 	})
 
 // um usuario especifico
@@ -72,28 +60,6 @@ router.route('/users/:user_id')
 	})
 
 	.put((req, res)=>{
-		/*
-		User.findById(req.params.user_id).then(user =>{
-			if(user){
-				bcrypt.hashSync(req.body.password, 12).then((senha) =>{
-					user.update({
-						login: login, 
-						password: senha, 
-						email: email
-					}).then(()=>{
-						res.json({message: user});
-					})
-				})
-			}else{
-				res.json({error: 'erro na atualizacao'});
-			}
-		})
-
-		
-			SÓ FUNCIONA SE TIVER TODOS OS CAMPOS, esse que ta comentado foi um teste
-			e não funcionou*/
-
-		//let senha = bcryp.t.hashSync(req.body.password, 12);
 
 		User.findById(req.params.user_id).then(user =>{
 			if (!(typeof req.body.password === "undefined")){
@@ -152,5 +118,19 @@ router.route('/auth')
 			}
 		})
 	})
+
+router.route('/profile')
+
+	.get((req, res)=>{
+		const token = req.headers['x-access-token'];
+
+		if(token){
+			jwt.verify(token, "senha", (err, decoded)=>{
+				res.json(decoded);
+			})
+		}else{
+			res.json({message: 'Token não encontrado'});
+		}
+	});
 
 export default router;
