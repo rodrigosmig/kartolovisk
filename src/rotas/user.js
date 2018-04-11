@@ -92,19 +92,28 @@ router.route('/users/:user_id')
 		
 			SÓ FUNCIONA SE TIVER TODOS OS CAMPOS, esse que ta comentado foi um teste
 			e não funcionou*/
+
+		//let senha = bcryp.t.hashSync(req.body.password, 12);
+
 		User.findById(req.params.user_id).then(user =>{
-			if (user) {
-				let senha = bcrypt.hashSync(req.body.password, 12);
+			if (!(typeof req.body.password === "undefined")){
+				let senha = bcrypt.hashSync(req.body.password, 12)
 				user.update({
 					email: req.body.email, 
-					nickname: req.body.nickname, 
-					password: senha
-				}).then(() =>{
+					nickname: req.body.nickname,
+					password: senha 
+				}).then((user)=>{
 					res.json(user);
 				})
-			} else{
-				res.json({error: 'erro na atualizacao'});
+			}else{
+				user.update({
+					email: req.body.email, 
+					nickname: req.body.nickname
+				}).then((user)=>{
+					res.json(user);
+				})
 			}
+			
 		})
 	})
 
