@@ -138,8 +138,8 @@ router.route('/teams/add_player')
 				}
 			}).then(team => {
 				//verifica se o jogador já está no time
-				team.hasPlayers(player).then(isExists => {
-					if(!isExists) {
+				team.hasPlayers(player).then(hasPlayer => {
+					if(!hasPlayer) {
 						//adiciona o jogador ao time
 						player.addTeams(team).then(ret => {
 							res.json({message: 'Jogador adicionado ao time'});
@@ -168,8 +168,8 @@ router.route('/teams/add_player')
 				}
 			}).then(team => {
 				//verifica se o jogador já está no time
-				team.hasPlayers(player).then(isExists => {
-					if(isExists) {
+				team.hasPlayers(player).then(hasPlayer => {
+					if(hasPlayer) {
 						//remove o jogador ao time
 						team.removePlayers(player).then(ret => {
 							res.json({message: 'Jogador removido do time'});
