@@ -1,5 +1,5 @@
 import express from 'express';
-import {League} from '../modelos/models';
+import {League, Team} from '../modelos/models';
 
 let router = express.Router();
 
@@ -37,6 +37,7 @@ router.route('/league')
                                 message: 'Liga cadastrada com sucesso!'
                             });
                         })
+
                     }else{
                         res.json({
                             error: 'O nome da liga já existe'
@@ -45,7 +46,7 @@ router.route('/league')
                 })
             } else{
                 res.json({
-                    error: 'O nome da liga já existe'
+                    error: 'usuário já é dono de uma liga'
                 });
             }
         })
@@ -80,6 +81,55 @@ router.route('/league/:league_id')
 		})
     })
 
-router.route('')
+router.route('/league/add_league')
+
+	.post((req, res)=>{
+		// procura a liga
+		League.findOne({
+			where: {
+				id: req.body.league
+			}
+		}).then(league =>{
+			//procura o usuario
+			Team.findOne({
+				where: {
+					userId: req.body.user
+				}
+			}).then(team =>{
+              
+               /*  league.getTeams({team}).then(nda => {
+                    res.json({
+                        nda
+                    });
+                }) */
+              
+                team.addLeagues(league).then(ret => {
+                    if(ret.length === 0){
+                        res.json({
+                            error: 'Time já pertence a liga'
+                        });
+                    }else{
+                        res.json({
+                            message: 'Time adicionado a liga com sucesso'
+                        });
+                    }
+                })
+			})
+		})
+    })
+
+router.route('/league/list')
+
+    .post((req, res)=>{
+        League.findOne({
+            where: {
+                id: req.body.id
+            }
+        }).then(league =>{
+            league.getTeams().then(teams =>{
+                res.json(teams)
+            })
+        })
+    })
 
 export default router;
