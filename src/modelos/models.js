@@ -37,6 +37,10 @@ export let Team = sequelize.define('team', {
 	formation: Sequelize.STRING
 })
 
+export let League = sequelize.define('league', {
+	name: Sequelize.STRING
+})
+
 //chave entrangeira de Event
 Tipo.hasOne(Event)
 Player.hasOne(Event)
@@ -45,14 +49,11 @@ Player.hasOne(Event)
 Team.belongsTo(User)
 Player.belongsToMany(Team, {through: 'PlayerTeam'})
 Team.belongsToMany(Player, {through: 'PlayerTeam'})
-/* Player.hasOne(Team) */
 
-/* User.belongsTo(Team)
-Team.belongsTo(User) */
+//chave estrangeira de League
+League.belongsToMany(User, {through: 'UserLeague'})
+User.belongsToMany(League, {through: 'UserLeague'})
+League.belongsTo(User)
 
-// User.hasMany(UserLeagueAssociation)
-// UserLeagueAssociation.belongsTo(User)
-
-// League.hasMany(UserLeagueAssociation)
 
 sequelize.sync()
