@@ -141,7 +141,7 @@ router.route('/teams/add_player')
 				team.getPlayers({newPlayer}).then(inTeam => {
 					if(inTeam.length === 0) {
 						//adiciona o jogador ao time
-						newPlayer.addTeams(team).then(teste => {
+						newPlayer.addTeams(team).then(ret => {
 							res.json({message: 'Jogador adicionado ao time'});
 						})
 					}
@@ -161,7 +161,14 @@ router.route('/teams/players/list')
 			}
 		}).then(team => {
 			team.getPlayers().then(players => {
-				res.json(players)
+				if(players.length === 0) {
+					res.json({
+						message: "Nenhum jogador foi adicionado ao time"
+					})
+				}
+				else {
+					res.json(players)
+				}				
 			})
 		})
 	})
