@@ -133,7 +133,7 @@ router.route('/teams/add_player')
 			where: {
 				id: req.body.player
 			}
-		}).then(newPlayer => {
+		}).then(player => {
 			//procura o time do usuário
 			Team.findOne({
 				where: {
@@ -141,15 +141,45 @@ router.route('/teams/add_player')
 				}
 			}).then(team => {
 				//verifica se o jogador já está no time
-				team.getPlayers({newPlayer}).then(inTeam => {
-					if(inTeam.length === 0) {
+				team.hasPlayers(player).then(isExists => {
+					if(!isExists) {
 						//adiciona o jogador ao time
-						newPlayer.addTeams(team).then(ret => {
+						player.addTeams(team).then(ret => {
 							res.json({message: 'Jogador adicionado ao time'});
 						})
 					}
 					else {
 						res.json({error: 'Jogador já está no time'});
+					}
+				})
+			})
+		})		
+	})
+
+	router.route('/teams/del_player')
+	.post((req, res)=>{
+		//procurar o jogador
+		Player.findOne({
+			where: {
+				id: req.body.player
+			}
+		}).then(player => {
+			//procura o time do usuário
+			Team.findOne({
+				where: {
+					userId: req.body.user
+				}
+			}).then(team => {
+				//verifica se o jogador já está no time
+				team.hasPlayers(player).then(isExists => {
+					if(isExists) {
+						//remove o jogador ao time
+						team.removePlayers(player).then(ret => {
+							res.json({message: 'Jogador removido do time'});
+						})
+					}
+					else {
+						res.json({error: 'Jogador não está no time'});
 					}
 				})
 			})
