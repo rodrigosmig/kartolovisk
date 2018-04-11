@@ -28,10 +28,6 @@ router.route('/teams')
 				}).then(isExists => {
 					//verifica se o nome do time já está sendo utilizado
 					if(!isExists) {
-						const name = req.body.name;
-						const formation = req.body.formation;
-						const score = req.body.score;
-						const userId = req.body.userId;
 						const data = {
 							name: req.body.name, 
 							formation: req.body.formation,
@@ -127,6 +123,7 @@ router.route('/teams/:team_id')
 	})
 
 router.route('/teams/add_player')
+
 	.post((req, res)=>{
 		//procurar o jogador
 		Player.findOne({
