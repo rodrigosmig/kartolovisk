@@ -1,11 +1,10 @@
+
 import express from 'express';
-import {Event} from '../modelos/models';
-import jwt from 'jsonwebtoken';
+import {Event, Player, Tipo} from '../modelos/models';
 
 let router = express.Router();
 
 router.route('/events')
-
 	.get((req, res)=>{
 		Event.findAll().then(function(event) {
 			res.send(event);
@@ -13,17 +12,36 @@ router.route('/events')
 	})
 
 	.post((req, res)=>{
-		const round = req.body.round;
-		const playerId = req.body.playerId;
-		const tipoId = req.body.tipoId;
-		
+	
 		const data = {
 			round: req.body.round, 
 			playerId: req.body.playerId,
-			tipoId: req.body.tipoId,
+			tipoId: req.body.tipoId,			
 		};
 		
+		
 		Event.create(data).then((event)=> {
+			Tipo.findOne({ 					
+				where: {
+					id: event.tipoId
+				}
+			}).then(tipo => {
+				
+				Player.findOne({
+					where: {
+						id: event.playerId						
+					}
+
+				}).then(player => {
+					const score = player.score + tipo.score
+					console.log(score)
+					player.update({
+						score: score
+					})
+				})
+
+			})
+
 			res.json({
 				message:'Evento cadastrado com sucesso!!'
 			});
@@ -41,6 +59,8 @@ router.route('/events/:event_id')
 			}
 		})
 	})	
+
+
 
 	.delete((req, res)=>{
 		Event.findById(req.params.event_id).then(event => {
