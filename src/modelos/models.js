@@ -42,6 +42,9 @@ export let League = sequelize.define('league', {
 
 export let Round = sequelize.define('round', {
 	round: Sequelize.INTEGER
+
+export let Formation = sequelize.define('formation',{
+	formation: Sequelize.STRING
 })
 
 //chave entrangeira de Event
