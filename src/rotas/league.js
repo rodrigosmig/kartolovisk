@@ -12,14 +12,13 @@ router.route('/league')
     })
 
     .post((req, res)=>{
-        
+
         League.findOne({
             where: {
                 userId: req.body.userId,
             }
         }).then(league => {
-            // não cria duas ligas com o mesmo nome
-            if (!league){
+            
                 League.findOne({
     
                    where: {
@@ -44,11 +43,7 @@ router.route('/league')
                         });
                     }
                 })
-            } else{
-                res.json({
-                    error: 'usuário já é dono de uma liga'
-                });
-            }
+
         })
 
     })
@@ -63,6 +58,22 @@ router.route('/league/:league_id')
                 res.json({
                     message: 'Essa liga não existe'
                 });
+            }
+        })
+    })
+
+
+    .put((req, res)=>{
+
+        League.findById(req.params.league_id).then(league =>{
+            if(league) {
+                league.update({
+                    name: req.body.name
+                }).then((league=>{
+                    res.json(league);
+                }))
+            }else{
+                res.json({error: 'Liga não cadastrada'});
             }
         })
     })
@@ -116,6 +127,41 @@ router.route('/league/add_league')
                 })
 			})
 		})
+    })
+
+    // dono da liga exclui membros de uma liga
+router.route('/league/del_league')
+
+    .post((req, res)=>{
+
+        // procura a liga
+        League.findOne({
+            where: {
+                id: req.body.league
+            }
+        }).then(league =>{
+            // procura o time associado ao usuario
+            Team.findOne({
+                where: {
+                    userId: req.body.user
+                }
+            }).then(team =>{
+                //verifica se o time esta na liga
+                team.hasLeagues(league).then(hasLeague =>{
+                    if(hasLeague){
+                        // remove um usuario da liga
+                        team.removeLeagues(league).then(ret =>{
+                            res.json({message: 'Time foi removido da liga'});
+                        })
+                    }else{
+                        res.json({
+                            error: 'Usuário não está na liga'
+                        });
+                    }
+                })
+            })
+        }) 
+
     })
 
 router.route('/league/list')
