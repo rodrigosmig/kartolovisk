@@ -17,8 +17,7 @@ router.route('/events')
 			round: req.body.round, 
 			playerId: req.body.playerId,
 			tipoId: req.body.tipoId,			
-		};
-		
+		};	
 		
 		Event.create(data).then((event)=> {
 			Tipo.findOne({ 					
@@ -34,7 +33,6 @@ router.route('/events')
 
 				}).then(player => {
 					const score = player.score + tipo.score
-					console.log(score)
 					player.update({
 						score: score
 					})
