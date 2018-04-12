@@ -41,6 +41,10 @@ export let League = sequelize.define('league', {
 	name: Sequelize.STRING
 })
 
+export let Formation= sequelize.define('formation',{
+	formation: Sequelize.STRING
+})
+
 //chave entrangeira de Event
 Tipo.hasOne(Event)
 Player.hasOne(Event)
