@@ -1,5 +1,5 @@
 import express from 'express';
-import {Player} from '../modelos/models';
+import {Player, Event, Tipo, Round} from '../modelos/models';
 import Sequelize from 'sequelize';
 
 const multer = require('multer');
@@ -137,6 +137,74 @@ router.route('/players/:player_id')
 				res.json({error: 'Jogador não cadastrado'});
 			}
 		})
+	})
+
+router.route('/players/details/:round_id')
+	
+	.post((req, res)=>{
+		Round.findOne({
+			where: {
+				id: req.params.round_id
+			}
+		}).then(round => {
+			//verifica se a rodada informada é válida
+			if(round) {
+				let eventType = []
+				Event.findAll({
+					where: {
+						playerId: req.body.player,
+						[Op.and]: {
+							roundId: req.params.round_id
+						}
+					}
+				}).then(events => {
+					//verifica se jogador possui eventos cadastrados
+					if(events.length === 0) {
+						res.json({
+							message: "Jogador não possui nenhum evento."
+						})
+					}
+					else {
+						//cada evento da rodada e do jogador será adicionado em um array 
+						for(let x = 0; x < events.length; x++) {
+							Tipo.findOne({
+								where: {
+									id: events[x].tipoId
+								}
+							}).then(tipo => {
+								let events = {
+									nome: tipo.name, 
+									score: tipo.score,
+								}
+								eventType.push(events)
+							})			
+						}					
+						Player.findOne({
+							where: {
+								id: req.body.player
+							}
+						}).then(player => {
+							//soma dos pontos
+							let total = 0
+							for(let k = 0; k < eventType.length; k++) {
+								total += parseInt(eventType[k].score)
+							}
+							res.json({
+								player: player.name,
+								events: eventType,
+								round: req.params.round_id,
+								score: total
+							})
+						})
+					}					
+				})
+			}
+			else {
+				res.json({
+					message: "Rodada inválida."
+				})
+			}
+		})	
 	})
 
 export default router;
