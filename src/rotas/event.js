@@ -14,18 +14,17 @@ router.route('/events')
 	.post((req, res)=>{
 	
 		const data = {
-			round: req.body.round, 
+			roundId: req.body.round, 
 			playerId: req.body.playerId,
 			tipoId: req.body.tipoId,			
-		};	
+		};
 		
 		Event.create(data).then((event)=> {
 			Tipo.findOne({ 					
 				where: {
 					id: event.tipoId
 				}
-			}).then(tipo => {
-				
+			}).then(tipo => {				
 				Player.findOne({
 					where: {
 						id: event.playerId						
@@ -37,7 +36,6 @@ router.route('/events')
 						score: score
 					})
 				})
-
 			})
 
 			res.json({
@@ -56,10 +54,8 @@ router.route('/events/:event_id')
 				res.json({message: 'Evento não cadastrado'});
 			}
 		})
-	})	
-
-
-
+	})
+	
 	.delete((req, res)=>{
 		Event.findById(req.params.event_id).then(event => {
 			if(event) {
