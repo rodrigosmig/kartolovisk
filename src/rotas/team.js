@@ -131,25 +131,32 @@ router.route('/teams/add_player')
 				id: req.body.player
 			}
 		}).then(player => {
-			//procura o time do usuário
-			Team.findOne({
-				where: {
-					userId: req.body.user
-				}
-			}).then(team => {
-				//verifica se o jogador já está no time
-				team.hasPlayers(player).then(hasPlayer => {
-					if(!hasPlayer) {
-						//adiciona o jogador ao time
-						player.addTeams(team).then(ret => {
-							res.json({message: 'Jogador adicionado ao time'});
-						})
+			if(player) {
+				//procura o time do usuário
+				Team.findOne({
+					where: {
+						userId: req.body.user
 					}
-					else {
-						res.json({error: 'Jogador já está no time'});
-					}
+				}).then(team => {
+					//verifica se o jogador já está no time
+					team.hasPlayers(player).then(hasPlayer => {
+						if(!hasPlayer) {
+							//adiciona o jogador ao time
+							player.addTeams(team).then(ret => {
+								res.json({message: 'Jogador adicionado ao time'});
+							})
+						}
+						else {
+							res.json({error: 'Jogador já está no time'});
+						}
+					})
 				})
-			})
+			}
+			else {
+				res.json({
+					error: "Jogador não cadastrado."
+				})
+			}
 		})		
 	})
 
