@@ -6,6 +6,7 @@ import EventRoute from 	'./rotas/event';
 import LeagueRoute from './rotas/league';
 import RoundRoute from './rotas/round';
 import TypeRoute from './rotas/type';
+import FormationRoute from './rotas/formation';
 import bodyParser from 'body-parser';
 
 let app = express();
@@ -19,6 +20,7 @@ app.use('/',EventRoute);
 app.use('/',RoundRoute);
 app.use('/',TypeRoute);
 app.use('/', TeamRoute);
+app.use('/', FormationRoute);
 
 
 

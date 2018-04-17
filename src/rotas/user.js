@@ -96,10 +96,6 @@ router.route('/users/:user_id')
 	})
 
 router.route('/auth')
-	
-	.get((req, res)=>{
-		res.json({message: 'teste'});
-	})
 
 	.post((req, res) =>{
 		User.findOne({where: {nickname: req.body.nickname}}).then((user) =>{
