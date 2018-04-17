@@ -30,7 +30,7 @@ router.route('/teams')
 					if(!isExists) {
 						const data = {
 							name: req.body.name, 
-							formation: req.body.formation,
+							formationId: req.body.formation,
 							score: req.body.score,
 							userId: req.body.userId,
 						};						
@@ -91,7 +91,7 @@ router.route('/teams/:team_id')
 					//verifica se o nome do time é o mesmo do nome enviado
 					if(team.name === req.body.name) {
 						team.update({
-							formation: req.body.formation,
+							formationId: req.body.formation,
 							score: req.body.score,
 						}).then((team) => {
 							res.json(team);
@@ -102,7 +102,7 @@ router.route('/teams/:team_id')
 						if(!isExists) {
 							team.update({
 								name: req.body.name, 
-								formation: req.body.formation,
+								formationId: req.body.formation,
 								score: req.body.score,
 							}).then((team) => {
 								res.json(team);
@@ -206,6 +206,35 @@ router.route('/teams/players/list')
 				else {
 					res.json(players)
 				}				
+			})
+		})
+	})
+
+	router.route('/teams/score/update')
+
+	.get((req, res)=>{
+		Team.findAll().then(teams => {
+			for(let x = 0; x < teams.length; x++) {
+				let totalScore = 0
+				teams[x].getPlayers().then(players => {
+					for(let y = 0; y < players.length; y++) {
+						totalScore += players[y].score
+					}
+					totalScore += teams[x].score
+					teams[x].update({
+						score: totalScore
+					})
+				})
+			}
+			Player.findAll().then(player => {
+				for(let k = 0; k < player.length; k++) {
+					player[k].update({
+						score: 0
+					})
+				}
+				res.json({
+					message: "Rodada finalizada com sucesso."
+				})
 			})
 		})
 	})

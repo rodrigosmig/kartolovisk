@@ -32,9 +32,17 @@ router.route('/league')
                             userId:req.body.userId,
                         };
                         League.create(data).then((league)=>{
-                            res.json({
-                                message: 'Liga cadastrada com sucesso!'
-                            });
+                            Team.findOne({
+                                where: {
+                                    userId: req.body.userId
+                                }
+                            }).then(team => {
+                                team.addLeagues(league).then(ret => {
+                                    res.json({
+                                        message: 'Liga cadastrada com sucesso!'
+                                    });
+                                })
+                            })                            
                         })
 
                     }else{
@@ -107,14 +115,8 @@ router.route('/league/add_league')
 					userId: req.body.user
 				}
 			}).then(team =>{
-              
-               /*  league.getTeams({team}).then(nda => {
-                    res.json({
-                        nda
-                    });
-                }) */
-              
                 team.addLeagues(league).then(ret => {
+                    console.log(ret)
                     if(ret.length === 0){
                         res.json({
                             error: 'Time já pertence a liga'

@@ -33,7 +33,7 @@ export let Tipo = sequelize.define('tipo', {
 
 export let Team = sequelize.define('team', {
 	name: Sequelize.STRING,
-	formation: Sequelize.STRING
+	score: Sequelize.INTEGER
 })
 
 export let League = sequelize.define('league', {
@@ -57,6 +57,7 @@ Event.belongsToMany(Player, {through: 'Details'})
 
 //chave estrangeira de Team
 Team.belongsTo(User)
+Team.belongsTo(Formation)
 Player.belongsToMany(Team, {through: 'PlayerTeam'})
 Team.belongsToMany(Player, {through: 'PlayerTeam'})
 
