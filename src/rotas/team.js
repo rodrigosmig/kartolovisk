@@ -16,7 +16,7 @@ router.route('/teams')
 	.post((req, res)=>{
 		Team.findOne({
 			where: {
-				userId: req.body.userId,
+				userId: req.body.user,
 			}
 		}).then(team => {
 			//Não permite usuário criar mais de um time
@@ -31,8 +31,8 @@ router.route('/teams')
 						const data = {
 							name: req.body.name, 
 							formationId: req.body.formation,
-							score: req.body.score,
-							userId: req.body.userId,
+							score: 0,
+							userId: req.body.user,
 						};						
 						Team.create(data).then((team)=> {
 							res.json({
@@ -56,10 +56,14 @@ router.route('/teams')
 		
 	})
 
-router.route('/teams/:team_id')
+router.route('/teams/:user_id')
 
 	.get((req, res)=>{
-		Team.findById(req.params.team_id).then(team => {
+		Team.findOne({
+			where: {
+				userId: req.params.user_id,
+			}
+		}).then(team => {
 			if(team) {
 				res.json(team);
 			}else{
@@ -72,57 +76,62 @@ router.route('/teams/:team_id')
 		Team.findById(req.params.team_id).then(team => {
 			if(team) {
 				team.destroy().then((team)=>{
-					res.json({message: 'Time Deletado'});
+					res.json({
+						message: 'Time Deletado'
+					});
 				})
 			}else{
-				res.json({error: 'Time não cadastrado'});
+				res.json({
+					error: 'Time não cadastrado'
+				});
 			}
 		})
 	})
-
+	//altera apenas a formação do time
 	.put((req, res)=>{
 		Team.findById(req.params.team_id).then(team => {
 			if(team) {
-				Team.findOne({
-					where: {
-						name: req.body.name
-					}
-				}).then(isExists => {
-					//verifica se o nome do time é o mesmo do nome enviado
-					if(team.name === req.body.name) {
-						team.update({
-							formationId: req.body.formation,
-							score: req.body.score,
-						}).then((team) => {
-							res.json(team);
-						})
-					}
-					else {
-						//verifica se o nome do time já está sendo utilizado
-						if(!isExists) {
-							team.update({
-								name: req.body.name, 
-								formationId: req.body.formation,
-								score: req.body.score,
-							}).then((team) => {
-								res.json(team);
-							})
-						}
-						else {
-							res.json({
-								error: 'O nome do time já está sendo utilizado.'
-							});
-						}
-					}
+				team.update({
+					formationId: req.body.formation,
+				}).then((team) => {
+					res.json(team);
 				})
 			}
 			else{
-				res.json({error: 'Time não cadastrado'});
+				res.json({
+					error: 'Time não cadastrado'
+				});
 			}
 		})
 	})
 
-router.route('/teams/add_player')
+router.route('/teams/players/:user_id')
+
+	.get((req, res)=>{
+		Team.findOne({
+			where: {
+				userId: req.params.user_id
+			}
+		}).then(team => {
+			if(team) {
+				team.getPlayers().then(players => {
+					if(players.length === 0) {
+						res.json({
+							message: "Nenhum jogador foi adicionado ao time."
+						})
+					}
+					else {
+						res.json(players)
+					}				
+				})
+			}
+			else {
+				res.json({
+					error: "Usuário não possui time cadastrado."
+				})
+			}
+		})
+	})
 
 	.post((req, res)=>{
 		//procurar o jogador
@@ -138,79 +147,80 @@ router.route('/teams/add_player')
 						userId: req.body.user
 					}
 				}).then(team => {
-					//verifica se o jogador já está no time
-					team.hasPlayers(player).then(hasPlayer => {
-						if(!hasPlayer) {
-							//adiciona o jogador ao time
-							player.addTeams(team).then(ret => {
-								res.json({message: 'Jogador adicionado ao time'});
-							})
-						}
-						else {
-							res.json({error: 'Jogador já está no time'});
-						}
-					})
+					if(team) {
+						//verifica se o jogador já está no time
+						team.hasPlayers(player).then(hasPlayer => {
+							if(!hasPlayer) {
+								//adiciona o jogador ao time
+								player.addTeams(team).then(ret => {
+									res.json({message: 'Jogador adicionado ao time'});
+								})
+							}
+							else {
+								res.json({error: 'Jogador já está no time'});
+							}
+						})
+					}
+					else {
+						res.json({
+							error: "Usuário não possui time cadastrado."
+						})
+					}
+					
 				})
 			}
 			else {
 				res.json({
-					error: "Jogador não cadastrado."
+					error: "Jogador não encontrado."
 				})
 			}
 		})		
 	})
 
-	router.route('/teams/del_player')
-	.post((req, res)=>{
+	.delete((req, res)=>{
 		//procurar o jogador
 		Player.findOne({
 			where: {
 				id: req.body.player
 			}
 		}).then(player => {
-			//procura o time do usuário
-			Team.findOne({
-				where: {
-					userId: req.body.user
-				}
-			}).then(team => {
-				//verifica se o jogador já está no time
-				team.hasPlayers(player).then(hasPlayer => {
-					if(hasPlayer) {
-						//remove o jogador ao time
-						team.removePlayers(player).then(ret => {
-							res.json({message: 'Jogador removido do time'});
+			if(player) {
+				//procura o time do usuário
+				Team.findOne({
+					where: {
+						userId: req.body.user
+					}
+				}).then(team => {
+					if(team) {
+						//verifica se o jogador já está no time
+						team.hasPlayers(player).then(hasPlayer => {
+							if(hasPlayer) {
+								//remove o jogador ao time
+								team.removePlayers(player).then(ret => {
+									res.json({message: 'Jogador removido do time'});
+								})
+							}
+							else {
+								res.json({error: 'Jogador não está no time'});
+							}
 						})
 					}
 					else {
-						res.json({error: 'Jogador não está no time'});
+						res.json({
+							message: "Usuário não possui time cadastrado."
+						})
 					}
 				})
-			})
+			}
+			else {
+				res.json({
+					error: "Jogador não encontrado."
+				})
+			}			
 		})		
 	})
 
-router.route('/teams/players/list')
-	.post((req, res)=>{
-		Team.findOne({
-			where: {
-				userId: req.body.user
-			}
-		}).then(team => {
-			team.getPlayers().then(players => {
-				if(players.length === 0) {
-					res.json({
-						message: "Nenhum jogador foi adicionado ao time"
-					})
-				}
-				else {
-					res.json(players)
-				}				
-			})
-		})
-	})
-
-	router.route('/teams/score/update')
+router.route('/teams/score/update')
 
 	.get((req, res)=>{
 		Team.findAll().then(teams => {
