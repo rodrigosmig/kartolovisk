@@ -25,18 +25,37 @@ router.route('/events')
 					id: event.tipoId
 				}
 			}).then(tipo => {				
-				Player.findOne({
-					where: {
-						id: event.playerId						
-					}
+				if(tipo){
+					
+					Player.findOne({
+						where: {
+							id: event.playerId						
+						}
 
-				}).then(player => {
-					const score = player.score + tipo.score
-					player.update({
-						score: score
+					}).then(player => {
+						if(player){
+							const score = player.score + tipo.score
+							player.update({
+								score: score
+							})
+						}else{
+							res.json({
+								message: 'Player não existe!'
+							})
+						}
+
 					})
-				})
+				
+				}
+				
+				
+				else{
+					res.json({
+						message:'Tipo não existe'
+					})
+				}
 			})
+		
 
 			res.json({
 				message:'Evento cadastrado com sucesso!!'
@@ -63,7 +82,7 @@ router.route('/events/:event_id')
 					res.json({message: 'Evento Deletado'});
 				})
 			}else{
-				res.json({error: 'Evento não cadastrado'});
+				res.json({error: 'Evento não deletado!'});
 			}
 		})
 	})
