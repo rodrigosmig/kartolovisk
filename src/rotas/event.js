@@ -25,41 +25,26 @@ router.route('/events')
 					id: event.tipoId
 				}
 			}).then(tipo => {				
-				if(tipo){
+				
+				Player.findOne({
+					where: {
+						id: event.playerId						
+					}
+				}).then(player => {
+					const score = player.score + tipo.score
+					player.update({
+						score: score
+					})
 					
-					Player.findOne({
-						where: {
-							id: event.playerId						
-						}
+				})
 
-					}).then(player => {
-						if(player){
-							const score = player.score + tipo.score
-							player.update({
-								score: score
-							})
-						}else{
-							res.json({
-								message: 'Player não existe!'
-							})
-						}
-
-					})
-				
-				}
-				
-				
-				else{
-					res.json({
-						message:'Tipo não existe'
-					})
-				}
 			})
-		
 
 			res.json({
 				message:'Evento cadastrado com sucesso!!'
 			});
+		}).catch(error =>{
+			res.json({message: 'Dados inválidos'});
 		})
 	})
 
