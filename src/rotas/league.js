@@ -1,56 +1,56 @@
 import express from 'express';
-import {League, Team} from '../modelos/models';
+import { League, Team } from '../modelos/models';
 
 let router = express.Router();
 
 router.route('/league')
 
-    .get((req, res)=>{
-        League.findAll().then(function(league){
+    .get((req, res) => {
+        League.findAll().then(function (league) {
             res.send(league);
         })
     })
 
-    .post((req, res)=>{
+    .post((req, res) => {
 
         League.findOne({
             where: {
                 userId: req.body.userId,
             }
         }).then(league => {
-            
-                League.findOne({
-    
-                   where: {
-                       name: req.body.name
-                   } 
-                }).then(hasLeague =>{
-                    // verifica se a liga já existe
-                    if(!hasLeague){
-                        const data = {
-                            name: req.body.name,
-                            userId:req.body.userId,
-                        };
-                        League.create(data).then((league)=>{
-                            Team.findOne({
-                                where: {
-                                    userId: req.body.userId
-                                }
-                            }).then(team => {
-                                team.addLeagues(league).then(ret => {
-                                    res.json({
-                                        message: 'Liga cadastrada com sucesso!'
-                                    });
-                                })
-                            })                            
-                        })
 
-                    }else{
-                        res.json({
-                            error: 'O nome da liga já existe'
-                        });
-                    }
-                })
+            League.findOne({
+
+                where: {
+                    name: req.body.name
+                }
+            }).then(hasLeague => {
+                // verifica se a liga já existe
+                if (!hasLeague) {
+                    const data = {
+                        name: req.body.name,
+                        userId: req.body.userId,
+                    };
+                    League.create(data).then((league) => {
+                        Team.findOne({
+                            where: {
+                                userId: req.body.userId
+                            }
+                        }).then(team => {
+                            team.addLeagues(league).then(ret => {
+                                res.json({
+                                    message: 'Liga cadastrada com sucesso!'
+                                });
+                            })
+                        })
+                    })
+
+                } else {
+                    res.json({
+                        error: 'O nome da liga já existe'
+                    });
+                }
+            })
 
         })
 
@@ -58,8 +58,8 @@ router.route('/league')
 
 router.route('/league/:league_id')
 
-    .get((req, res)=>{
-        League.findById(req.params.league_id).then(league =>{
+    .get((req, res) => {
+        League.findById(req.params.league_id).then(league => {
             if (league) {
                 res.json(league);
             } else {
@@ -70,76 +70,73 @@ router.route('/league/:league_id')
         })
     })
 
+    .put((req, res) => {
 
-    .put((req, res)=>{
-
-        League.findById(req.params.league_id).then(league =>{
-            if(league) {
+        League.findById(req.params.league_id).then(league => {
+            if (league) {
                 league.update({
                     name: req.body.name
-                }).then((league=>{
+                }).then((league => {
                     res.json(league);
                 }))
-            }else{
-                res.json({error: 'Liga não cadastrada'});
+            } else {
+                res.json({ error: 'Liga não cadastrada' });
             }
         })
     })
 
-    .delete((req, res)=>{
-		League.findById(req.params.league_id).then(league => {
-			if(league) {
-				league.destroy().then((league)=>{
-					res.json({message: 'Liga deletada'});
-				})
-			}else{
-				res.json({
+    .delete((req, res) => {
+        League.findById(req.params.league_id).then(league => {
+            if (league) {
+                league.destroy().then((league) => {
+                    res.json({ message: 'Liga deletada' });
+                })
+            } else {
+                res.json({
                     error: 'Liga não cadastrada'
                 });
-			}
-		})
+            }
+        })
     })
+// adiciona e remove times da liga
+router.route('/league/team/:league_id')
 
-router.route('/league/add_league')
-
-	.post((req, res)=>{
-		// procura a liga
-		League.findOne({
-			where: {
-				id: req.body.league
-			}
-		}).then(league =>{
-			//procura o usuario
-			Team.findOne({
-				where: {
-					userId: req.body.user
-				}
-			}).then(team =>{
+    // adicionar um usuario a liga
+    .post((req, res) => {
+        // procura a liga
+        League.findOne({
+            where: {
+                id: req.params.league_id
+            }
+        }).then(league => {
+            //procura o usuario
+            Team.findOne({
+                where: {
+                    userId: req.body.user
+                }
+            }).then(team => {
                 team.addLeagues(league).then(ret => {
                     console.log(ret)
-                    if(ret.length === 0){
+                    if (ret.length === 0) {
                         res.json({
                             error: 'Time já pertence a liga'
                         });
-                    }else{
+                    } else {
                         res.json({
                             message: 'Time adicionado a liga com sucesso'
                         });
                     }
                 })
-			})
-		})
+            })
+        })
     })
 
-    // dono da liga exclui membros de uma liga
-router.route('/league/del_league')
-
-    .post((req, res)=>{
+    .delete((req, res)=>{
 
         // procura a liga
         League.findOne({
             where: {
-                id: req.body.league
+                id: req.params.league_id
             }
         }).then(league =>{
             // procura o time associado ao usuario
@@ -163,20 +160,25 @@ router.route('/league/del_league')
                 })
             })
         }) 
-
     })
 
-router.route('/league/list')
+router.route('/league/list/:id')
 
-    .post((req, res)=>{
+    .get((req, res) => {
         League.findOne({
             where: {
-                id: req.body.id
+                id: req.params.id
             }
-        }).then(league =>{
-            league.getTeams().then(teams =>{
-                res.json(teams)
-            })
+        }).then(league => {
+            if (league) {
+                league.getTeams().then(teams => {
+                    res.json(teams)
+                })
+            } else {
+                res.json({
+                    error: 'Não existe esta liga!'
+                });
+            }
         })
     })
 
