@@ -27,7 +27,8 @@ router.route('/players')
 	})
 
 	.post( upload.single('imagePlayer'), (req, res, next)=>{
-		const name= req.body.name;
+
+		const name = req.body.name;
 		const country = req.body.country;
 		const position = req.body.position;
 		const score = req.body.score;
@@ -38,13 +39,14 @@ router.route('/players')
 		Player.create(data).then((players)=> {
 			res.json({message:'cadastro com sucesso!'});
 		})
-		
 	})
 
-router.route('/players/name')
+router.route('/players/name/:player_name')
 
-	.post((req,res)=>{
-		const namePlayer = "%" + req.body.name + "%";
+	.get((req,res)=>{
+		const namePlayer = "%" + req.params.player_name + "%";
+		console.log(req.params.name);
+		console.log(req.body.name);
 		Player.findAll({
 			where: {
 				name: {
@@ -60,10 +62,10 @@ router.route('/players/name')
 		})
 	})
 
-router.route('/players/country')
+router.route('/players/country/:player_country')
 	
-	.post((req, res)=>{
-		const countryPlayer = "%" + req.body.country + "%";
+	.get((req, res)=>{
+		const countryPlayer = "%" + req.params.player_country + "%";
 		Player.findAll({
 			where: {
 				country: {
@@ -79,10 +81,10 @@ router.route('/players/country')
 		})
 	})
 
-router.route('/players/position')
+router.route('/players/:player_position')
 	
-	.post((req, res)=>{
-		const positionPlayer = "%" + req.body.position + "%";
+	.get((req, res)=>{
+		const positionPlayer = "%" + req.body.params.player_position + "%";
 		Player.findAll({
 			where: {
 				position: {
@@ -141,7 +143,7 @@ router.route('/players/:player_id')
 
 router.route('/players/details/:round_id')
 	
-	.post((req, res)=>{
+	.get((req, res)=>{
 		Round.findOne({
 			where: {
 				id: req.params.round_id
