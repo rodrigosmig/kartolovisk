@@ -1,6 +1,6 @@
-# front-end
+# kartolovski
 
-> Front-end do projeto de Sistemas corporatico
+> A Vue.js project
 
 ## Build Setup
 
