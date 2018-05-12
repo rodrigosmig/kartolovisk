@@ -4,7 +4,7 @@
 # ignora quaisquer diretórios chamados "node_modules"
 node_modules/
 dist/
-
+kartolovisk/node_modules
 
 
 
