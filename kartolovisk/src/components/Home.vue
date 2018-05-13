@@ -59,14 +59,7 @@
 
               <div class="md-layout-item">
                 <md-card-content>
-                  <md-menu md-size="medium" md-align-trigger>
-                    <md-button md-menu-trigger>Posição</md-button>
-                    <md-menu-content>
-                      <md-menu-item>My Item 1</md-menu-item>
-                      <md-menu-item>My Item 2</md-menu-item>
-                      <md-menu-item>My Item 3</md-menu-item>
-                    </md-menu-content>
-                  </md-menu>
+                <busca-posicao></busca-posicao> 
                 </md-card-content>
               </div>
 
@@ -183,7 +176,12 @@
 </style>
 
 <script>
+import BuscaPosicao from './BuscaPosicao'
+
 export default {
+  components: {
+    BuscaPosicao
+  },
   name: 'LastRowFixed',
   data: () => ({
     menuVisible: false

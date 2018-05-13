@@ -17,6 +17,14 @@ const upload = multer({ storage: storage });
 
 let router = express.Router();
 const Op = Sequelize.Op;
+router.use(function(req, res, next) {
+	res.header('X-Frame-Options','SAMEORIGIN');
+	res.header('Access-Control-Allow-Credentials', true);
+	res.header('Access-Control-Allow-Origin', '*');
+	res.header('Access-Control-Allow-Methods','GET,PUT,POST,DELETE');
+	res.header('Access-Control-Allow-Headers','X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
+	next();
+});
 
 router.route('/players')
 
