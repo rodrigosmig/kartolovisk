@@ -17,14 +17,6 @@ const upload = multer({ storage: storage });
 
 let router = express.Router();
 const Op = Sequelize.Op;
-router.use(function(req, res, next) {
-	res.header('X-Frame-Options','SAMEORIGIN');
-	res.header('Access-Control-Allow-Credentials', true);
-	res.header('Access-Control-Allow-Origin', '*');
-	res.header('Access-Control-Allow-Methods','GET,PUT,POST,DELETE');
-	res.header('Access-Control-Allow-Headers','X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
-	next();
-});
 
 router.route('/players')
 
@@ -73,7 +65,9 @@ router.route('/players/name/:player_name')
 router.route('/players/country/:player_country')
 	
 	.get((req, res)=>{
+		consol
 		const countryPlayer = "%" + req.params.player_country + "%";
+		console.log(countryPlayer)
 		Player.findAll({
 			where: {
 				country: {
@@ -89,10 +83,10 @@ router.route('/players/country/:player_country')
 		})
 	})
 
-router.route('/players/:player_position')
+router.route('/players/position/:player_position')
 	
 	.get((req, res)=>{
-		const positionPlayer = "%" + req.body.params.player_position + "%";
+		const positionPlayer = "%" + req.params.player_position + "%";
 		Player.findAll({
 			where: {
 				position: {

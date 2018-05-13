@@ -59,7 +59,7 @@
 
               <div class="md-layout-item">
                 <md-card-content>
-                <busca-posicao></busca-posicao> 
+                <posicao @clickPosition="search"></posicao> 
                 </md-card-content>
               </div>
 
@@ -80,79 +80,28 @@
             <div>
               <md-table md-card>
                 <md-table-row>
-                  <md-table-head>Imagem</md-table-head>
-                  <md-table-head>Nome do Jogador</md-table-head>
-                  <md-table-head>País</md-table-head>
-                  <md-table-head>Posição</md-table-head>
-                  <md-table-head>Pontuação</md-table-head>
-                  <md-table-head>Detalhes</md-table-head>
+                    <md-table-head>Imagem</md-table-head>
+                    <md-table-head>Nome do Jogador</md-table-head>
+                    <md-table-head>País</md-table-head>
+                    <md-table-head>Posição</md-table-head>
+                    <md-table-head>Pontuação</md-table-head>
+                    <md-table-head>Detalhes</md-table-head>
                 </md-table-row>
 
-                <md-table-row>
+                <md-table-row v-for="player in players" :key="player.id">
                   <md-table-cell>IMG</md-table-cell>
-                  <md-table-cell>Cristiano Ronaldo</md-table-cell>
-                  <md-table-cell>Portugal</md-table-cell>
-                  <md-table-cell>Atacante</md-table-cell>
-                  <md-table-cell md-numeric>100</md-table-cell>
+                  <md-table-cell>{{player.name}}</md-table-cell>
+                  <md-table-cell>{{player.country}}</md-table-cell>
+                  <md-table-cell>{{player.position}}</md-table-cell>
+                  <md-table-cell md-numeric>{{player.score}}</md-table-cell>
                   <md-table-cell>DT</md-table-cell>
                 </md-table-row>
 
-                <md-table-row>
-                  <md-table-cell>IMG</md-table-cell>
-                  <md-table-cell>Cristiano Ronaldo</md-table-cell>
-                  <md-table-cell>Portugal</md-table-cell>
-                  <md-table-cell>Atacante</md-table-cell>
-                  <md-table-cell md-numeric>100</md-table-cell>
-                  <md-table-cell>DT</md-table-cell>
-                </md-table-row>
+                <!-- <player-list :players="players"></player-list> -->
 
-                <md-table-row>
-                  <md-table-cell>IMG</md-table-cell>
-                  <md-table-cell>Cristiano Ronaldo</md-table-cell>
-                  <md-table-cell>Portugal</md-table-cell>
-                  <md-table-cell>Atacante</md-table-cell>
-                  <md-table-cell md-numeric>100</md-table-cell>
-                  <md-table-cell>DT</md-table-cell>
-                </md-table-row>
-
-                <md-table-row>
-                  <md-table-cell>IMG</md-table-cell>
-                  <md-table-cell>Cristiano Ronaldo</md-table-cell>
-                  <md-table-cell>Portugal</md-table-cell>
-                  <md-table-cell>Atacante</md-table-cell>
-                  <md-table-cell md-numeric>100</md-table-cell>
-                  <md-table-cell>DT</md-table-cell>
-                </md-table-row>
-
-                <md-table-row>
-                  <md-table-cell>IMG</md-table-cell>
-                  <md-table-cell>Cristiano Ronaldo</md-table-cell>
-                  <md-table-cell>Portugal</md-table-cell>
-                  <md-table-cell>Atacante</md-table-cell>
-                  <md-table-cell md-numeric>100</md-table-cell>
-                  <md-table-cell>DT</md-table-cell>
-                </md-table-row>
-
-                <md-table-row>
-                  <md-table-cell>IMG</md-table-cell>
-                  <md-table-cell>Cristiano Ronaldo</md-table-cell>
-                  <md-table-cell>Portugal</md-table-cell>
-                  <md-table-cell>Atacante</md-table-cell>
-                  <md-table-cell md-numeric>100</md-table-cell>
-                  <md-table-cell>DT</md-table-cell>
-                </md-table-row>
-
-                <md-table-row>
-                  <md-table-cell>IMG</md-table-cell>
-                  <md-table-cell>Cristiano Ronaldo</md-table-cell>
-                  <md-table-cell>Portugal</md-table-cell>
-                  <md-table-cell>Atacante</md-table-cell>
-                  <md-table-cell md-numeric>100</md-table-cell>
-                  <md-table-cell>DT</md-table-cell>
-                </md-table-row>
               </md-table>
+          </div>
 
-            </div>
           </div>
 
         </div>
@@ -161,6 +110,39 @@
     </md-app>
   </div>
 </template>
+
+<script>
+import axios from 'axios'
+import Posicao from './Posicao'
+import PlayerList from './PlayerList'
+
+export default {
+  components: {
+    Posicao,
+    PlayerList
+  },
+  name: 'LastRowFixed',
+  data() {
+    return {
+      players: [],
+      menuVisible: false,
+      }    
+  },
+  methods: {
+    search: function(position) {
+      const url = "http://localhost:3000/players/position/" + position
+      axios.get(url)
+        .then(response => {
+          this.players = response.data
+        })
+        .catch(error => {
+            console.log("Erro")
+        })
+    }
+  }
+}
+
+</script>
 
 <style lang="scss" scoped>
   .md-app {
@@ -174,18 +156,3 @@
     margin-left: 30px;
   }
 </style>
-
-<script>
-import BuscaPosicao from './BuscaPosicao'
-
-export default {
-  components: {
-    BuscaPosicao
-  },
-  name: 'LastRowFixed',
-  data: () => ({
-    menuVisible: false
-  })
-}
-
-</script>

@@ -7,30 +7,21 @@
     </md-menu>
 </template>
 <script>
-import axios from 'axios'
 
 export default {
-    data() {
-        return {
-            positions: [
-                'Goleiro', 
-                'Zagueiro', 
-                'Lateral',
-                'Meio Campo',
-                'Atacante'
-            ],
-        }
-    },
+    data: () => ({        
+        positions: [
+            'Goleiro', 
+            'Zagueiro', 
+            'Lateral',
+            'Meio Campo',
+            'Atacante'
+        ],        
+    }),
     methods: {
         search: function(index) {
             const position = this.positions[index].toLowerCase()
-            axios.get("http://localhost:3000/players")
-                .then(players => {
-                    console.log(players)
-                })
-                .catch(error => {
-                    console.log("Erro")
-                })
+            this.$emit("clickPosition", position)
         }
     }
 }
