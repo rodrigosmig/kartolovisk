@@ -43,6 +43,16 @@
           </div>
 
           <div class="md-layout-item">
+
+            <md-card-content>
+              <div class="form">
+                <md-field>
+                  <label>Procurar Jogador</label>
+                  <md-input v-model="jogador" autofocus></md-input>
+                </md-field>
+              </div>
+            </md-card-content>
+
             <div class="md-layout-item md-layout md-gutter">
               <div class="md-layout-item">
                 <md-card-content>
@@ -111,6 +121,17 @@
   </div>
 </template>
 
+<style lang="scss" scoped>
+  .md-app {
+    max-height: 100%;
+    border: 1px solid rgba(#000,.12);
+  }
+  .card-menu{
+    width: 70%;
+  }
+</style>
+
+
 <script>
 import axios from 'axios'
 import Posicao from './Posicao'
@@ -122,10 +143,9 @@ export default {
     PlayerList
   },
   name: 'LastRowFixed',
-  data() {
+  data(){
     return {
-      players: [],
-      menuVisible: false,
+      players: []
       }    
   },
   methods: {
@@ -143,16 +163,3 @@ export default {
 }
 
 </script>
-
-<style lang="scss" scoped>
-  .md-app {
-    max-height: 650px;
-    border: 2px solid rgba(#000, .12);
-  }
-  .card-menu{
-    width: 70%;
-  }
-  .md-toolbar-section-end{
-    margin-left: 30px;
-  }
-</style>
