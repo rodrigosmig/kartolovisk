@@ -16,9 +16,9 @@
 
           <md-card class="card-menu">
             <div class="md-toolbar-section-end">
-              <md-button>Notícias</md-button>
-              <md-button>Regras</md-button>
-              <md-button>Sobre</md-button>
+              <md-button><router-link to='/noticias'>NOTÍCIAS</router-link></md-button>
+              <md-button><router-link to='/regras'>REGRAS</router-link></md-button>
+              <md-button><router-link to='/sobre'>SOBRE</router-link></md-button>
               <md-button class="md-raised md-accent">Sair</md-button>
             </div>
           </md-card>
