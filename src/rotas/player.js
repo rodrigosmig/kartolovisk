@@ -65,7 +65,7 @@ router.route('/players/name/:player_name')
 router.route('/players/country/:player_country')
 	
 	.get((req, res)=>{
-		consol
+		
 		const countryPlayer = "%" + req.params.player_country + "%";
 		console.log(countryPlayer)
 		Player.findAll({
