@@ -5,15 +5,27 @@ import Home from '@/components/Home'
 import Noticias from '@/components/Noticias'
 import Regras from '@/components/Regras'
 import Sobre from '@/components/Sobre'
+import Login from '@/components/Login'
+import Cadastro from '@/components/Cadastro'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
-      path: '/',
+      path: '/hello',
       name: 'HelloWorld',
       component: HelloWorld
+    },
+    {
+      path: '/',
+      name: Login,
+      component: Login
+    },
+    {
+      path: '/cadastro',
+      name: Cadastro,
+      component: Cadastro
     },
     {
       path: '/home',
