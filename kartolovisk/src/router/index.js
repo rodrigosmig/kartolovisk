@@ -21,7 +21,7 @@ export default new Router({
     },
     {
       path: '/',
-      name: Login,
+      name: 'Login',
       component: Login
     },
     {
@@ -31,7 +31,7 @@ export default new Router({
     },
     {
       path: '/cadastro',
-      name: Cadastro,
+      name: 'Cadastro',
       component: Cadastro
     },
     {
@@ -41,17 +41,17 @@ export default new Router({
     },
     {
       path: '/noticias',
-      name: Noticias,
+      name: 'Noticias',
       component: Noticias
     },
     {
       path: '/regras',
-      name: Regras,
+      name: 'Regras',
       component: Regras
     },
     {
       path: '/sobre',
-      name: Sobre,
+      name: 'Sobre',
       component: Sobre
     }
   ]
