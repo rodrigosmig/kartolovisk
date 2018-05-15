@@ -1,15 +1,29 @@
 <template>
+    <div class="centered-container">
+        <md-content class="md-elevation-3">
+            <div class="title">
+                <div class="md-title">Kartolovski</div>
+                <div class="md-body-1">Tela de Login</div>
+            </div>
 
-    <div>
-        <input placeholder="Login" type="text" v-model="user.nickname">
-        <input placeholder="Senha" type="password" v-model="user.password">
+            <div class="form">
+                <md-field>
+                    <label>Login</label>
+                    <md-input type="text" v-model="user.nickname" autofocus></md-input>
+                </md-field>
+                <md-field md-has-password>
+                    <label>Senha</label>
+                    <md-input type="password" v-model="user.password"></md-input>
+                </md-field>
+            </div>
 
-        <button type="submit" @click.prevent="login()"> Entrar </button>
-            {{message}}
-
-        <p>Ainda não é cadastrado? Clique </p> <router-link to='/cadastro'>aqui</router-link>
+            <div class="actions md-alignment-center-space-between">
+                <md-button class="md-raised md-accent" type="submit" @click.prevent="login()"> Entrar </md-button>
+                <p>{{message}}</p>
+                <p>Ainda não é cadastrado?</p> <router-link to='/cadastro'>Clique aqui</router-link>
+            </div>
+        </md-content>
     </div>
-  
 </template>
 
 <script>
@@ -20,6 +34,7 @@ export default {
 
     data: function(){
         return {
+            loading: false,
             user:{
                 nickname: "",
                 password: ""
@@ -41,4 +56,20 @@ export default {
     }
 }
 </script>
+
+<style lang="scss" scoped>
+
+.centered-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+.form {
+    width: 300px;
+}
+.md-content {
+    padding: 50px;
+}
+</style>
 
