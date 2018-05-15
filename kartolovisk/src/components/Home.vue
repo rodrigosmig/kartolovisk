@@ -26,36 +26,37 @@
                 </div>
               </md-card>
             </div>
-
-            <div class="md-toolbar-row">
-              <md-tabs class="md-accent">
-                <md-tab md-label="Meu Time"></md-tab>
-                <md-tab md-label="Liga"></md-tab>
-                <md-tab md-label="Ranking"></md-tab>
-                <md-tab md-label="Configuração"></md-tab>
-              </md-tabs>
-            </div>
-          </md-app-toolbar>
-
-          <md-app-content>
-            <div class="md-layout-item md-layout md-gutter">
-              <div class="md-layout-item">
-                <md-card-content>
-                  <img src="../assets/campo.jpg">
-                </md-card-content>
+            
+             <div class="md-toolbar-row">
+                  <md-tabs class="md-accent">
+                    <md-tab md-label="Meu Time"></md-tab>
+                    <md-tab md-label="Liga"></md-tab>
+                    <md-tab md-label="Ranking"></md-tab>
+                    <md-tab md-label="Configuração"></md-tab>
+                  </md-tabs>
+                </div>
+              </md-app-toolbar>
+            
+            <md-app-content>
+              <div class="md-layout-item md-layout md-gutter">
+                <div class="md-layout-item">
+                  <md-card-content class="campo">
+                    <formacao></formacao>
+                  </md-card-content>
+             </div>
+          
+            <div class="md-layout-item">
+            
+            <!-- <md-card-content>
+              <div class="form">
+                <md-field>
+                  <label>Procurar Jogador</label>
+                  <md-input v-model="jogador" autofocus></md-input>
+                </md-field>
               </div>
+            </md-card-content> -->
 
-              <div class="md-layout-item">
-
-                <md-card-content>
-                  <div class="form">
-                    <md-field>
-                      <label>Procurar Jogador</label>
-                      <md-input v-model="jogador" autofocus></md-input>
-                    </md-field>
-                  </div>
-                </md-card-content>
-
+            
                 <div class="md-layout-item md-layout md-gutter">
                   <div class="md-layout-item">
                     <md-card-content>
@@ -131,16 +132,17 @@
 
   </div>
 </template>
-
 <script>
 import axios from 'axios'
 import Posicao from './Posicao'
 import PlayerList from './PlayerList'
+import Formacao from './Formacao'
 
 export default {
   components: {
     Posicao,
-    PlayerList
+    PlayerList,
+    Formacao
   },
   name: 'LastRowFixed',
   data(){
@@ -199,4 +201,15 @@ export default {
   .card-menu{
     width: 70%;
   }
+  .card-menu{
+    width: 70%;
+  }
+  .campo {
+    background-image: url("../assets/campo.jpg");
+    width: 425px;
+    height: 548px;
+    margin-left: 15%;
+    margin-top: 5%;
+  }
+
 </style>
