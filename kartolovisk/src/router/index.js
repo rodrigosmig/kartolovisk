@@ -9,7 +9,6 @@ import Login from '@/components/Login'
 import Cadastro from '@/components/Cadastro'
 import Profile from '@/components/Profile'
 
-
 Vue.use(Router)
 
 export default new Router({
