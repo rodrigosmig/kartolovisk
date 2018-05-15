@@ -1,13 +1,32 @@
 <template>
-    <div>
-        <input placeholder="Login" type="text" v-model="user.nickname">
-        <input placeholder="E-mail" type="text" v-model="user.email">
-        <input placeholder="Senha" type="password" v-model="user.password">
+    <div class="centered-container">
+        <md-content class="md-elevation-3">
+            <div class="title">
+                <div class="md-title">Kartolovski</div>
+                <div class="md-body-1">Tela de Cadastro</div>
+            </div>
 
-        <button type="submit" @click.prevent="cadastro()">Cadastrar</button>
-        {{message}}
-    </div>
-  
+            <div class="form">
+                <md-field>
+                    <label>Login</label>
+                    <md-input type="text" v-model="user.nickname" autofocus></md-input>
+                </md-field>
+                <md-field>
+                    <label>Email</label>
+                    <md-input type="text" v-model="user.email" autofocus></md-input>
+                </md-field>
+                <md-field>
+                    <label>Senha</label>
+                    <md-input type="password" v-model="user.password" autofocus></md-input>
+                </md-field>
+            </div>
+
+            <div class="actions md-alignment-center-space-between">
+                <md-button class="md-raised md-accent" type="submit" @click.prevent="cadastro()">Cadastrar</md-button>
+                <p>{{message}}</p>
+            </div>
+        </md-content>
+    </div> 
 </template>
 
 <script>
@@ -42,3 +61,18 @@ export default {
 }
 </script>
 
+<style lang="scss" scoped>
+
+.centered-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+.form {
+    width: 300px;
+}
+.md-content {
+    padding: 50px;
+}
+</style>
