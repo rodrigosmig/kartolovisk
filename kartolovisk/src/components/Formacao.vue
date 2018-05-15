@@ -15,11 +15,11 @@
         <div class="position" style="margin: 400px 223px;">9</div> -->
        
         <div class=position :id="'player_' + key" v-for="(player, key) in players" :key="key">
-            <img src="../assets/camisa.png" @click="showModal(player.name)">
+            <img src="../assets/camisa.png" @click="showModal(player.id)">
             <label>{{player.name}}</label>
         </div>
 
-        <modal v-show="isModalVisible" @close="closeModal" @remove="removePlayer()">
+        <modal v-show="isModalVisible" @close="closeModal" @remove="removePlayer">
             <span slot="header">
                 {{ playerName }}
             </span>
@@ -40,6 +40,7 @@ export default {
     data() {        
         return {
             playerName: "",
+            playerId: "",
             isModalVisible: false,
             players: [
                 {
@@ -156,16 +157,25 @@ export default {
         }    
     },
     methods: {
-        showModal(player) {
-            this.playerName = player
+        playerIndex(id) {
+            for(let index in this.players) {
+                if(this.players[index].id == id) {
+                    return index
+                }
+            }
+        },
+        showModal(id) {
+            this.playerId = id
+            const index = this.playerIndex(id)
+            this.playerName = this.players[index].name
             this.isModalVisible = true;
         },
         closeModal() {
             this.isModalVisible = false;
         },
-        removePlayer(id) {
-            console.log("Jogador removido")
-            console.log(id)
+        removePlayer() {
+            const index = this.playerIndex(this.playerId)
+            this.players.splice(index, 1)
             this.isModalVisible = false;
         }
     }
