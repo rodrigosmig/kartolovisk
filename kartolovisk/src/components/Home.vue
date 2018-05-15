@@ -19,10 +19,10 @@
 
               <md-card class="card-menu">
                 <div class="md-toolbar-section-end">
-                  <md-button><router-link to='/noticias'>NOTÍCIAS</router-link></md-button>
-                  <md-button><router-link to='/regras'>REGRAS</router-link></md-button>
-                  <md-button><router-link to='/sobre'>SOBRE</router-link></md-button>
-                  <md-button class="md-raised md-accent"><a href="http://localhost:3000/" @click.prevent="logout()">SAIR</a></md-button>
+                  <md-button><router-link to='/noticias' id="menu">NOTÍCIAS</router-link></md-button>
+                  <md-button><router-link to='/regras' id="menu">REGRAS</router-link></md-button>
+                  <md-button><router-link to='/sobre' id="menu">SOBRE</router-link></md-button>
+                  <md-button class="md-raised md-accent" ><a id="menu" href="http://localhost:3000/" @click.prevent="logout()">SAIR</a></md-button>
                 </div>
               </md-card>
             </div>
@@ -200,6 +200,7 @@ export default {
   }
   .card-menu{
     width: 70%;
+    
   }
   .card-menu{
     width: 70%;
@@ -212,4 +213,10 @@ export default {
     margin-top: 5%;
   }
 
+   #menu{
+    color:white;
+  }
+
+
+  
 </style>
