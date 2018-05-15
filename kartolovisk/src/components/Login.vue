@@ -47,6 +47,7 @@ export default {
             .post("http://localhost:3000/auth" , this.user).then(response =>{
                 localStorage.setItem("token", response.data.token)
                 this.message = response.data.message
+                this.$router.push('/home')
             })
             .catch (e =>{
                 this.message = "nickname ou senha inválido"
