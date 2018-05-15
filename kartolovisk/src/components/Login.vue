@@ -34,7 +34,6 @@ export default {
 
     data: function(){
         return {
-            loading: false,
             user:{
                 nickname: "",
                 password: ""
