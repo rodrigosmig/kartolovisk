@@ -1,5 +1,5 @@
 <template>
-    <div id="app">
+    <div>
         <!-- <div class="position" style="margin: 5px 175px;">1</div>
         <div class="position" style="margin: 110px 30px">2</div>
         <div class="position" style="margin: 110px 123px;">3</div>
@@ -15,21 +15,32 @@
         <div class="position" style="margin: 400px 223px;">9</div> -->
        
         <div class=position :id="'player_' + key" v-for="(player, key) in players" :key="key">
-            <img src="../assets/camisa.png">
+            <img src="../assets/camisa.png" @click="showModal(player.name)">
             <label>{{player.name}}</label>
         </div>
+
+        <modal v-show="isModalVisible" @close="closeModal" @remove="removePlayer()">
+            <span slot="header">
+                {{ playerName }}
+            </span>
+        </modal>
     </div>
 
 </template>
 <script>
-export default {
+import Modal from './Modal.vue';
 
+export default {
+    components: {
+        Modal
+    },
     created () {
         
     },
     data() {        
         return {
-            positions: [],
+            playerName: "",
+            isModalVisible: false,
             players: [
                 {
                     "id": 1,
@@ -145,18 +156,17 @@ export default {
         }    
     },
     methods: {
-        removeRecipe: function (id) {
-            this.recipes = this.recipes.filter (function (recipe) {
-                return recipe.id != id;
-            });
+        showModal(player) {
+            this.playerName = player
+            this.isModalVisible = true;
         },
-        capLetter: function (input) {
-            return input.charAt(0).toUpperCase() + input.slice(1);
+        closeModal() {
+            this.isModalVisible = false;
         },
-        // this is called when a new recipe is dropped into a day
-        newPlayer: function (event) {
-            // console.log('newPlayer ' + event.to.id);
-            eventBus.$emit('playerSelected', event.to.id);
+        removePlayer(id) {
+            console.log("Jogador removido")
+            console.log(id)
+            this.isModalVisible = false;
         }
     }
 }
