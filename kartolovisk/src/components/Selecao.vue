@@ -15,50 +15,14 @@
 export default {
 
      data: () => ({        
-        paises: [
-            'Egito',
-            'Rússia',
-            'Arábia Saudita',
-            'Uruguai',
+        paises:['Alemanha', 'Argentina', 'Arábia SauditaUruguai', 'Austrália', 'Brazil', 'Bélgica', 
+            'Colômbia', 'Coreia do Sul', 'Costa Rica', 'Croácia', 'Dinamarca', 
+            'Egito', 'Espanha', 'França', 'Inglaterra', 'Irã', 'Islândia', 
+            'Japão', 'Marrocos', 'México', 'Nigéria', 'Panamá', 
+            'Peru', 'Polônia', 'Portugal', 'Rússia', 'Senegal', 'Suécia', 
+            'Suíça', 'Sérvia', 'Tunísia'
             
-            'Irã',
-            'Marrocos',
-            'Portugal',
-            'Espanha',
-
-            'Austrália',
-            'Dinamarca',
-            'França',
-            'Peru',
-
-            'Argentina',
-            'Croácia',
-            'Islândia',
-            'Nigéria',
-
-            'Brazil',
-            'Costa Rica',
-            'Sérvia',
-            'Suíça',
-
-            'Alemanha',
-            'Coreia do Sul',
-            'México',
-            'Suécia',
-
-            'Bélgica',
-            'Inglaterra',
-            'Panamá',
-            'Tunísia',
-
-            'Colômbia',
-            'Japão',
-            'Polônia',
-            'Senegal'
-
-
-            
-        ],        
+        ]        
     }),
      methods: {
         searchSelecao: function(index) {
