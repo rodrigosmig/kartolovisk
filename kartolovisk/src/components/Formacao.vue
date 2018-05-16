@@ -14,27 +14,27 @@
         <div class="position" style="margin: 400px 123px;">11</div>
         <div class="position" style="margin: 400px 223px;">9</div> -->
        
-        <div class=position :id="'goal_keeper_' + key" v-for="(player, key) in goalKeeper" :key="player.id">
+        <div class=position :id="'goal_keeper_' + key" v-for="(player, key) in positions.goalKeeper" :key="player.id">
             <img src="../assets/camisa.png" @click="showModal(player.id)">
             <label>{{player.name}}</label>
         </div>
 
-        <div class=position :id="'defender_' + key" v-for="(player, key) in defenders" :key="player.id">
+        <div class=position :id="'defender_' + key" v-for="(player, key) in positions.defenders" :key="player.id">
             <img src="../assets/camisa.png" @click="showModal(player.id)">
             <label>{{player.name}}</label>
         </div>
 
-        <div class=position :id="'side_backer_' + key" v-for="(player, key) in sideBackers" :key="player.id">
+        <div class=position :id="'side_backer_' + key" v-for="(player, key) in positions.sideBackers" :key="player.id">
             <img src="../assets/camisa.png" @click="showModal(player.id)">
             <label>{{player.name}}</label>
         </div>
 
-        <div class=position :id="'midfielder_' + key" v-for="(player, key) in midfielders" :key="player.id">
+        <div class=position :id="'midfielder_' + key" v-for="(player, key) in positions.midfielders" :key="player.id">
             <img src="../assets/camisa.png" @click="showModal(player.id)">
             <label>{{player.name}}</label>
         </div>
 
-        <div class=position :id="'forward_' + key" v-for="(player, key) in forwards" :key="player.id">
+        <div class=position :id="'forward_' + key" v-for="(player, key) in positions.forwards" :key="player.id">
             <img src="../assets/camisa.png" @click="showModal(player.id)">
             <label>{{player.name}}</label>
         </div>
@@ -62,19 +62,19 @@ export default {
                 this.players = response.data
                 for(let player of this.players) {
                     if(player.position === "Zagueiro") {
-                        this.defenders.push(player)
+                        this.positions.defenders.push(player)
                     }
                     else if(player.position === "Lateral") {
-                        this.sideBackers.push(player)
+                        this.positions.sideBackers.push(player)
                     }
                     else if(player.position === "Meio Campo") {
-                        this.midfielders.push(player)
+                        this.positions.midfielders.push(player)
                     }
                     else if(player.position === "Atacante") {
-                        this.forwards.push(player)
+                        this.positions.forwards.push(player)
                     }
                     else {
-                        this.goalKeeper.push(player)
+                        this.positions.goalKeeper.push(player)
                     }
                 }
             })
@@ -86,14 +86,16 @@ export default {
         return {
             playerName: "",
             playerId: "",
-            isModalVisible: false,
-            players: [],
-            defenders: [],
-            sideBackers: [],
-            midfielders: [],
-            forwards: [],
-            goalKeeper: []
             
+            players: [],
+            positions: {
+                defenders: [],
+                sideBackers: [],
+                midfielders: [],
+                forwards: [],
+                goalKeeper: []
+            },
+            isModalVisible: false,
         }    
     },
     methods: {
@@ -104,8 +106,45 @@ export default {
                 }
             }
         },
+        playerIndexPosition(position) {
+            if(position === "Goleiro") {
+                for(let index in this.positions.goalKeeper) {
+                    if(this.positions.goalKeeper[index].id === this.playerId) {
+                        return index
+                    }
+                }
+            }    
+            else if(position === "Zagueiro") {
+                for(let index in this.positions.defenders) {
+                    if(this.positions.defenders[index].id === this.playerId) {
+                        return index
+                    }
+                }
+            }
+            else if(position === "Lateral") {
+                for(let index in this.positions.sideBackers) {
+                    if(this.positions.sideBackers[index].id === this.playerId) {
+                        return index
+                    }
+                }
+            }
+            else if(position === "Meio Campo") {
+                for(let index in this.positions.midfielders) {
+                    if(this.positions.midfielders[index].id === this.playerId) {
+                        return index
+                    }
+                }
+            }
+            else if(position === "Atacante") {
+                for(let index in this.positions.forwards) {
+                    if(this.positions.forwards[index].id === this.playerId) {
+                        return index
+                    }
+                }
+            }
+        },
         showModal(id) {
-            this.playerId = id
+            this.playerId = id            
             const index = this.playerIndex(id)
             this.playerName = this.players[index].name
             this.isModalVisible = true;
@@ -115,7 +154,25 @@ export default {
         },
         removePlayer() {
             const index = this.playerIndex(this.playerId)
-            this.players.splice(index, 1)
+            const position = this.players[index].position
+            const indexPosition = this.playerIndexPosition(position)
+            console.log(indexPosition)
+
+            if(position === "Goleiro") {
+                this.positions.goalKeeper.splice(indexPosition, 1)
+            }
+            else if(position === "Zagueiro") {
+                this.positions.defenders.splice(indexPosition, 1)
+            }
+            else if(position === "Lateral") {
+                this.positions.sideBackers.splice(indexPosition, 1)
+            }
+            else if(position === "Meio Campo") {
+                this.positions.midfielders.splice(indexPosition, 1)
+            }
+            else if(position === "Atacante") {
+                this.positions.forwards.splice(indexPosition, 1)
+            }            
             this.isModalVisible = false;
         }
     }
@@ -155,15 +212,15 @@ export default {
         margin: 260px 260px;
     }
 
-    #forward_0 {
+    #forward_2 {
         margin: 400px 300px;
     }
 
-    #forward_1 {
+    #forward_0 {
         margin: 400px 10px;
     }
 
-    #forward_2 {
+    #forward_1 {
         margin: 400px 153px;
     }
 
