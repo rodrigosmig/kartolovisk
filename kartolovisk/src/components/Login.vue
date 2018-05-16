@@ -51,7 +51,7 @@ export default {
             })
             .catch (e =>{
                 this.message = "nickname ou senha inválido"
-            })
+            });
         }
     }
 }
