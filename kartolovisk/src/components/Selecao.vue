@@ -15,7 +15,7 @@
 export default {
 
      data: () => ({        
-        paises:['Alemanha', 'Argentina', 'Arábia SauditaUruguai', 'Austrália', 'Brazil', 'Bélgica', 
+        paises:['Alemanha', 'Argentina', 'Arábia Saudita','Uruguai', 'Austrália', 'Brazil', 'Bélgica', 
             'Colômbia', 'Coreia do Sul', 'Costa Rica', 'Croácia', 'Dinamarca', 
             'Egito', 'Espanha', 'França', 'Inglaterra', 'Irã', 'Islândia', 
             'Japão', 'Marrocos', 'México', 'Nigéria', 'Panamá', 

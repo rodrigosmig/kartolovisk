@@ -100,6 +100,7 @@ router.route('/auth')
 	.post((req, res) =>{
 		User.findOne({where: {nickname: req.body.nickname}}).then((user) =>{
 			if (user) {
+				console.log('teste');
 				bcrypt.compare(req.body.password, user.password).then((senha) =>{
 					if (senha) {
 						const token = jwt.sign(user.get({plain:true}), "senha");
@@ -121,7 +122,7 @@ router.route('/profile')
 		const token = req.headers['x-access-token'];
 
 		if(token){
-			jwt.verify(token, "senha", (err, decoded)=>{
+			jwt.verify(token, 'senha', (err, decoded)=>{
 				res.json(decoded);
 			})
 		}else{
