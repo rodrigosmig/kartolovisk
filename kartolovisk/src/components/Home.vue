@@ -47,14 +47,14 @@
           
             <div class="md-layout-item">
             
-            <!-- <md-card-content>
+            <md-card-content>
               <div class="form">
                 <md-field>
                   <label>Procurar Jogador</label>
-                  <md-input v-model="jogador" autofocus></md-input>
+                  <md-input autofocus></md-input>
                 </md-field>
               </div>
-            </md-card-content> -->
+            </md-card-content>
 
             
                 <div class="md-layout-item md-layout md-gutter">
@@ -94,12 +94,12 @@
                 <div>
                   <md-table md-card>
                     <md-table-row>
-                        <md-table-head>Imagem</md-table-head>
+                        <md-table-head>Camisa</md-table-head>
                         <md-table-head>Nome do Jogador</md-table-head>
                         <md-table-head>País</md-table-head>
                         <md-table-head>Posição</md-table-head>
                         <md-table-head>Pontuação</md-table-head>
-                        <md-table-head>Detalhes</md-table-head>
+                        <md-table-head>Adicionar</md-table-head>
                     </md-table-row>
 
                     <md-table-row v-for="player in players" :key="player.id">
@@ -108,7 +108,11 @@
                       <md-table-cell>{{player.country}}</md-table-cell>
                       <md-table-cell>{{player.position}}</md-table-cell>
                       <md-table-cell md-numeric>{{player.score}}</md-table-cell>
-                      <md-table-cell>DT</md-table-cell>
+                      <md-table-cell>
+                        <md-button class="md-fab md-mini md-accent" >
+                          <md-icon>add</md-icon>
+                        </md-button>
+                      </md-table-cell>
                     </md-table-row>
 
                     <!-- <player-list :players="players"></player-list> -->
@@ -195,12 +199,8 @@ export default {
 
 <style lang="scss" scoped>
   .md-app {
-    max-height: 100%;
+    max-height: 700px;
     border: 1px solid rgba(#000,.12);
-  }
-  .card-menu{
-    width: 70%;
-    
   }
   .card-menu{
     width: 70%;
