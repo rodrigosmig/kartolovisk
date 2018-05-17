@@ -1,19 +1,5 @@
 <template>
-    <div>
-        <!-- <div class="position" style="margin: 5px 175px;">1</div>
-        <div class="position" style="margin: 110px 30px">2</div>
-        <div class="position" style="margin: 110px 123px;">3</div>
-        <div class="position" style="margin: 110px 223px">4</div>
-        <div class="position" style="margin: 110px 310px">6</div>
-
-        <div class="position" style="margin: 260px 30px">7</div>
-        <div class="position" style="margin: 260px 123px">5</div>
-        <div class="position" style="margin: 260px 223px">8</div>
-        <div class="position" style="margin: 260px 310px">10</div>
-
-        <div class="position" style="margin: 400px 123px;">11</div>
-        <div class="position" style="margin: 400px 223px;">9</div> -->
-       
+    <div>      
         <div class=position :id="'goal_keeper_' + key" v-for="(player, key) in positions.goalKeeper" :key="player.id">
             <img src="../assets/camisa.png" @click="showModal(player.id)">
             <label>{{player.name}}</label>
@@ -48,6 +34,7 @@
 
 </template>
 <script>
+import { eventBus } from '../main.js';
 import axios from 'axios'
 import Modal from './Modal.vue';
 
@@ -56,7 +43,7 @@ export default {
         Modal
     },
     created () {
-        const url = "http://localhost:3000/players/"
+        /* const url = "http://localhost:3000/players/"
         axios.get(url)
             .then(response => {                
                 this.players = response.data
@@ -80,7 +67,88 @@ export default {
             })
             .catch(error => {
                 console.log("Erro")
-            })
+            }); */
+
+            for(let player of this.players) {
+                    if(player.position === "Zagueiro") {
+                        this.positions.defenders.push(player)
+                    }
+                    else if(player.position === "Lateral") {
+                        this.positions.sideBackers.push(player)
+                    }
+                    else if(player.position === "Meio Campo") {
+                        this.positions.midfielders.push(player)
+                    }
+                    else if(player.position === "Atacante") {
+                        this.positions.forwards.push(player)
+                    }
+                    else {
+                        this.positions.goalKeeper.push(player)
+                    }
+                }
+        eventBus.$on('adicionaJogador', player => {
+            
+            if(this.playerIndex(player.id) < 0) {
+                if(player.position === "Zagueiro") {
+                    if(this.positions.defenders.length < 2) {
+                        this.positions.defenders.push(player)
+                    }
+                    else {
+                        let message = "Não existe posição disponível."
+                        this.$emit("message", message)
+                        return
+                    }            
+                }
+                else if(player.position === "Lateral") {
+                    if(this.positions.sideBackers.length < 2) {
+                        this.positions.sideBackers.push(player)
+                    }
+                    else {
+                        let message = "Não existe posição disponível."
+                        this.$emit("message", message)
+                        return
+                    }
+                    
+                }
+                else if(player.position === "Meio Campo") {
+                    if(this.positions.midfielders.length < 3) {
+                    this.positions.midfielders.push(player)
+                    }
+                    else {
+                        let message = "Não existe posição disponível."
+                        this.$emit("message", message)
+                        return
+                    }
+                    
+                }
+                else if(player.position === "Atacante") {
+                    if(this.positions.forwards.length < 3) {
+                        this.positions.forwards.push(player)
+                    } 
+                    else {
+                        let message = "Não existe posição disponível."
+                        this.$emit("message", message)
+                        return
+                    }
+                }
+                else {
+                    if(this.positions.goalKeeper.length < 1) {
+                        this.positions.goalKeeper.push(player)
+                    }
+                    else {
+                        let message = "Não existe posição disponível."
+                        this.$emit("message", message)
+                        return
+                    }
+                }
+                this.players.push(player)
+            }
+            else {
+                let message = "Jogador já está no time."
+                this.$emit("message", message)
+            }
+                       
+        });
     },
     data() {        
         return {
@@ -101,10 +169,11 @@ export default {
     methods: {
         playerIndex(id) {
             for(let index in this.players) {
-                if(this.players[index].id == id) {
+                if(this.players[index].id === id) {
                     return index
                 }
             }
+            return -1
         },
         playerIndexPosition(position) {
             if(position === "Goleiro") {
@@ -147,6 +216,7 @@ export default {
             this.playerId = id            
             const index = this.playerIndex(id)
             this.playerName = this.players[index].name
+            eventBus.$emit("show")
             this.isModalVisible = true;
         },
         closeModal() {
@@ -156,7 +226,6 @@ export default {
             const index = this.playerIndex(this.playerId)
             const position = this.players[index].position
             const indexPosition = this.playerIndexPosition(position)
-            console.log(indexPosition)
 
             if(position === "Goleiro") {
                 this.positions.goalKeeper.splice(indexPosition, 1)
@@ -172,7 +241,8 @@ export default {
             }
             else if(position === "Atacante") {
                 this.positions.forwards.splice(indexPosition, 1)
-            }            
+            }
+            this.players.splice(index, 1)
             this.isModalVisible = false;
         }
     }
