@@ -141,9 +141,7 @@ export default {
                         return
                     }
                 }
-                console.log(this.players.length)
                 this.players.push(player)
-                console.log(this.players.length)
             }
             else {
                 let message = "Jogador já está no time."
@@ -218,6 +216,7 @@ export default {
             this.playerId = id            
             const index = this.playerIndex(id)
             this.playerName = this.players[index].name
+            eventBus.$emit("show")
             this.isModalVisible = true;
         },
         closeModal() {

@@ -173,6 +173,7 @@ export default {
             console.log("não esta autenticado")
         })
       }
+      
   },
 
   methods: {
