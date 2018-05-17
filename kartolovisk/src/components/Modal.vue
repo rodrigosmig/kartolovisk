@@ -1,72 +1,71 @@
 <template>
+  <div>
+    <md-dialog :md-active.sync="showModal">
+      <md-dialog-title>
+        <slot name="header"></slot>
+      </md-dialog-title>
 
-    <div class="modal-backdrop">
-      <div class="modal" role="dialog" aria-labelledby="modalTitle" aria-describedby="modalDescription">
+      <md-tabs md-dynamic-height>
+        <md-tab md-label="Características">
+          <md-table>
+            <md-table-row>
+              <md-table-head>País</md-table-head>
+              <md-table-head>Posição</md-table-head>
+              <md-table-head>Pontuação Total</md-table-head>
+            </md-table-row>
 
-        <md-title class="modal-header">
-          <slot name="header">
-          </slot>
-        </md-title>
+            <md-table-row>
+              <md-table-cell>Brasil</md-table-cell>
+              <md-table-cell>Atacante</md-table-cell>
+              <md-table-cell>100</md-table-cell>
+            </md-table-row>
+          </md-table>
+        </md-tab>
+        <md-tab md-label="Detalhes">
+          <md-table>
+            <md-table-row>
+                <md-table-head>Rodada</md-table-head>
+                <md-table-head>Evento</md-table-head>
+                <md-table-head>Pontuação</md-table-head>
+            </md-table-row>
 
-        <section class="modal-body" id="modalDescription">
-          <slot name="body">
-            I'm the default body!
-          </slot>
-        </section>
+            <md-table-row>
+              <md-table-cell>01</md-table-cell>
+              <md-table-cell>Cartão Vermelho</md-table-cell>
+              <md-table-cell>-05</md-table-cell>
+            </md-table-row>
+          </md-table>
+        </md-tab>
+      </md-tabs>
 
-        <footer class="modal-footer">
-          <slot name="footer">
-            <md-button type="button" class="md-raised md-accent" @click="remove" aria-label="Close modal">
-              Remover
-            </md-button>
-            <md-button type="button" class="md-raised md-primary" @click="close" aria-label="Close modal">
-              Fechar
-            </md-button>
-          </slot>
-        </footer>
+      <md-dialog-actions>
+        <md-button type="button" class="md-raised md-accent" @click="remove">
+          Remover
+        </md-button>
+      </md-dialog-actions>
+    </md-dialog>
 
-      </div>
-    </div>
+    <md-button class="md-primary md-raised" @click="showModal = true">Modal</md-button>
+  </div>
 </template>
 
 <script>
   export default {
     name: 'modal',
+    data: () => ({
+      showModal: false
+    }),
     methods: {
-        close() {
-            this.$emit('close');
-        },
-        remove() {
-            this.$emit('remove')
-        }
+      remove() {
+        this.$emit('remove')
+      }
     },
   };
 </script>
 
-<style>
-  .modal-backdrop {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin-left: 180px;
-    display: flex;
-    
-    align-items: center;
-  }
-
-  .modal {
-    background: #FFFFFF;
-    box-shadow: 2px 2px 20px 1px;
-    overflow-x: auto;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .modal-header {
-    border-bottom: 1px solid #eeeeee;
-    color: black;
-    justify-content: space-between;
+<style lang="scss" scoped>
+  .md-dialog {
+    max-width: 768px;
   }
 </style>
+
