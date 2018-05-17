@@ -47,14 +47,15 @@
           
             <div class="md-layout-item">
             
-            <md-card-content>
+          <!--  <md-card-content>
               <div class="form">
                 <md-field>
                   <label>Procurar Jogador</label>
                   <md-input autofocus></md-input>
                 </md-field>
               </div>
-            </md-card-content>
+            </md-card-content> -->
+            <buscar-jogador @clickBuscarJogador="searchPlayer"></buscar-jogador>
 
             
               <div class="md-layout-item md-layout md-gutter">
@@ -136,13 +137,15 @@ import PlayerList from './PlayerList'
 import Formacao from './Formacao'
 //import Barra from './Barra'
 import Selecao from './Selecao'
+import BuscarJogador from './BuscarJogador'
 
 export default {
   components: {
     Posicao,
     PlayerList,
     Formacao,
-    Selecao
+    Selecao,
+    BuscarJogador
   },
   name: 'LastRowFixed',
   data(){
@@ -184,6 +187,7 @@ export default {
             console.log("Erro")
         })
     },
+
     searchSelecao: function(pais){
       const url = "http://localhost:3000/players/country/" + pais
       axios.get(url)
@@ -194,6 +198,18 @@ export default {
             console.log("Erro")
         })
     },
+
+     searchPlayer: function(nome){
+      const url = "http://localhost:3000/players/name/" + nome
+      axios.get(url)
+        .then(response => {
+          this.players = response.data
+        })
+        .catch(error => {
+            console.log("Erro")
+        })
+    },
+
     logout:function(){
       localStorage.removeItem("token")
       this.$router.push({name: "Login"})
