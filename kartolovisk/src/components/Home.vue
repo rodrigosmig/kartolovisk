@@ -100,7 +100,7 @@
                       <md-table-cell>{{player.name}}</md-table-cell>
                       <md-table-cell>{{player.country}}</md-table-cell>
                       <md-table-cell>{{player.position}}</md-table-cell>
-                      <md-table-cell md-numeric>{{player.score}}</md-table-cell>
+                      <md-table-cell>{{player.score}}</md-table-cell>
                       <md-table-cell>
                         <md-button class="md-fab md-mini md-accent" >
                           <md-icon>add</md-icon>
@@ -134,6 +134,7 @@ import axios from 'axios'
 import Posicao from './Posicao'
 import PlayerList from './PlayerList'
 import Formacao from './Formacao'
+//import Barra from './Barra'
 import Selecao from './Selecao'
 
 export default {
