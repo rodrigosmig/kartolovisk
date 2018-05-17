@@ -47,19 +47,16 @@
           
             <div class="md-layout-item">
             
-          <!--  <md-card-content>
+            <md-card-content>
               <div class="form">
                 <md-field>
                   <label>Procurar Jogador</label>
                   <md-input autofocus></md-input>
                 </md-field>
               </div>
-
             </md-card-content>
             
             <p>{{ messagem }}</p>
-            </md-card-content> -->
-            <buscar-jogador @clickBuscarJogador="searchPlayer"></buscar-jogador>
             
               <div class="md-layout-item md-layout md-gutter">
                   <div class="md-layout-item">
@@ -141,15 +138,13 @@ import PlayerList from './PlayerList'
 import Formacao from './Formacao'
 //import Barra from './Barra'
 import Selecao from './Selecao'
-import BuscarJogador from './BuscarJogador'
 
 export default {
   components: {
     Posicao,
     PlayerList,
     Formacao,
-    Selecao,
-    BuscarJogador
+    Selecao
   },
   name: 'LastRowFixed',
   data(){
@@ -174,15 +169,10 @@ export default {
         .get("http://localhost:3000/profile", {headers:{"x-access-token":token}}).then(response => {
             this.user.nickname = response.data.nickname
         })
-            console.log("entrou")
         .catch(e =>{
             console.log("não esta autenticado")
         })
       }
-      /* eventBus.$on('message', message => {
-        console.log(message + "dsfhasdkfkdfasds")
-        this.messagem = message
-      }); */
   },
 
   methods: {
@@ -196,7 +186,6 @@ export default {
             console.log("Erro")
         })
     },
-
     searchSelecao: function(pais){
       const url = "http://localhost:3000/players/country/" + pais
       axios.get(url)
@@ -207,18 +196,7 @@ export default {
             console.log("Erro")
         })
     },
-    searchPlayer: function(nome){
-      const url = "http://localhost:3000/players/name/" + nome
-      axios.get(url)
-        .then(response => {
-          this.players = response.data
-        })
-        .catch(error => {
-            console.log("Erro")
-        })
-    },
-
-    logout:function(){
+    logout: function() {
       localStorage.removeItem("token")
       this.$router.push({name: "Login"})
     },
