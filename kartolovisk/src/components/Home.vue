@@ -48,12 +48,7 @@
             <div class="md-layout-item">
             
             <md-card-content>
-              <div class="form">
-                <md-field>
-                  <label>Procurar Jogador</label>
-                  <md-input autofocus></md-input>
-                </md-field>
-              </div>
+              <buscar-jogador @clickBuscarJogador="searchName"></buscar-jogador>
             </md-card-content>
             
             <p>{{ messagem }}</p>
@@ -138,13 +133,15 @@ import PlayerList from './PlayerList'
 import Formacao from './Formacao'
 //import Barra from './Barra'
 import Selecao from './Selecao'
+import BuscarJogador from './BuscarJogador'
 
 export default {
   components: {
     Posicao,
     PlayerList,
     Formacao,
-    Selecao
+    Selecao,
+    BuscarJogador
   },
   name: 'LastRowFixed',
   data(){
@@ -187,8 +184,9 @@ export default {
             console.log("Erro")
         })
     },
-    searchSelecao: function(pais){
-      const url = "http://localhost:3000/players/country/" + pais
+    searchName: function(name) {
+      const url = "http://localhost:3000/players/name/" + name
+      console.log(url)
       axios.get(url)
         .then(response => {
           this.players = response.data
@@ -196,6 +194,9 @@ export default {
         .catch(error => {
             console.log("Erro")
         })
+    },
+    searchSelecao: function(pais){
+      
     },
     logout: function() {
       localStorage.removeItem("token")

@@ -1,17 +1,13 @@
 <template>
 
-    <md-card-content>
-              <div class="form">
-                <md-field>
-                  <label>Procurar Jogador</label>
-                    
-                    <md-input autofocus   v-model="buscarNome"
-                    @keyup.13="searchPlayer">
 
-                    </md-input>
-                </md-field>
-              </div>
-    </md-card-content>
+    <div class="form">
+        <md-field>
+            <label>Procurar Jogador</label>                    
+                <md-input autofocus   v-model="buscarNome" @keyup.13="searchPlayer">
+            </md-input>
+        </md-field>
+    </div>
    
 </template>
 
