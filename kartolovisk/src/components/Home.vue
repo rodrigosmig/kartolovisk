@@ -57,17 +57,10 @@
             </md-card-content>
 
             
-                <div class="md-layout-item md-layout md-gutter">
+              <div class="md-layout-item md-layout md-gutter">
                   <div class="md-layout-item">
-                    <md-card-content>
-                      <md-menu md-size="medium" md-align-trigger>
-                        <md-button md-menu-trigger>Seleção</md-button>
-                        <md-menu-content>
-                          <md-menu-item>My Item 1</md-menu-item>
-                          <md-menu-item>My Item 2</md-menu-item>
-                          <md-menu-item>My Item 3</md-menu-item>
-                        </md-menu-content>
-                      </md-menu>
+                    <md-card-content>                      
+                        <selecao @clickSelecao="searchSelecao"></selecao>
                     </md-card-content>
                   </div>
 
@@ -142,12 +135,14 @@ import Posicao from './Posicao'
 import PlayerList from './PlayerList'
 import Formacao from './Formacao'
 //import Barra from './Barra'
+import Selecao from './Selecao'
 
 export default {
   components: {
     Posicao,
     PlayerList,
-    Formacao
+    Formacao,
+    Selecao
   },
   name: 'LastRowFixed',
   data(){
@@ -181,6 +176,16 @@ export default {
   methods: {
     search: function(position) {
       const url = "http://localhost:3000/players/position/" + position
+      axios.get(url)
+        .then(response => {
+          this.players = response.data
+        })
+        .catch(error => {
+            console.log("Erro")
+        })
+    },
+    searchSelecao: function(pais){
+      const url = "http://localhost:3000/players/country/" + pais
       axios.get(url)
         .then(response => {
           this.players = response.data

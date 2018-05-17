@@ -47,13 +47,14 @@ export default {
     },
     methods: {
         cadastro: function(){
-            axios
+            
+            axios           
             .post("http://localhost:3000/users", this.user).then(response =>{
                 this.message = "Usuário adicionado"
             })
             .catch(e =>{
-                this.message = "erro no cadastro do usuario"
-            })
+                this.message = "Erro no cadastro do usuario"
+            });
         }
     }
 
