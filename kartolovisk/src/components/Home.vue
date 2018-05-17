@@ -196,7 +196,14 @@ export default {
         })
     },
     searchSelecao: function(pais){
-      
+      const url = "http://localhost:3000/players/country/" + pais
+      axios.get(url)
+        .then(response => {
+          this.players = response.data
+        })
+        .catch(error => {
+            console.log("Erro")
+        })
     },
     logout: function() {
       localStorage.removeItem("token")
