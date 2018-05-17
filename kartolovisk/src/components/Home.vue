@@ -41,7 +41,7 @@
               <div class="md-layout-item md-layout md-gutter">
                 <div class="md-layout-item">
                   <md-card-content class="campo">
-                    <formacao></formacao>
+                    <formacao @message="notice"></formacao>
                   </md-card-content>
              </div>
           
@@ -55,7 +55,8 @@
                 </md-field>
               </div>
             </md-card-content>
-
+            
+            <p>{{ messagem }}</p>
             
               <div class="md-layout-item md-layout md-gutter">
                   <div class="md-layout-item">
@@ -95,14 +96,14 @@
                         <md-table-head>Adicionar</md-table-head>
                     </md-table-row>
 
-                    <md-table-row v-for="player in players" :key="player.id">
+                    <md-table-row v-for="(player, index) in players" :key="player.id">
                       <md-table-cell>IMG</md-table-cell>
                       <md-table-cell>{{player.name}}</md-table-cell>
                       <md-table-cell>{{player.country}}</md-table-cell>
                       <md-table-cell>{{player.position}}</md-table-cell>
                       <md-table-cell>{{player.score}}</md-table-cell>
                       <md-table-cell>
-                        <md-button class="md-fab md-mini md-accent" >
+                        <md-button class="md-fab md-mini md-accent" @click="addPlayer(index)">
                           <md-icon>add</md-icon>
                         </md-button>
                       </md-table-cell>
@@ -130,6 +131,7 @@
   </div>
 </template>
 <script>
+import { eventBus } from '../main.js';
 import axios from 'axios'
 import Posicao from './Posicao'
 import PlayerList from './PlayerList'
@@ -149,9 +151,10 @@ export default {
     return {
       players: [],
       user: {
-          nickname: ""
-        },
-        authorized:false
+        nickname: ""
+      },
+      authorized:false,
+      messagem: ""
       }
       
   },
@@ -171,6 +174,10 @@ export default {
             console.log("não esta autenticado")
         })
       }
+      /* eventBus.$on('message', message => {
+        console.log(message + "dsfhasdkfkdfasds")
+        this.messagem = message
+      }); */
   },
 
   methods: {
@@ -194,9 +201,16 @@ export default {
             console.log("Erro")
         })
     },
-    logout:function(){
+    logout: function() {
       localStorage.removeItem("token")
       this.$router.push({name: "Login"})
+    },
+    addPlayer: function(index) {
+      let player = this.players[index]
+      eventBus.$emit("adicionaJogador", player)
+    },
+    notice: function(message) {
+      this.messagem = message
     }
   }
 }
