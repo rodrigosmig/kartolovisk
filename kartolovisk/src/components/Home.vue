@@ -72,14 +72,7 @@
 
                   <div class="md-layout-item">
                     <md-card-content>
-                      <md-menu md-size="medium" md-align-trigger>
-                        <md-button md-menu-trigger>Esquema Tático</md-button>
-                        <md-menu-content>
-                          <md-menu-item>My Item 1</md-menu-item>
-                          <md-menu-item>My Item 2</md-menu-item>
-                          <md-menu-item>My Item 3</md-menu-item>
-                        </md-menu-content>
-                      </md-menu>
+                        <EsquemaTatico @clickScheme="searchScheme"></EsquemaTatico>
                     </md-card-content>
                   </div>
                 </div>
@@ -136,13 +129,15 @@ import PlayerList from './PlayerList'
 import Formacao from './Formacao'
 //import Barra from './Barra'
 import Selecao from './Selecao'
+import EsquemaTatico from './EsquemaTatico'
 
 export default {
   components: {
     Posicao,
     PlayerList,
     Formacao,
-    Selecao
+    Selecao,
+    EsquemaTatico
   },
   name: 'LastRowFixed',
   data(){
@@ -194,6 +189,11 @@ export default {
             console.log("Erro")
         })
     },
+
+    searchScheme: function(scheme) {
+     
+    },
+
     logout:function(){
       localStorage.removeItem("token")
       this.$router.push({name: "Login"})
