@@ -99,8 +99,9 @@ router.route('/auth')
 
 	.post((req, res) =>{
 		User.findOne({where: {nickname: req.body.nickname}}).then((user) =>{
+
 			if (user) {
-				console.log('teste');
+				console.log('entrooou');
 				bcrypt.compare(req.body.password, user.password).then((senha) =>{
 					if (senha) {
 						const token = jwt.sign(user.get({plain:true}), "senha");
