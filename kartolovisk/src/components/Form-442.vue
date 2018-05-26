@@ -24,8 +24,6 @@
             <img src="../assets/camisa.png" @click="showModal(player)">
             <label>{{player.name}}</label>
         </div>
-
-        <modal @remove="removePlayer"></modal>
     </div>
 
 </template>
@@ -105,7 +103,7 @@ export default {
                     
                 }
                 else if(player.position === "Meio Campo") {
-                    if(this.positions.midfielders.length < 3) {
+                    if(this.positions.midfielders.length < 4) {
                     this.positions.midfielders.push(player)
                     }
                     else {
@@ -116,7 +114,7 @@ export default {
                     
                 }
                 else if(player.position === "Atacante") {
-                    if(this.positions.forwards.length < 3) {
+                    if(this.positions.forwards.length < 2) {
                         this.positions.forwards.push(player)
                     } 
                     else {

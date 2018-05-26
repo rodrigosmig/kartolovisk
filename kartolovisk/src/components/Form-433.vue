@@ -23,9 +23,7 @@
         <div class=position :id="'forward_' + key" v-for="(player, key) in positions.forwards" :key="player.id">
             <img src="../assets/camisa.png" @click="showModal(player)">
             <label>{{player.name}}</label>
-        </div>
-
-        <modal @remove="removePlayer"></modal>
+        </div>       
     </div>
 
 </template>
