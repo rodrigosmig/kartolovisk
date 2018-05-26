@@ -21,7 +21,7 @@ export default {
     }),
     methods: {
         searchScheme: function(index) {
-            const scheme = this.schemes[index].toLowerCase()
+            const scheme = this.schemes[index]
             this.$emit("clickScheme", scheme)
         }
     }
