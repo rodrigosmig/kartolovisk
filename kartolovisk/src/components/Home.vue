@@ -150,10 +150,8 @@ export default {
       }
       
   },
-
   created: function(){
       const token = localStorage.getItem("token")
-
       if(token !== null){
         this.authorized = true
 
@@ -165,7 +163,9 @@ export default {
             console.log("não esta autenticado")
         })
       }
-      
+      eventBus.$on('message', message => {
+        this.notice(message)
+      })
   },
 
   methods: {
