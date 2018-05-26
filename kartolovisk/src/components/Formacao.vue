@@ -1,35 +1,31 @@
 <template>
     <div>      
         <div class=position :id="'goal_keeper_' + key" v-for="(player, key) in positions.goalKeeper" :key="player.id">
-            <img src="../assets/camisa.png" @click="showModal(player.id)">
+            <img src="../assets/camisa.png" @click="showModal(player)">
             <label>{{player.name}}</label>
         </div>
 
         <div class=position :id="'defender_' + key" v-for="(player, key) in positions.defenders" :key="player.id">
-            <img src="../assets/camisa.png" @click="showModal(player.id)">
+            <img src="../assets/camisa.png" @click="showModal(player)">
             <label>{{player.name}}</label>
         </div>
 
         <div class=position :id="'side_backer_' + key" v-for="(player, key) in positions.sideBackers" :key="player.id">
-            <img src="../assets/camisa.png" @click="showModal(player.id)">
+            <img src="../assets/camisa.png" @click="showModal(player)">
             <label>{{player.name}}</label>
         </div>
 
         <div class=position :id="'midfielder_' + key" v-for="(player, key) in positions.midfielders" :key="player.id">
-            <img src="../assets/camisa.png" @click="showModal(player.id)">
+            <img src="../assets/camisa.png" @click="showModal(player)">
             <label>{{player.name}}</label>
         </div>
 
         <div class=position :id="'forward_' + key" v-for="(player, key) in positions.forwards" :key="player.id">
-            <img src="../assets/camisa.png" @click="showModal(player.id)">
+            <img src="../assets/camisa.png" @click="showModal(player)">
             <label>{{player.name}}</label>
         </div>
 
-        <modal v-show="isModalVisible" @close="closeModal" @remove="removePlayer">
-            <span slot="header">
-                {{ playerName }}
-            </span>
-        </modal>
+        <modal @remove="removePlayer"></modal>
     </div>
 
 </template>
@@ -152,9 +148,6 @@ export default {
     },
     data() {        
         return {
-            playerName: "",
-            playerId: "",
-            
             players: [],
             positions: {
                 defenders: [],
@@ -163,7 +156,6 @@ export default {
                 forwards: [],
                 goalKeeper: []
             },
-            isModalVisible: false,
         }    
     },
     methods: {
@@ -212,38 +204,31 @@ export default {
                 }
             }
         },
-        showModal(id) {
-            this.playerId = id            
-            const index = this.playerIndex(id)
-            this.playerName = this.players[index].name
-            eventBus.$emit("show")
-            this.isModalVisible = true;
-        },
-        closeModal() {
-            this.isModalVisible = false;
+        showModal(player) {
+            this.player = player
+            eventBus.$emit("show", this.player)
         },
         removePlayer() {
-            const index = this.playerIndex(this.playerId)
-            const position = this.players[index].position
-            const indexPosition = this.playerIndexPosition(position)
+            const index = this.playerIndex(this.player.id)
+            const indexPosition = this.playerIndexPosition(this.player.position)
 
-            if(position === "Goleiro") {
+            if(this.player.position === "Goleiro") {
                 this.positions.goalKeeper.splice(indexPosition, 1)
             }
-            else if(position === "Zagueiro") {
+            else if(this.player.position === "Zagueiro") {
                 this.positions.defenders.splice(indexPosition, 1)
             }
-            else if(position === "Lateral") {
+            else if(this.player.position === "Lateral") {
                 this.positions.sideBackers.splice(indexPosition, 1)
             }
-            else if(position === "Meio Campo") {
+            else if(this.player.position === "Meio Campo") {
                 this.positions.midfielders.splice(indexPosition, 1)
             }
-            else if(position === "Atacante") {
+            else if(this.player.position === "Atacante") {
                 this.positions.forwards.splice(indexPosition, 1)
             }
             this.players.splice(index, 1)
-            this.isModalVisible = false;
+            eventBus.$emit("close")
         }
     }
 }
