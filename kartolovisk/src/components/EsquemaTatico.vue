@@ -7,26 +7,31 @@
     </md-menu>
 </template>
 <script>
-
-export default {
-    data: () => ({        
-        schemes: [
-            '4-4-2', 
-            '4-3-3', 
-            '3-5-2',
-            '3-4-3',
-            '5-4-1',
-            '5-3-2'
-        ],      
-    }),
-    methods: {
-        searchScheme: function(index) {
-            const scheme = this.schemes[index]
-            this.$emit("clickScheme", scheme)
+    import axios from 'axios'
+    
+    export default {
+        created: function() {
+            const url = "http://localhost:3000/formation/"
+            axios.get(url).then(formation => {
+                for(let f of formation.data) {
+                    this.schemes.push(f.formation)
+                }
+                
+            })
+        },
+        data() {        
+            return {
+                schemes: [], 
+            }     
+        },
+        methods: {
+            searchScheme: function(index) {
+                const scheme = this.schemes[index]
+                this.$emit("clickScheme", scheme)
+            }
         }
     }
-}
-</script>
+    </script>
 
 <style scoped>
 

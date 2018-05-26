@@ -68,7 +68,7 @@
 
                   <div class="md-layout-item">
                     <md-card-content>
-                        <EsquemaTatico @clickScheme="searchScheme"></EsquemaTatico>
+                        <EsquemaTatico @clickScheme="formation"></EsquemaTatico>
                     </md-card-content>
                   </div>
                 </div>
@@ -202,8 +202,8 @@ export default {
         })
     },
     
-    searchScheme: function(scheme) {
-     
+    formation: function(scheme) {
+     console.log(scheme)
     },
     
     logout: function() {
