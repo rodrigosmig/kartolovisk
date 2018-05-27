@@ -116,9 +116,7 @@ router.route('/teams/players/:user_id')
 			if(team) {
 				team.getPlayers().then(players => {
 					if(players.length === 0) {
-						res.json({
-							message: "Nenhum jogador foi adicionado ao time."
-						})
+						res.json()
 					}
 					else {
 						res.json(players)
