@@ -57,8 +57,8 @@
          this.showDialog = true
          this.player = player                    
       });
-      eventBus.$on('close', player => {   
-         this.showDialog = false                  
+      eventBus.$on('close', player => {
+        this.showDialog = false                  
       });
     },
     data() {
@@ -69,7 +69,7 @@
     },
     methods: {
       remove() {
-          this.$emit('remove')
+          eventBus.$emit('remove', this.player)
       }
     },
   }

@@ -38,6 +38,7 @@
               </md-app-toolbar>
             
             <md-app-content>
+              <h1>{{formation}}</h1>
               <div class="md-layout-item md-layout md-gutter">
                 <div class="md-layout-item">
                   <md-card-content class="campo">
@@ -68,7 +69,7 @@
 
                   <div class="md-layout-item">
                     <md-card-content>
-                        <EsquemaTatico @clickScheme="searchScheme"></EsquemaTatico>
+                        <EsquemaTatico></EsquemaTatico>
                     </md-card-content>
                   </div>
                 </div>
@@ -142,18 +143,17 @@ export default {
   data(){
     return {
       players: [],
+      team: "",
       user: {
         nickname: ""
       },
       authorized:false,
-      messagem: ""
-      }
-      
+      messagem: "",
+      formation: "4-4-2"
+      }     
   },
-
   created: function(){
       const token = localStorage.getItem("token")
-
       if(token !== null){
         this.authorized = true
 
@@ -165,7 +165,16 @@ export default {
             console.log("não esta autenticado")
         })
       }
-      
+/*       axios.get("http://localhost:3000/teams/1").then(team => {
+        console.log(team)
+          
+      }) */
+      eventBus.$on('message', message => {
+        this.notice(message)
+      });
+    eventBus.$on('changeScheme', scheme => {
+      this.formation = scheme.formation
+    })
   },
 
   methods: {
@@ -181,7 +190,6 @@ export default {
     },
     searchName: function(name) {
       const url = "http://localhost:3000/players/name/" + name
-      console.log(url)
       axios.get(url)
         .then(response => {
           this.players = response.data
@@ -200,12 +208,7 @@ export default {
         .catch(error => {
             console.log("Erro")
         })
-    },
-    
-    searchScheme: function(scheme) {
-     
-    },
-    
+    },    
     logout: function() {
       localStorage.removeItem("token")
       this.$router.push({name: "Login"})
