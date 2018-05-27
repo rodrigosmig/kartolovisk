@@ -208,12 +208,7 @@ export default {
         .catch(error => {
             console.log("Erro")
         })
-    },
-    
-    formation: function(scheme) {
-     console.log(scheme.formation)
-    },
-    
+    },    
     logout: function() {
       localStorage.removeItem("token")
       this.$router.push({name: "Login"})

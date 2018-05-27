@@ -21,7 +21,7 @@ router.route('/formation')
         })		
     })
 
-router.route('/players/:formation_id')
+router.route('/formation/:formation_id')
 
 	.get((req, res)=>{
 		Formation.findById(req.params.formation_id).then(formation =>{

@@ -2,7 +2,8 @@
     <div>  
         <f442 v-if="formation.formation === '4-4-2'" key="4-4-2"></f442>
         <f433 v-else-if="formation.formation === '4-3-3'" key="4-3-3"></f433>
-        <modal></modal>        
+        <modal></modal> 
+        <confirmar></confirmar>       
     </div>
 
 </template>
@@ -10,12 +11,14 @@
 import { eventBus } from '../main.js';
 import axios from 'axios'
 import Modal from './Modal.vue';
+import Confirmar from './Confirmar.vue';
 import F433 from './Form-433.vue';
 import F442 from './Form-442.vue';
 
 export default {
     components: {
         Modal,
+        Confirmar,
         F433,
         F442
     },
@@ -30,14 +33,23 @@ export default {
             })      
         });
         eventBus.$on('clickScheme', scheme => {
-            this.formation = scheme
-            eventBus.$emit("changeScheme", scheme)
+            if(this.formation.formation !== scheme.formation) {
+                this.formation_to_change = scheme
+                eventBus.$emit("confirmFormation", true)                
+            }
+        })
+        eventBus.$on('confirmation', confirmation => {
+            if(confirmation) {
+                this.formation = this.formation_to_change
+                eventBus.$emit("changeScheme", this.formation_to_change)
+            }
         })
     },
     data() {        
         return {
             team: {},
             formation: "",
+            formation_to_change: ""
         }    
     },
     methods: {
