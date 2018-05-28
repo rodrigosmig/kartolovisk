@@ -1,7 +1,7 @@
 <template>
     <div>  
-        <f442 v-if="formation.formation === '4-4-2'" key="4-4-2"></f442>
-        <f433 v-else-if="formation.formation === '4-3-3'" key="4-3-3"></f433>
+        <f442 v-if="formation.formation === '4-4-2'" key="4-4-2" :team_players="team_players"></f442>
+        <f433 v-else-if="formation.formation === '4-3-3'" key="4-3-3" :team_players="team_players"></f433>
         <modal></modal> 
         <confirmar></confirmar>       
     </div>
@@ -32,6 +32,11 @@ export default {
                 this.formation = formation.data;   
             })      
         });
+        const player_id = "1"
+        const url_players = "http://localhost:3000/teams/players/" + player_id + "/"
+        axios.get(url_players).then(response => {
+            this.team_players = response.data
+        })
         eventBus.$on('clickScheme', scheme => {
             if(this.formation.formation !== scheme.formation) {
                 this.formation_to_change = scheme
@@ -48,6 +53,7 @@ export default {
     data() {        
         return {
             team: {},
+            team_players: "",
             formation: "",
             formation_to_change: ""
         }    
