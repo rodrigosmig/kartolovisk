@@ -44,6 +44,7 @@ export default {
             for(let z = 0; z < 2; z++) {
                 this.positions.defenders.push(
                     {
+                        "id": "nenhum",
                         "name": "nenhum",
                         "position": "Zagueiro"
                     }
@@ -52,6 +53,7 @@ export default {
             for(let s = 0; s < 2; s++) {
                 this.positions.sideBackers.push(
                     {
+                        "id": "nenhum",
                         "name": "nenhum",
                         "position": "Zagueiro"
                     }
@@ -60,6 +62,7 @@ export default {
             for(let m = 0; m < 3; m++) {
                 this.positions.midfielders.push(
                     {
+                        "id": "nenhum",
                         "name": "nenhum",
                         "position": "Zagueiro"
                     }
@@ -68,6 +71,7 @@ export default {
             for(let f = 0; f < 3; f++) {
                 this.positions.forwards.push(
                     {
+                        "id": "nenhum",
                         "name": "nenhum",
                         "position": "Zagueiro"
                     }
@@ -75,6 +79,7 @@ export default {
             }
             this.positions.goalKeeper.push(
                 {
+                    "id": "nenhum",
                     "name": "nenhum",
                     "position": "Zagueiro"
                 }
@@ -105,11 +110,11 @@ export default {
             }
         }
         eventBus.$on('adicionaJogador', player => {
-            
+            const index = this.searchEmptyIndex(player.position)
             if(this.playerIndex(player.id) < 0) {
                 if(player.position === "Zagueiro") {
                     if(this.total_defenders < 2) {
-                        this.positions.defenders.splice(this.total_defenders, 1, player)
+                        this.positions.defenders.splice(index, 1, player)
                         this.total_defenders++
                     }
                     else {
@@ -120,7 +125,7 @@ export default {
                 }
                 else if(player.position === "Lateral") {
                     if(this.total_sideBackers < 2) {
-                        this.positions.sideBackers.splice(this.total_sideBackers, 1, player)
+                        this.positions.sideBackers.splice(index, 1, player)
                         this.total_sideBackers++
                     }
                     else {
@@ -131,8 +136,8 @@ export default {
                     
                 }
                 else if(player.position === "Meio Campo") {
-                    if(this.total_midfielders < 4) {
-                        this.positions.midfielders.splice(this.total_midfielders, 1, player)
+                    if(this.total_midfielders < 3) {
+                        this.positions.midfielders.splice(index, 1, player)
                         this.total_midfielders++
                     }
                     else {
@@ -143,8 +148,8 @@ export default {
                     
                 }
                 else if(player.position === "Atacante") {
-                    if(this.total_forwards < 2) {
-                        this.positions.forwards.splice(this.total_forwards, 1, player)
+                    if(this.total_forwards < 3) {
+                        this.positions.forwards.splice(index, 1, player)
                         this.total_forwards++
                     } 
                     else {
@@ -155,7 +160,7 @@ export default {
                 }
                 else {
                     if(this.total_goalKeeper < 1) {
-                        this.positions.goalKeeper.splice(this.total_goalKeeper, 1, player)
+                        this.positions.goalKeeper.splice(index, 1, player)
                         this.total_goalKeeper++
                     }
                     else {
@@ -164,7 +169,7 @@ export default {
                         return
                     }
                 }
-                this.players.push(player)
+                this.team_players.push(player)
             }
             else {
                 let message = "Jogador já está no time."
@@ -179,7 +184,6 @@ export default {
     },
     data() {        
         return {
-            players: [],
             player: "",
             positions: {
                 defenders: [],
@@ -196,9 +200,46 @@ export default {
         }    
     },
     methods: {
+        searchEmptyIndex(position) {
+            if(position === "Goleiro") {
+                for(let index in this.positions.goalKeeper) {
+                    if(this.positions.goalKeeper[index].id === "nenhum") {
+                        return index
+                    }
+                }
+            }    
+            else if(position === "Zagueiro") {
+                for(let index in this.positions.defenders) {
+                    if(this.positions.defenders[index].id === "nenhum") {
+                        return index
+                    }
+                }
+            }
+            else if(position === "Lateral") {
+                for(let index in this.positions.sideBackers) {
+                    if(this.positions.sideBackers[index].id === "nenhum") {
+                        return index
+                    }
+                }
+            }
+            else if(position === "Meio Campo") {
+                for(let index in this.positions.midfielders) {
+                    if(this.positions.midfielders[index].id === "nenhum") {
+                        return index
+                    }
+                }
+            }
+            else if(position === "Atacante") {
+                for(let index in this.positions.forwards) {
+                    if(this.positions.forwards[index].id === "nenhum") {
+                        return index
+                    }
+                }
+            }
+        },
         playerIndex(id) {
-            for(let index in this.players) {
-                if(this.players[index].id === id) {
+            for(let index in this.team_players) {
+                if(this.team_players[index].id === id) {
                     return index
                 }
             }
@@ -250,29 +291,26 @@ export default {
             const indexPosition = this.playerIndexPosition(this.player.position)
 
             if(this.player.position === "Goleiro") {
-                this.positions.goalKeeper.splice(indexPosition, 1, {"name": "nenhum","position": "Goleiro"})
+                this.positions.goalKeeper.splice(indexPosition, 1, {"id": "nenhum", "name": "nenhum","position": "Goleiro"})
                 this.total_goalKeeper--
             }
             else if(this.player.position === "Zagueiro") {
-                this.positions.defenders.splice(indexPosition, 1, {"name": "nenhum","position": "Zagueiro"})
-                console.log("indice:" + indexPosition)
-                console.log(this.total_defenders)
+                this.positions.defenders.splice(indexPosition, 1, {"id": "nenhum", "name": "nenhum","position": "Zagueiro"})
                 this.total_defenders--
-                console.log(this.total_defenders)
             }
             else if(this.player.position === "Lateral") {
-                this.positions.sideBackers.splice(indexPosition, 1, {"name": "nenhum","position": "Lateral"})
+                this.positions.sideBackers.splice(indexPosition, 1, {"id": "nenhum", "name": "nenhum","position": "Lateral"})
                 this.total_sideBackers--
             }
             else if(this.player.position === "Meio Campo") {
-                this.positions.midfielders.splice(indexPosition, 1, {"name": "nenhum","position": "Meio Campo"})
+                this.positions.midfielders.splice(indexPosition, 1, {"id": "nenhum", "name": "nenhum","position": "Meio Campo"})
                 this.total_midfielders--
             }
             else if(this.player.position === "Atacante") {
-                this.positions.forwards.splice(indexPosition, 1, {"name": "nenhum","position": "Goleiro"})
+                this.positions.forwards.splice(indexPosition, 1, {"id": "nenhum", "name": "nenhum","position": "Goleiro"})
                 this.total_forwards--
             }
-            this.players.splice(index, 1)
+            this.team_players.splice(index, 1)
             eventBus.$emit("close")
         }
     }
