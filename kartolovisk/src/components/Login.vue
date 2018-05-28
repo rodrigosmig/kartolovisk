@@ -18,7 +18,7 @@
             </div>
 
             <div class="actions md-alignment-center-space-between">
-                <md-button class="md-raised md-accent" type="submit" @click.prevent="login()"> Entrar </md-button>
+                <md-button class="md-raised md-accent" type="submit" @click.native.prevent="login()"> Entrar </md-button>
                 <p>{{message}}</p>
                 <p>Ainda não é cadastrado?</p> <router-link to='/cadastro'>Clique aqui</router-link>
             </div>
@@ -36,7 +36,8 @@ export default {
         return {
             user:{
                 nickname: "",
-                password: ""
+                password: "",
+                id:0
             },
             message: ""
         }
@@ -49,6 +50,7 @@ export default {
                 if(this.user.nickname === "" && this.user.password === ""){
                     console.log("aiii")
                     this.message = "Nickname e senha inválido"
+                   
                 }else if(this.user.nickname === ""){
                     console.log("aii 2")
                 }
@@ -58,9 +60,9 @@ export default {
                     //this.$router.push('/home')
                     this.$router.push({name: "Home"})
                     console.log("entrou?")
-                   // console.log(this.user)
-                    console.log(this.user.password)
-                   
+                    // console.log(this.user)
+                    // console.log(this.user.password)
+                     console.log(this.user.id)
                 }
                
             })

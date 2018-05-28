@@ -2,7 +2,7 @@
 
 
   <div class="page-container">
-
+   
      <div v-if="authorized">
             <md-app md-waterfall md-mode="fixed-last">
           <md-app-toolbar class="md-large md-dense md-accent">
@@ -140,12 +140,13 @@ export default {
     EsquemaTatico
   },
   name: 'LastRowFixed',
-  data(){
+  data: function(){
     return {
       players: [],
       team: "",
       user: {
-        nickname: ""
+        nickname: "",
+        id: 0
       },
       authorized:false,
       messagem: "",
@@ -158,12 +159,23 @@ export default {
         this.authorized = true
 
         axios
+        .get("http://localhost:3000/users").then(response =>{
+              console.log(this.user.nickname)
+              this.messagem = this.user.nickname
+        })
+
+        /*
         .get("http://localhost:3000/profile", {headers:{"x-access-token":token}}).then(response => {
             this.user.nickname = response.data.nickname
+            console.log("autenticado")
         })
+        /*
         .catch(e =>{
             console.log("não esta autenticado")
-        })
+            console.log(this.user.nickname)
+            console.log(this.user.id)
+            
+        })*/
       }
 /*       axios.get("http://localhost:3000/teams/1").then(team => {
         console.log(team)
