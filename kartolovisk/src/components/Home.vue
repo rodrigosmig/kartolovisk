@@ -197,6 +197,9 @@ export default {
       });
     eventBus.$on('changeScheme', scheme => {
       this.formation = scheme
+      console.log(this.team_players.length)
+      this.team_players = []
+      console.log(this.team_players.length)
     })
   },
   methods: {
