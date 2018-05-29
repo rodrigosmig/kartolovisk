@@ -29,13 +29,19 @@ export default {
             this.team = team.data;
             const url_formation = "http://localhost:3000/formation/" + this.team.formationId
             axios.get(url_formation).then(formation => {
-                this.formation = formation.data;   
+                this.formation = formation.data;
+                console.log(this.formation)  
             })      
         });
         const player_id = "1"
         const url_players = "http://localhost:3000/teams/players/" + player_id + "/"
         axios.get(url_players).then(response => {
-            this.team_players = response.data
+            if(response.data.length === 0) {
+                this.team_players = []
+            }
+            else {
+                this.team_players = response.data
+            }
         })
         eventBus.$on('clickScheme', scheme => {
             if(this.formation.formation !== scheme.formation) {
