@@ -2,8 +2,10 @@ import express from 'express';
 import {User, League} from '../modelos/models'; //./models
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import Sequelize from 'sequelize';
 
 let router = express.Router();
+const Op = Sequelize.Op;
 
 router.route('/users')
 
@@ -91,6 +93,28 @@ router.route('/users/:user_id')
 				})
 			} else{
 				res.json({error: 'Usuário não encontrado'});
+			}
+		})
+	})
+
+// retorna usuario especifico pelo nome
+router.route('/users/name/:user_name')
+
+	.get((req, res)=>{
+
+		const userName = "%" + req.params.user_name + "%"
+		
+		User.findAll({
+			where: {
+				nickname: {
+					[Op.like]: userName
+				}
+			}
+		}).then(user => {
+			if(user.length !== 0){
+				res.json(user)
+			}else{
+				res.json({error: "Usuário não encontrado"})
 			}
 		})
 	})
