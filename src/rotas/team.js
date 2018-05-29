@@ -67,7 +67,9 @@ router.route('/teams/:user_id')
 			if(team) {
 				res.json(team);
 			}else{
-				res.json({message: 'Time não cadastrado'});
+				res.status(404).send({
+					error: 'Time não cadastrado'
+				});
 			}
 		})
 	})	
@@ -81,7 +83,7 @@ router.route('/teams/:user_id')
 					});
 				})
 			}else{
-				res.json({
+				res.status(404).send({
 					error: 'Time não cadastrado'
 				});
 			}
@@ -98,7 +100,7 @@ router.route('/teams/:user_id')
 				})
 			}
 			else{
-				res.json({
+				res.status(404).send({
 					error: 'Time não cadastrado'
 				});
 			}
@@ -124,7 +126,7 @@ router.route('/teams/players/:user_id')
 				})
 			}
 			else {
-				res.json({
+				res.status(404).send({
 					error: "Usuário não possui time cadastrado."
 				})
 			}

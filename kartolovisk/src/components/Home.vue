@@ -35,14 +35,14 @@
           </div>
         </md-app-toolbar>
             
-        <md-app-content>
-          <h1>{{formation}}</h1>
-            <div class="md-layout-item md-layout md-gutter">
-              <div class="md-layout-item">
-                <md-card-content class="campo">
-                  <formacao @message="notice"></formacao>
-                </md-card-content>
-              </div>
+            <md-app-content>
+              <h1>{{ formation.formation }}</h1>
+              <div class="md-layout-item md-layout md-gutter">
+                <div class="md-layout-item">
+                  <md-card-content class="campo">
+                    <formacao @message="notice" :team=team :players=team_players :formation=formation></formacao>
+                  </md-card-content>
+             </div>
           
               <div class="md-layout-item">
                 <md-card-content>
@@ -132,18 +132,19 @@ export default {
   name: 'LastRowFixed',
   data: function(){
     return {
+      team_players: "",
       players: [],
       team: "",
+      formation: "",
       user: {
         nickname: "",
-        id: 0
+        id: "1"
       },
       authorized:false,
       messagem: "",
-      formation: "4-4-2"
       }     
   },
-  created: function(){
+  created() {
       const token = localStorage.getItem("token")
       if(token !== null){
         this.authorized = true
@@ -167,18 +168,37 @@ export default {
             
         })*/
       }
-/*       axios.get("http://localhost:3000/teams/1").then(team => {
-        console.log(team)
-          
-      }) */
+      //busca time do usuario e sua formação
+      const url_team = "http://localhost:3000/teams/" + this.user.id
+      axios.get(url_team).then(response => {
+        this.team = response.data
+        const url_formation = "http://localhost:3000/formation/" + this.team.formationId
+        axios.get(url_formation).then(formation => {
+          this.formation = formation.data;
+        })
+      }).catch (e =>{
+          alert(e.response.data.error)
+        });
+
+      //busca os jogadores do time do usuario
+      const url_team_players = "http://localhost:3000/teams/players/" + this.user.id
+      axios.get(url_team_players).then(response => {
+        if(response.data.length === 0) {
+          this.team_players = []
+        }
+        else {
+          this.team_players = response.data
+        }        
+      }).catch (e =>{
+          alert(e.response.data.error)
+        });
       eventBus.$on('message', message => {
         this.notice(message)
       });
     eventBus.$on('changeScheme', scheme => {
-      this.formation = scheme.formation
+      this.formation = scheme
     })
   },
-
   methods: {
     search: function(position) {
       const url = "http://localhost:3000/players/position/" + position
