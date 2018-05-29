@@ -13,13 +13,16 @@
                 </md-avatar>
               </div>
               <span class="md-title">Kartolovski</span>
+             
             </div>
 
             <md-card class="card-menu">
               <div class="md-toolbar-section-end">
+               
                 <md-button><router-link to='/noticias' id="menu">NOTÍCIAS</router-link></md-button>
                 <md-button><router-link to='/regras' id="menu">REGRAS</router-link></md-button>
                 <md-button><router-link to='/sobre' id="menu">SOBRE</router-link></md-button>
+                
                 <md-button class="md-raised md-accent" ><a id="menu" href="http://localhost:8080/#/" @click.prevent="logout()">SAIR</a></md-button>
               </div>
             </md-card>
@@ -70,7 +73,7 @@
                     </md-card-content>
                   </div>
                 </div>
-
+                   
                 <div>
                   <md-table md-card>
                     <md-table-row>
