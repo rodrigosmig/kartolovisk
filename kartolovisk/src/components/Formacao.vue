@@ -1,7 +1,12 @@
 <template>
-    <div>  
-        <f442 v-if="formation.formation === '4-4-2'" key="4-4-2" :team_players="players"></f442>
-        <f433 v-else-if="formation.formation === '4-3-3'" key="4-3-3" :team_players="players"></f433>
+    <div>
+        <div v-if="formation.formation === '4-4-2'">
+            <f442 :team_players="players" key="4-4-2"></f442>
+        </div>
+        <div v-else-if="formation.formation === '4-3-3'">
+            <f433 :team_players="players" key="4-3-3"></f433>
+        </div>
+        
         <modal></modal> 
         <confirmar></confirmar>       
     </div>
@@ -36,9 +41,9 @@ export default {
             }
         })
     },
-    data() {        
+    data: function() {        
         return {
-            formation_to_change: ""
+            formation_to_change: "",
         }    
     },
     methods: {
