@@ -32,6 +32,10 @@
                 	</md-tabs>
             	</div>
         	</md-app-toolbar>
+
+                <md-app-content>
+          
+      </md-app-content>
     	</md-app>
   	</div>
 </template>
