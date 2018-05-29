@@ -1,41 +1,39 @@
 <template>
 
-
   <div class="page-container">
-   
-     <div v-if="authorized">
-            <md-app md-waterfall md-mode="fixed-last">
-          <md-app-toolbar class="md-large md-dense md-accent">
-            <div class="md-toolbar-row">
+    <div v-if="authorized">
+      <md-app md-waterfall md-mode="fixed-last">
+        <md-app-toolbar class="md-large md-dense md-accent">
+          <div class="md-toolbar-row">
 
-              <div class="md-toolbar-section-start">
-                <div class="separator">
-                  <md-avatar class="md=large">
-                    <img src="../assets/russia.png">
-                  </md-avatar>
-                </div>
-                <span class="md-title">Kartolovski</span>
+            <div class="md-toolbar-section-start">
+              <div class="separator">
+                <md-avatar class="md=large">
+                  <img src="../assets/russia.png">
+                </md-avatar>
               </div>
-
-              <md-card class="card-menu">
-                <div class="md-toolbar-section-end">
-                  <md-button><router-link to='/noticias' id="menu">NOTÍCIAS</router-link></md-button>
-                  <md-button><router-link to='/regras' id="menu">REGRAS</router-link></md-button>
-                  <md-button><router-link to='/sobre' id="menu">SOBRE</router-link></md-button>
-                  <md-button class="md-raised md-accent" ><a id="menu" href="http://localhost:8080/#/" @click.prevent="logout()">SAIR</a></md-button>
-                </div>
-              </md-card>
+              <span class="md-title">Kartolovski</span>
             </div>
+
+            <md-card class="card-menu">
+              <div class="md-toolbar-section-end">
+                <md-button><router-link to='/noticias' id="menu">NOTÍCIAS</router-link></md-button>
+                <md-button><router-link to='/regras' id="menu">REGRAS</router-link></md-button>
+                <md-button><router-link to='/sobre' id="menu">SOBRE</router-link></md-button>
+                <md-button class="md-raised md-accent" ><a id="menu" href="http://localhost:8080/#/" @click.prevent="logout()">SAIR</a></md-button>
+              </div>
+            </md-card>
+          </div>
             
-             <div class="md-toolbar-row">
-                  <md-tabs class="md-accent">
-                    <md-tab md-label="Meu Time"></md-tab>
-                    <md-tab md-label="Liga"></md-tab>
-                    <md-tab md-label="Ranking"></md-tab>
-                    <md-tab md-label="Configuração"></md-tab>
-                  </md-tabs>
-                </div>
-              </md-app-toolbar>
+          <div class="md-toolbar-row">
+            <md-tabs class="md-accent">
+              <md-tab md-label="Meu Time"></md-tab>
+              <md-tab md-label="Liga"></md-tab>
+              <md-tab md-label="Ranking"></md-tab>
+              <md-tab md-label="Configuração"></md-tab>
+            </md-tabs>
+          </div>
+        </md-app-toolbar>
             
             <md-app-content>
               <h1>{{ formation.formation }}</h1>
@@ -46,30 +44,29 @@
                   </md-card-content>
              </div>
           
-            <div class="md-layout-item">
+              <div class="md-layout-item">
+                <md-card-content>
+                  <buscar-jogador @clickBuscarJogador="searchName"></buscar-jogador>
+                </md-card-content>
             
-            <md-card-content>
-              <buscar-jogador @clickBuscarJogador="searchName"></buscar-jogador>
-            </md-card-content>
+                <p>{{ messagem }}</p>
             
-            <p>{{ messagem }}</p>
-            
-              <div class="md-layout-item md-layout md-gutter">
+                <div class="md-layout-item md-layout md-gutter">
                   <div class="md-layout-item">
                     <md-card-content>                      
-                        <selecao @clickSelecao="searchSelecao"></selecao>
+                      <selecao @clickSelecao="searchSelecao"></selecao>
                     </md-card-content>
                   </div>
 
                   <div class="md-layout-item">
                     <md-card-content>
-                    <posicao @clickPosition="search"></posicao> 
+                      <posicao @clickPosition="search"></posicao> 
                     </md-card-content>
                   </div>
 
                   <div class="md-layout-item">
                     <md-card-content>
-                        <EsquemaTatico></EsquemaTatico>
+                      <EsquemaTatico></EsquemaTatico>
                     </md-card-content>
                   </div>
                 </div>
@@ -77,12 +74,12 @@
                 <div>
                   <md-table md-card>
                     <md-table-row>
-                        <md-table-head>Camisa</md-table-head>
-                        <md-table-head>Nome do Jogador</md-table-head>
-                        <md-table-head>País</md-table-head>
-                        <md-table-head>Posição</md-table-head>
-                        <md-table-head>Pontuação</md-table-head>
-                        <md-table-head>Adicionar</md-table-head>
+                      <md-table-head>Camisa</md-table-head>
+                      <md-table-head>Nome do Jogador</md-table-head>
+                      <md-table-head>País</md-table-head>
+                      <md-table-head>Posição</md-table-head>
+                      <md-table-head>Pontuação</md-table-head>
+                      <md-table-head>Adicionar</md-table-head>
                     </md-table-row>
 
                     <md-table-row v-for="(player, index) in players" :key="player.id">
@@ -101,22 +98,15 @@
                     <!-- <player-list :players="players"></player-list> -->
 
                   </md-table>
+                </div>
               </div>
-
-          </div>
-
-        </div>
-      </md-app-content>
-
-    </md-app>
-
-    </div>
-
-    <div v-else>
+            </div>
+          </md-app-content>
+        </md-app>
+      </div>
+      <div v-else>
         Nao autenticado
-    </div>
-
-
+      </div>
   </div>
 </template>
 <script>

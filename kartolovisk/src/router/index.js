@@ -6,6 +6,7 @@ import Regras from '@/components/Regras'
 import Sobre from '@/components/Sobre'
 import Login from '@/components/Login'
 import Cadastro from '@/components/Cadastro'
+import Liga from '@/components/Liga'
 
 
 
@@ -43,6 +44,11 @@ export default new Router({
       path: '/sobre',
       name: 'Sobre',
       component: Sobre
+    },
+    {
+      path: '/liga',
+      name: 'Liga',
+      component: Liga
     }
   ]
 })
