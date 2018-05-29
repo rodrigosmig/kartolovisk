@@ -29,10 +29,10 @@
           </div>
             
           <div class="md-toolbar-row">
-            <md-tabs class="md-accent">
-              <md-tab md-label="Meu Time"></md-tab>
-              <md-tab md-label="Liga"></md-tab>
-              <md-tab md-label="Ranking"></md-tab>
+            <md-tabs class="md-accent" md-sync-route>
+              <md-tab md-label="Meu Time" to="/Home"></md-tab>
+              <md-tab md-label="Liga" to="/Liga"></md-tab>
+              <md-tab md-label="Ranking" to="/Ranking"></md-tab>
               <md-tab md-label="Configuração"></md-tab>
             </md-tabs>
           </div>

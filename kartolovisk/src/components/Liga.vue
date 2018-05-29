@@ -7,7 +7,7 @@
 					<div class="md-toolbar-section-start">
             <div class="separator">
               <md-avatar class="md=large">
-                <img src="../assets/russia.png">
+                <img src="../assets/kremlin.png">
               </md-avatar>
             </div>
             <span class="md-title">Kartolovski</span>
@@ -25,44 +25,30 @@
         </div>
             
         <div class="md-toolbar-row">
-          <md-tabs class="md-accent">
-            <md-tab md-label="Meu Time"></md-tab>
-            <md-tab md-label="Liga"></md-tab>
-            <md-tab md-label="Ranking"></md-tab>
-            <md-tab md-label="Configuração"></md-tab>
+          <md-tabs class="md-accent" md-sync-route>
+            <md-tab md-label="Meu Time" to="/Home"></md-tab>
+              <md-tab md-label="Liga" to="/Liga"></md-tab>
+              <md-tab md-label="Ranking" to="/Ranking"></md-tab>
+              <md-tab md-label="Configuração"></md-tab>
           </md-tabs>
         </div>
       </md-app-toolbar>
 
       <md-app-content>
         <div class="md-layout-item md-layout md-gutter">
-          <div class="md-layout-item md-size-30">
-            <div id="spac">
 
-              <div id="but">
+          <div class="md-layout-item md-size-10">
+              <div id="spac">
                 <md-button class="md-raised md-accent">Criar Liga</md-button>
               </div>
+          </div>
 
-              <div id="but">
-                <md-card>
-                  <md-card-header>
-                    <md-card-media md-medium>
-                      <img src="../assets/brasao2.png">
-                    </md-card-media>
-                    <md-card-header-text>
-                      <div class="md-title">Nome da Liga</div>
-                      <div class="md-subhead">Pontuação</div>
-                    </md-card-header-text>
-                  </md-card-header>
-                  <md-card-actions>
-                    <md-button class="md-raised">Detalhes</md-button>
-                  </md-card-actions>
-                </md-card>
-              </div>
+          <div class="md-layout-item md-size-40">
+            <div id="spac">
               <md-card>
                 <md-card-header>
-                  <md-card-media md-medium>
-                    <img src="../assets/brasao2.png">
+                  <md-card-media>
+                    <img src="../assets/pennant.png">
                   </md-card-media>
                   <md-card-header-text>
                     <div class="md-title">Nome da Liga</div>
@@ -70,14 +56,14 @@
                   </md-card-header-text>
                 </md-card-header>
                 <md-card-actions>
-                  <md-button class="md-raised">Detalhes</md-button>
+                  <md-button class="md-raised md-accent">Deletar</md-button>
+                  <md-button class="md-raised md-primary">Detalhes</md-button>
                 </md-card-actions>
               </md-card>
-
             </div>
           </div>
 
-          <div class="md-layout-item">
+          <div class="md-layout-item md-size-50">
             <div id="spac">
               <md-table md-card>
                 <md-table-toolbar>
@@ -85,33 +71,65 @@
                 </md-table-toolbar>
 
                 <md-table-row>
+                  <md-table-head>Colocação</md-table-head>
                   <md-table-head>Nome do Time</md-table-head>
                   <md-table-head>Pontuação</md-table-head>
+                  <md-table-head>Excluir</md-table-head>
                 </md-table-row>
 
                 <md-table-row>
+                  <md-table-cell>1</md-table-cell>
                   <md-table-cell>Brisa FC</md-table-cell>
                   <md-table-cell>100</md-table-cell>
+                  <md-table-cell>
+                    <md-button class="md-fab md-mini md-accent">
+                      <md-icon>cancel</md-icon>
+                    </md-button>
+                  </md-table-cell>
                 </md-table-row>
 
                 <md-table-row>
+                  <md-table-cell>2</md-table-cell>
                   <md-table-cell>Brisa FC</md-table-cell>
                   <md-table-cell>100</md-table-cell>
+                  <md-table-cell>
+                    <md-button class="md-fab md-mini md-accent">
+                      <md-icon>cancel</md-icon>
+                    </md-button>
+                  </md-table-cell>
                 </md-table-row>
 
                 <md-table-row>
+                  <md-table-cell>3</md-table-cell>
                   <md-table-cell>Brisa FC</md-table-cell>
                   <md-table-cell>100</md-table-cell>
+                  <md-table-cell>
+                    <md-button class="md-fab md-mini md-accent">
+                      <md-icon>cancel</md-icon>
+                    </md-button>
+                  </md-table-cell>
                 </md-table-row>
 
                 <md-table-row>
+                  <md-table-cell>4</md-table-cell>
                   <md-table-cell>Brisa FC</md-table-cell>
                   <md-table-cell>100</md-table-cell>
+                  <md-table-cell>
+                    <md-button class="md-fab md-mini md-accent">
+                      <md-icon>cancel</md-icon>
+                    </md-button>
+                  </md-table-cell>
                 </md-table-row>
 
                 <md-table-row>
+                  <md-table-cell>5</md-table-cell>
                   <md-table-cell>Brisa FC</md-table-cell>
                   <md-table-cell>100</md-table-cell>
+                  <md-table-cell>
+                    <md-button class="md-fab md-mini md-accent">
+                      <md-icon>cancel</md-icon>
+                    </md-button>
+                  </md-table-cell>
                 </md-table-row>
 
               </md-table>
