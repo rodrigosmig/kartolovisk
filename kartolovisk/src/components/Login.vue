@@ -13,7 +13,7 @@
                 </md-field>
                 <md-field md-has-password>
                     <label>Senha</label>
-                    <md-input type="password" v-model="user.password"></md-input>
+                    <md-input type="password" v-model="user.password" @keyup.13="login"></md-input>
                 </md-field>
             </div>
 
