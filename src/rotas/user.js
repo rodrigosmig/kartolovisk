@@ -108,11 +108,11 @@ router.route('/auth')
 
 						res.json({message: 'Usuário autenticado', token:token});
 					}else{
-						res.json({message: 'Senha incorreta'});
+						res.status(404).send({error: 'Senha incorreta'});
 					}
 				})
 			} else {
-				res.json({message: 'Usuário não encontrado'});
+				res.status(404).send({error: 'Usuário não encontrado'});
 			}
 		})
 	})
