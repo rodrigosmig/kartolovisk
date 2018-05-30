@@ -8,6 +8,7 @@ import Login from '@/components/Login'
 import Cadastro from '@/components/Cadastro'
 import Liga from '@/components/Liga'
 import Ranking from '@/components/Ranking'
+import Configuracao from '@/components/Configuracao'
 
 
 Vue.use(Router)
@@ -54,6 +55,11 @@ export default new Router({
       path: '/Ranking',
       name: 'Ranking',
       component: Ranking
+    },
+    {
+      path: '/Configuracao',
+      name: 'Configuracao',
+      component: Configuracao
     }
   ]
 })
