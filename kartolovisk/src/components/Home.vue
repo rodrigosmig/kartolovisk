@@ -1,5 +1,4 @@
 <template>
-
   <div class="page-container">
     <div v-if="authorized">
       <md-app md-waterfall md-mode="fixed-last">
@@ -13,16 +12,13 @@
                 </md-avatar>
               </div>
               <span class="md-title">Kartolovski</span>
-             
             </div>
 
             <md-card class="card-menu">
               <div class="md-toolbar-section-end">
-               
                 <md-button><router-link to='/noticias' id="menu">NOTÍCIAS</router-link></md-button>
                 <md-button><router-link to='/regras' id="menu">REGRAS</router-link></md-button>
                 <md-button><router-link to='/sobre' id="menu">SOBRE</router-link></md-button>
-                
                 <md-button class="md-raised md-accent" ><a id="menu" href="http://localhost:8080/#/" @click.prevent="logout()">SAIR</a></md-button>
               </div>
             </md-card>
@@ -38,80 +34,98 @@
           </div>
         </md-app-toolbar>
             
-            <md-app-content>
+        <md-app-content>
+
+          <div class="md-layout-item md-layout md-gutter">
+            <div class="md-layout-item">
+              <p>Usuário</p>
+              <h1>Brisa FC</h1>
+            </div>
+            <div class="md-layout-item">
+              <p>Escalação</p>
               <h1>{{ formation.formation }}</h1>
-              <div class="md-layout-item md-layout md-gutter">
-                <div class="md-layout-item">
-                  <md-card-content class="campo">
-                    <formacao @message="notice" :team=team :players=team_players :formation=formation></formacao>
-                  </md-card-content>
-             </div>
+            </div>
+            <div class="md-layout-item">
+              <p>Pontuação</p>
+              <h1>1000</h1>
+            </div>
+          </div>
+          <md-divider></md-divider>
+
+          <p>{{ messagem }}</p>
+
+          <div class="md-layout-item md-layout md-gutter">
+
+            <div class="md-layout-item">
+              <md-card-content class="campo">
+                <formacao @message="notice" :team=team :players=team_players :formation=formation></formacao>
+              </md-card-content>
+            </div>
           
-              <div class="md-layout-item">
-                <md-card-content>
-                  <buscar-jogador @clickBuscarJogador="searchName"></buscar-jogador>
-                </md-card-content>
-            
-                <p>{{ messagem }}</p>
-            
-                <div class="md-layout-item md-layout md-gutter">
-                  <div class="md-layout-item">
-                    <md-card-content>                      
-                      <selecao @clickSelecao="searchSelecao"></selecao>
-                    </md-card-content>
-                  </div>
-
-                  <div class="md-layout-item">
-                    <md-card-content>
-                      <posicao @clickPosition="search"></posicao> 
-                    </md-card-content>
-                  </div>
-
-                  <div class="md-layout-item">
-                    <md-card-content>
-                      <EsquemaTatico></EsquemaTatico>
-                    </md-card-content>
-                  </div>
+            <div class="md-layout-item">
+              <md-card-content>
+                <buscar-jogador @clickBuscarJogador="searchName"></buscar-jogador>
+              </md-card-content>
+          
+              <div class="md-layout-item md-layout md-gutter">        
+                <div class="md-layout-item">
+                  <md-card-content>
+                    <selecao @clickSelecao="searchSelecao"></selecao>
+                  </md-card-content>
                 </div>
-                   
-                <div>
-                  <md-table md-card>
-                    <md-table-row>
-                      <md-table-head>Camisa</md-table-head>
-                      <md-table-head>Nome do Jogador</md-table-head>
-                      <md-table-head>País</md-table-head>
-                      <md-table-head>Posição</md-table-head>
-                      <md-table-head>Pontuação</md-table-head>
-                      <md-table-head>Adicionar</md-table-head>
-                    </md-table-row>
 
-                    <md-table-row v-for="(player, index) in players" :key="player.id">
-                      <md-table-cell>IMG</md-table-cell>
-                      <md-table-cell>{{player.name}}</md-table-cell>
-                      <md-table-cell>{{player.country}}</md-table-cell>
-                      <md-table-cell>{{player.position}}</md-table-cell>
-                      <md-table-cell>{{player.score}}</md-table-cell>
-                      <md-table-cell>
-                        <md-button class="md-fab md-mini md-accent" @click="addPlayer(index)">
-                          <md-icon>add</md-icon>
-                        </md-button>
-                      </md-table-cell>
-                    </md-table-row>
+                <div class="md-layout-item">
+                  <md-card-content>
+                    <posicao @clickPosition="search"></posicao> 
+                  </md-card-content>
+                </div>
 
-                    <!-- <player-list :players="players"></player-list> -->
-
-                  </md-table>
+                <div class="md-layout-item">
+                  <md-card-content>
+                    <EsquemaTatico></EsquemaTatico>
+                  </md-card-content>
                 </div>
               </div>
+                   
+              <div>
+                <md-table md-card>
+                  <md-table-row>
+                    <md-table-head>Camisa</md-table-head>
+                    <md-table-head>Nome do Jogador</md-table-head>
+                    <md-table-head>País</md-table-head>
+                    <md-table-head>Posição</md-table-head>
+                    <md-table-head>Pontuação</md-table-head>
+                    <md-table-head>Adicionar</md-table-head>
+                  </md-table-row>
+
+                  <md-table-row v-for="(player, index) in players" :key="player.id">
+                    <md-table-cell>IMG</md-table-cell>
+                    <md-table-cell>{{player.name}}</md-table-cell>
+                    <md-table-cell>{{player.country}}</md-table-cell>
+                    <md-table-cell>{{player.position}}</md-table-cell>
+                    <md-table-cell>{{player.score}}</md-table-cell>
+                    <md-table-cell>
+                      <md-button class="md-fab md-mini md-accent" @click="addPlayer(index)">
+                        <md-icon>add</md-icon>
+                      </md-button>
+                    </md-table-cell>
+                  </md-table-row>
+
+                  <!-- <player-list :players="players"></player-list> -->
+
+                </md-table>
+              </div>
             </div>
-          </md-app-content>
-        </md-app>
-      </div>
-      <div v-else>
-        Nao autenticado
-      </div>
+          </div>
+        </md-app-content>
+      </md-app>
+    </div>
+    <div v-else>
+      Nao autenticado
+    </div>
   </div>
 </template>
+
 <script>
 import { eventBus } from '../main.js';
 import axios from 'axios'
@@ -255,7 +269,7 @@ export default {
 
 <style lang="scss" scoped>
   .md-app {
-    max-height: 700px;
+    max-height: 100%;
     border: 1px solid rgba(#000,.12);
   }
   .card-menu{
@@ -268,11 +282,7 @@ export default {
     margin-left: 15%;
     margin-top: 5%;
   }
-
    #menu{
     color:white;
   }
-
-
-  
 </style>
