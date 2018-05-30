@@ -9,7 +9,7 @@
             <div class="md-toolbar-section-start">
               <div class="separator">
                 <md-avatar class="md=large">
-                  <img src="../assets/russia.png">
+                  <img src="../assets/kremlin.png">
                 </md-avatar>
               </div>
               <span class="md-title">Kartolovski</span>
