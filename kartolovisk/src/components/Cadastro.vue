@@ -17,7 +17,7 @@
                 </md-field>
                 <md-field>
                     <label>Senha</label>
-                    <md-input type="password" v-model="user.password" autofocus></md-input>
+                    <md-input type="password" v-model="user.password" autofocus @keyup.13="cadastro"></md-input>
                 </md-field>
             </div>
 
