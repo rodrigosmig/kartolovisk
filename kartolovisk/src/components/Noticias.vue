@@ -1,6 +1,6 @@
 <template>
 	<div class="page-container">
-    <md-app md-waterfall md-mode="fixed-last">
+    <md-app md-waterfall md-mode="fixed">
       <md-app-toolbar class="md-large md-dense md-accent">
         <div class="md-toolbar-row">
 
@@ -34,6 +34,8 @@
       </md-app-toolbar>
 
       <md-app-content>
+        <h1>Notícias</h1>
+        <p>Nenhuma notícia cadastrada</p>
       </md-app-content>
       
     </md-app>

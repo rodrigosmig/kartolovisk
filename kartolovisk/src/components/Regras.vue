@@ -1,6 +1,6 @@
 <template>
 	<div class="page-container">
-    <md-app md-waterfall md-mode="fixed-last">
+    <md-app md-waterfall md-mode="fixed">
       <md-app-toolbar class="md-large md-dense md-accent">
         <div class="md-toolbar-row">
 
@@ -45,6 +45,7 @@
             <div id="spac">
               <md-table md-card>
                 <md-table-toolbar>
+                  <img src="../assets/soccer-player.png">
                   <h1 class="md-title">Scouts de Ataque</h1>
                 </md-table-toolbar>
                 <md-table-row>
@@ -61,6 +62,7 @@
             <div id="spac">
               <md-table md-card>
                 <md-table-toolbar>
+                  <img src="../assets/goalkeeper.png">
                   <h1 class="md-title">Scouts de Defesa</h1>
                 </md-table-toolbar>
                 <md-table-row>

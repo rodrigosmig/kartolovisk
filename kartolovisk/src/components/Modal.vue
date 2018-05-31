@@ -76,7 +76,5 @@
 </script>
 
 <style lang="scss" scoped>
-  .md-dialog {
-    max-width: 768px;
-  }
+
 </style>
