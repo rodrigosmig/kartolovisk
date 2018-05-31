@@ -1,6 +1,6 @@
 <template>
 	<div class="page-container">
-    <md-app md-waterfall md-mode="fixed-last">
+    <md-app md-waterfall md-mode="fixed">
       <md-app-toolbar class="md-large md-dense md-accent">
         <div class="md-toolbar-row">
 
@@ -42,7 +42,7 @@
 
 <style>
 	.md-app {
-    max-height: 700px;
+    max-height: 100%;
     border: 1px solid rgba(#000,.12);
   }
 	.card-menu{

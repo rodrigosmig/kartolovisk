@@ -1,6 +1,6 @@
 <template>
 	<div class="page-container">
-    <md-app md-waterfall md-mode="fixed-last">
+    <md-app md-waterfall md-mode="fixed">
       <md-app-toolbar class="md-large md-dense md-accent">
         <div class="md-toolbar-row">
 
@@ -35,8 +35,28 @@
 
       <md-app-content>
       	<h1>Sobre</h1>
-      	<p>Em virtude deste ano de 2018, ocorrer a copa do mundo, que é o maior evento de futebol do planeta, pensamos em criar um jogo no estilo do Cartola FC, mas que seja voltado para a copa do mundo de futebol.</p>
-      	<p>Desenvolver um jogo intuitivo no estilo de um fantasy game, em que o usuário possa escalar sua própria seleção da copa do mundo, baseado nos jogadores das seleções que estão convocadas para a copa do mundo de 2018</p>
+        <div class="md-layout-item md-layout md-gutter">
+          <div class="md-layout-item" id="text">
+            <p>O Kartolovski é o jogo onde você pode montar seu próprio time com os jogadores reais da Copa do Mundo 2018. Você pode acompanhar a copa de maneira divertida competindo com os seus amigos e outros Kartolovos para ver quem sabe tudo de futebol e escolhe os melhores jogadores</p>
+            <p>Um jogo intuitivo no estilo de fantasy game, em que o usuário possa escalar sua própria seleção da copa do mundo, baseado nos jogadores das seleções que estão convocadas para a copa do mundo de 2018</p>
+          </div>
+        </div>
+
+        <div class="md-layout-item md-layout md-gutter">
+          <div class="md-layout-item">
+            <img src="../assets/strategy.png">
+            <p>Escale seus jogadores sem nenhum custo.</p>
+          </div>
+          <div class="md-layout-item">
+            <img src="../assets/soccer-game.png">
+            <p>A cada rodada da Copa do Mundo, o seu time pontua baseado em suas ações nas partidas</p>
+          </div>
+          <div class="md-layout-item">
+            <img src="../assets/winners.png">
+            <p>Compartilhe a sua escalação e divirta-se com seus amigos e família.</p>
+          </div>
+        </div>
+
       </md-app-content>
 
     </md-app>
@@ -53,6 +73,11 @@
   }
 	#menu{
     color:white;
+  }
+  #text{
+    padding-right: 200px;
+    padding-left: 200px;
+    padding-bottom: 30px;
   }
 </style>
 

@@ -1,6 +1,6 @@
 <template>
 	<div class="page-container">
-    <md-app md-waterfall md-mode="fixed-last">
+    <md-app md-waterfall md-mode="fixed">
       <md-app-toolbar class="md-large md-dense md-accent">
         <div class="md-toolbar-row">
 
@@ -34,6 +34,53 @@
       </md-app-toolbar>
 
       <md-app-content>
+        <h1>Configuração</h1>
+        <div class="md-layout-item md-layout md-gutter">
+          <div class="md-layout-item">
+            <md-card>
+              <md-card-header>
+                <md-card-media>
+                  <img src="../assets/configNick.png">
+                </md-card-media>
+                <md-card-header-text>
+                  <div class="md-title">Editar Nickname</div>
+                </md-card-header-text>
+              </md-card-header>
+              <md-card-content>
+                <md-field>
+                    <label>Nickname Antigo</label>
+                    <md-input name="nickname"></md-input>
+                  </md-field>
+                  <md-field>
+                    <label>Nickname Novo</label>
+                    <md-input name="nickname"></md-input>
+                  </md-field>
+              </md-card-content>
+            </md-card>
+          </div>
+          <div class="md-layout-item">
+            <md-card>
+              <md-card-header>
+                <md-card-media>
+                  <img src="../assets/configTime.png">
+                </md-card-media>
+                <md-card-header-text>
+                  <div class="md-title">Editar Nome do Time</div>
+                </md-card-header-text>
+              </md-card-header>
+              <md-card-content>
+                <md-field>
+                    <label>Nome Antigo</label>
+                    <md-input name="nickname"></md-input>
+                  </md-field>
+                  <md-field>
+                    <label>Nome Novo</label>
+                    <md-input name="nickname"></md-input>
+                  </md-field>
+              </md-card-content>
+            </md-card>
+          </div>
+        </div>
       </md-app-content>
 
     </md-app>
@@ -42,7 +89,7 @@
 
 <style>
 	.md-app {
-    max-height: 700px;
+    max-height: 100%;
     border: 1px solid rgba(#000,.12);
   }
 	.card-menu{
