@@ -3,6 +3,10 @@ import { League, Team, User } from '../modelos/models';
 
 let router = express.Router();
 
+function sortByScore(x,y) {
+	return y.score - x.score; 
+}
+
 router.route('/league')
 
     .get((req, res) => {
@@ -163,6 +167,7 @@ router.route('/league/team/:league_id')
         }) 
     })
 
+//lista os times de uma liga
 router.route('/league/list/:id')
 
     .get((req, res) => {
@@ -173,8 +178,28 @@ router.route('/league/list/:id')
         }).then(league => {
             if (league) {
                 league.getTeams().then(teams => {
+                    teams.sort(sortByScore)
                     res.json(teams)
                 })
+            } else {
+                res.status(404).send({
+                    error: 'Não existe esta liga!'
+                });
+            }
+        })
+    })
+
+//lista liga de um usuario
+router.route('/league/user/:user_id')
+    .get((req, res) => {
+        League.findAll({
+            where: {
+                userId: req.params.user_id
+            }
+        }).then(leagues => {
+            console.log(leagues.length)
+            if(leagues.length !== 0) {
+                res.send(leagues);
             } else {
                 res.status(404).send({
                     error: 'Não existe esta liga!'

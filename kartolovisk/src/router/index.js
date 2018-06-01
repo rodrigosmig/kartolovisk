@@ -29,7 +29,8 @@ export default new Router({
     {
       path: '/home',
       name: 'Home',
-      component: Home
+      component: Home,
+      props: true
     },
     {
       path: '/noticias',
@@ -49,7 +50,8 @@ export default new Router({
     {
       path: '/liga',
       name: 'Liga',
-      component: Liga
+      component: Liga,
+      props: true
     },
     {
       path: '/Ranking',
