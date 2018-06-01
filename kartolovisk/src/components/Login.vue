@@ -46,16 +46,20 @@ export default {
         login: function(){
 
             if(this.user.nickname === "" && this.user.password === ""){
-                console.log("aiii")
                 this.message = "Nickname e senha inválido"    
             }
 
             axios
-            .post("http://localhost:3000/auth" , this.user).then(response =>{
-               
+            .post("http://localhost:3000/auth" , this.user).then(response =>{               
                 localStorage.setItem("token", response.data.token)
                 this.message = response.data.message
-                this.$router.push({name: "Home"})
+                const url_user = "http://localhost:3000/users/name/" + this.user.nickname
+                axios.get(url_user).then(response =>{
+                    this.user = response.data
+                    //envia os dados do usuário pra Home
+                    this.$router.push({name: "Home", params: {user: this.user}})
+                })
+                
               
             })
             .catch (e =>{

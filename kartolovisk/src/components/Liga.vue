@@ -45,19 +45,18 @@
 
           <div class="md-layout-item md-size-40">
             <div id="spac">
-              <md-card>
+              <md-card v-for="(l, index) in user_leagues" :key="index">
                 <md-card-header>
                   <md-card-media>
                     <img src="../assets/pennant.png">
                   </md-card-media>
                   <md-card-header-text>
-                    <div class="md-title">Nome da Liga</div>
-                    <div class="md-subhead">Pontuação</div>
+                    <div class="md-title">{{ l.name }}</div>
                   </md-card-header-text>
                 </md-card-header>
                 <md-card-actions>
                   <md-button class="md-raised md-accent">Deletar</md-button>
-                  <md-button class="md-raised md-primary">Detalhes</md-button>
+                  <md-button class="md-raised md-primary" @click="searchTeams(l.id)">Detalhes</md-button>
                 </md-card-actions>
               </md-card>
             </div>
@@ -77,54 +76,10 @@
                   <md-table-head>Excluir</md-table-head>
                 </md-table-row>
 
-                <md-table-row>
-                  <md-table-cell>1</md-table-cell>
-                  <md-table-cell>Brisa FC</md-table-cell>
-                  <md-table-cell>100</md-table-cell>
-                  <md-table-cell>
-                    <md-button class="md-fab md-mini md-accent">
-                      <md-icon>cancel</md-icon>
-                    </md-button>
-                  </md-table-cell>
-                </md-table-row>
-
-                <md-table-row>
-                  <md-table-cell>2</md-table-cell>
-                  <md-table-cell>Brisa FC</md-table-cell>
-                  <md-table-cell>100</md-table-cell>
-                  <md-table-cell>
-                    <md-button class="md-fab md-mini md-accent">
-                      <md-icon>cancel</md-icon>
-                    </md-button>
-                  </md-table-cell>
-                </md-table-row>
-
-                <md-table-row>
-                  <md-table-cell>3</md-table-cell>
-                  <md-table-cell>Brisa FC</md-table-cell>
-                  <md-table-cell>100</md-table-cell>
-                  <md-table-cell>
-                    <md-button class="md-fab md-mini md-accent">
-                      <md-icon>cancel</md-icon>
-                    </md-button>
-                  </md-table-cell>
-                </md-table-row>
-
-                <md-table-row>
-                  <md-table-cell>4</md-table-cell>
-                  <md-table-cell>Brisa FC</md-table-cell>
-                  <md-table-cell>100</md-table-cell>
-                  <md-table-cell>
-                    <md-button class="md-fab md-mini md-accent">
-                      <md-icon>cancel</md-icon>
-                    </md-button>
-                  </md-table-cell>
-                </md-table-row>
-
-                <md-table-row>
-                  <md-table-cell>5</md-table-cell>
-                  <md-table-cell>Brisa FC</md-table-cell>
-                  <md-table-cell>100</md-table-cell>
+                <md-table-row v-for="(t, index) in league" :key="index">
+                  <md-table-cell>{{ index + 1 }}</md-table-cell>
+                  <md-table-cell>{{ t.name }}</md-table-cell>
+                  <md-table-cell>{{ t.score }}</md-table-cell>
                   <md-table-cell>
                     <md-button class="md-fab md-mini md-accent">
                       <md-icon>cancel</md-icon>
@@ -142,6 +97,35 @@
     </md-app>
   </div>
 </template>
+
+<script>
+  import { eventBus } from '../main.js';
+  import axios from 'axios'
+  
+  export default {
+    props: ['user'],
+    created() {
+      const url_user_league = "http://localhost:3000/league/user/" + this.user.id
+      axios.get(url_user_league).then(response =>{
+          this.user_leagues = response.data
+      })  
+    },
+    data() {
+      return {
+        user_leagues: "",
+        league: ""
+      }
+    },
+    methods: {
+      searchTeams: function(id) {
+        const url_teams_league = "http://localhost:3000/league/list/" + id
+        axios.get(url_teams_league).then(response =>{
+          this.league = response.data
+        })
+      }
+    },
+  }
+</script>
 
 <style>
 	.md-app {
@@ -162,6 +146,3 @@
   }
 </style>
 
-<script>
-	
-</script>
