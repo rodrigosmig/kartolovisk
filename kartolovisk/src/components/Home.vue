@@ -39,7 +39,7 @@
           <div class="md-layout-item md-layout md-gutter">
             <div class="md-layout-item">
               <p>Usuário</p>
-              <h1>Brisa FC</h1>
+              <h1>{{ team.name }}</h1>
             </div>
             <div class="md-layout-item">
               <p>Escalação</p>
@@ -47,7 +47,7 @@
             </div>
             <div class="md-layout-item">
               <p>Pontuação</p>
-              <h1>1000</h1>
+              <h1>{{ team.score }}</h1>
             </div>
           </div>
           <md-divider></md-divider>
@@ -157,6 +157,7 @@ export default {
         nickname: "",
         id: "1"
       },
+      user_leagues: "",
       authorized:false,
       messagem: "",
       }     

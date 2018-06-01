@@ -5,10 +5,15 @@ import Sequelize from 'sequelize';
 let router = express.Router();
 const Op = Sequelize.Op;
 
+function sortByScore(x,y) {
+	return y.score - x.score; 
+}
+
 router.route('/teams')
 
 	.get((req, res)=>{
 		Team.findAll().then(function(team) {
+			team.sort(sortByScore)
 			res.send(team);
 		})
 	})
