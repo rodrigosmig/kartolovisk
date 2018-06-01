@@ -39,7 +39,7 @@
 
           <div class="md-layout-item md-size-10">
               <div id="spac">
-                <md-button class="md-raised md-accent">Criar Liga</md-button>
+                <md-button class="md-raised md-accent" @click="showDialog = true">Criar Liga</md-button>
               </div>
           </div>
 
@@ -55,7 +55,7 @@
                   </md-card-header-text>
                 </md-card-header>
                 <md-card-actions>
-                  <md-button class="md-raised md-accent">Deletar</md-button>
+                  <md-button class="md-raised md-accent" @click="removeLeague(l.id)">Deletar</md-button>
                   <md-button class="md-raised md-primary" @click="searchTeams(l.id)">Detalhes</md-button>
                 </md-card-actions>
               </md-card>
@@ -93,8 +93,21 @@
 
         </div>
       </md-app-content>
-
     </md-app>
+
+      <md-dialog :md-active.sync="showDialog">
+        <md-dialog-title>Nova Liga</md-dialog-title>
+
+          <md-dialog-content>
+            <input type="text" v-model="new_league_name" placeholder="Digite o nomce da liga">
+          </md-dialog-content>
+
+      <md-dialog-actions>
+        <md-button class="md-primary" @click="showDialog = false">Fechar</md-button>
+        <md-button class="md-primary" @click="addleague">Salvar</md-button>
+      </md-dialog-actions>
+    </md-dialog>
+
   </div>
 </template>
 
@@ -113,7 +126,10 @@
     data() {
       return {
         user_leagues: "",
-        league: ""
+        league: "",
+        new_league_name: "",
+        showDialog: false,
+        message: "",
       }
     },
     methods: {
@@ -121,6 +137,34 @@
         const url_teams_league = "http://localhost:3000/league/list/" + id
         axios.get(url_teams_league).then(response =>{
           this.league = response.data
+        })
+      },
+      addleague: function() {
+        const data = {
+          userId: this.user.id,
+          name: this.new_league_name
+        }
+        const url_new_league = "http://localhost:3000/league/"
+        axios.post(url_new_league, data).then(response =>{
+          this.user_leagues.push(response.data)
+          this.new_league_name = ""
+          this.showDialog = false
+        })
+      },
+      removeLeague: function(id) {
+        const url_remove_league = "http://localhost:3000/league/" + id
+        let index = ""
+        for(let x in this.user_leagues) {
+          if(this.user_leagues[x].id === id) {
+            index = x 
+            console.log(this.user_leagues[x].name)
+            break
+          }
+        }
+        axios.delete(url_remove_league).then(response =>{         
+          this.user_leagues.splice(index, 1)
+        }).catch(e => {
+          this.message = "Liga não pode ser deletada"
         })
       }
     },

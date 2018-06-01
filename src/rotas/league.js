@@ -41,9 +41,7 @@ router.route('/league')
                             }
                         }).then(team => {
                             team.addLeagues(league).then(ret => {
-                                res.json({
-                                    message: 'Liga cadastrada com sucesso!'
-                                });
+                                res.json(league)
                             })
                         })
                     })
