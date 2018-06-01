@@ -1,5 +1,5 @@
 import express from 'express';
-import { League, Team } from '../modelos/models';
+import { League, Team, User } from '../modelos/models';
 
 let router = express.Router();
 
@@ -12,19 +12,18 @@ router.route('/league')
     })
 
     .post((req, res) => {
-
-        League.findOne({
+        User.findOne({
             where: {
-                userId: req.body.userId,
+                id: req.body.userId,
             }
-        }).then(league => {
-
+        }).then(user => {
+            console.log(user)
             League.findOne({
-
                 where: {
                     name: req.body.name
                 }
             }).then(hasLeague => {
+                console.log(hasLeague)
                 // verifica se a liga já existe
                 if (!hasLeague) {
                     const data = {
@@ -46,7 +45,7 @@ router.route('/league')
                     })
 
                 } else {
-                    res.json({
+                    res.status(401).send({
                         error: 'O nome da liga já existe'
                     });
                 }
@@ -63,8 +62,8 @@ router.route('/league/:league_id')
             if (league) {
                 res.json(league);
             } else {
-                res.json({
-                    message: 'Essa liga não existe'
+                res.status(404).send({
+                    error: 'Essa liga não existe'
                 });
             }
         })
@@ -80,7 +79,9 @@ router.route('/league/:league_id')
                     res.json(league);
                 }))
             } else {
-                res.json({ error: 'Liga não cadastrada' });
+                res.status(404).send({
+                    error: 'Liga não cadastrada' 
+                });
             }
         })
     })
@@ -92,7 +93,7 @@ router.route('/league/:league_id')
                     res.json({ message: 'Liga deletada' });
                 })
             } else {
-                res.json({
+                res.status(404).send({
                     error: 'Liga não cadastrada'
                 });
             }
@@ -118,7 +119,7 @@ router.route('/league/team/:league_id')
                 team.addLeagues(league).then(ret => {
                     console.log(ret)
                     if (ret.length === 0) {
-                        res.json({
+                        res.status(400).send({
                             error: 'Time já pertence a liga'
                         });
                     } else {
@@ -153,7 +154,7 @@ router.route('/league/team/:league_id')
                             res.json({message: 'Time foi removido da liga'});
                         })
                     }else{
-                        res.json({
+                        res.status(404).send({
                             error: 'Usuário não está na liga'
                         });
                     }
@@ -175,7 +176,7 @@ router.route('/league/list/:id')
                     res.json(teams)
                 })
             } else {
-                res.json({
+                res.status(404).send({
                     error: 'Não existe esta liga!'
                 });
             }

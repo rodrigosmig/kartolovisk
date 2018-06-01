@@ -69,41 +69,12 @@
                   <md-table-head>Nome do Time</md-table-head>
                   <md-table-head>Pontuação</md-table-head>
                 </md-table-row>
-                <md-table-row>
-                  <md-table-cell>1</md-table-cell>
-                  <md-table-cell>Brisa FC</md-table-cell>
-                  <md-table-cell>134</md-table-cell>
+                <md-table-row v-for="(t, key) in teams" :key=key>
+                  <md-table-cell>{{ key }}</md-table-cell>
+                  <md-table-cell>{{ t.name }}</md-table-cell>
+                  <md-table-cell>{{ t.score }}</md-table-cell>
                 </md-table-row>
-                <md-table-row>
-                  <md-table-cell>1</md-table-cell>
-                  <md-table-cell>Brisa FC</md-table-cell>
-                  <md-table-cell>134</md-table-cell>
-                </md-table-row>
-                <md-table-row>
-                  <md-table-cell>1</md-table-cell>
-                  <md-table-cell>Brisa FC</md-table-cell>
-                  <md-table-cell>134</md-table-cell>
-                </md-table-row>
-                <md-table-row>
-                  <md-table-cell>1</md-table-cell>
-                  <md-table-cell>Brisa FC</md-table-cell>
-                  <md-table-cell>134</md-table-cell>
-                </md-table-row>
-                <md-table-row>
-                  <md-table-cell>1</md-table-cell>
-                  <md-table-cell>Brisa FC</md-table-cell>
-                  <md-table-cell>134</md-table-cell>
-                </md-table-row>
-                <md-table-row>
-                  <md-table-cell>1</md-table-cell>
-                  <md-table-cell>Brisa FC</md-table-cell>
-                  <md-table-cell>134</md-table-cell>
-                </md-table-row>
-                <md-table-row>
-                  <md-table-cell>1</md-table-cell>
-                  <md-table-cell>Brisa FC</md-table-cell>
-                  <md-table-cell>134</md-table-cell>
-                </md-table-row>
+                
               </md-table>
             </div>
           </div>
@@ -113,6 +84,28 @@
     </md-app>
   </div>
 </template>
+
+<script>
+  import { eventBus } from '../main.js';
+  import axios from 'axios'
+  
+  export default {
+    created() {
+        axios
+          .get("http://localhost:3000/teams").then(response =>{
+            this.teams = response.data
+        })  
+    },
+    data() {
+      return {
+        teams: "",
+      }
+    },
+    methods: {
+      
+    },
+  }
+</script>
 
 <style>
 	.md-app {
@@ -129,7 +122,3 @@
     padding-top: 30px;
   }
 </style>
-
-<script>
-	
-</script>
