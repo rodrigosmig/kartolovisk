@@ -26,7 +26,8 @@
             </div>
 
             <div class="actions md-alignment-center-space-between">
-                <md-button class="md-raised md-accent" type="submit" @click.prevent="cadastro()" :disabled=false>Cadastrar</md-button>
+                       
+                <md-button v-if="user.nickname && team.name && user.email && user.password != '' "  class="md-raised md-accent" type="submit" @click.prevent="cadastro()" :disabled=false>Cadastrar</md-button>
                 <p>{{message}}</p>
             </div>
         </md-content>
