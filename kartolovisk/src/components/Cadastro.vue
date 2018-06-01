@@ -3,7 +3,9 @@
         <md-content class="md-elevation-3">
             <div class="title">
                 <div class="md-title">Kartolovski</div>
+                
                 <div class="md-body-1">Tela de Cadastro</div>
+                
             </div>
 
             <div class="form">
@@ -28,6 +30,10 @@
             <div class="actions md-alignment-center-space-between">
                        
                 <md-button v-if="user.nickname && team.name && user.email && user.password != '' "  class="md-raised md-accent" type="submit" @click.prevent="cadastro()" :disabled=false>Cadastrar</md-button>
+            <md-button v-if="this.message =='Usuário cadastrado com sucesso!!'"  class="md-raised md-accent"  router-link to='/'>Login</md-button>
+
+                
+
                 <p>{{message}}</p>
             </div>
         </md-content>
@@ -41,6 +47,9 @@ import axios from 'axios'
 import { eventBus } from '../main.js';
 
 export default {
+    
+ 
+  
     data: function(){
         return {
             user: {
