@@ -18,7 +18,8 @@
               <md-button><router-link to='/noticias' id="menu">NOTÍCIAS</router-link></md-button>
               <md-button><router-link to='/regras' id="menu">REGRAS</router-link></md-button>
               <md-button><router-link to='/sobre' id="menu">SOBRE</router-link></md-button>
-              <md-button class="md-raised md-accent" ><a id="menu" href="http://localhost:3000/" @click.prevent="logout()">SAIR</a></md-button>
+              <!--<md-button class="md-raised md-accent" ><a id="menu" href="http://localhost:3000/" @click.prevent="logout()">SAIR</a></md-button>-->
+              <sair></sair>
             </div>
           </md-card>
         </div>
@@ -63,6 +64,20 @@
   </div>
 </template>
 
+<script>
+import Sair from './Sair'
+export default {
+  
+  components: {
+   Sair
+  },
+  
+  data: function(){
+  }
+}
+	
+</script>
+
 <style>
 	.md-app {
     max-height: 700px;
@@ -81,7 +96,5 @@
   }
 </style>
 
-<script>
-	
-</script>
+
 

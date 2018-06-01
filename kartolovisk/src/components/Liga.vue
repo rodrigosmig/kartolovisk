@@ -18,7 +18,8 @@
               <md-button><router-link to='/noticias' id="menu">NOTÍCIAS</router-link></md-button>
               <md-button><router-link to='/regras' id="menu">REGRAS</router-link></md-button>
               <md-button><router-link to='/sobre' id="menu">SOBRE</router-link></md-button>
-              <md-button class="md-raised md-accent" ><a id="menu" href="http://localhost:3000/" @click.prevent="logout()">SAIR</a></md-button>
+              <!--<md-button class="md-raised md-accent" ><a id="menu" href="http://localhost:3000/" @click.prevent="logout()">SAIR</a></md-button>-->
+              <sair></sair>
             </div>
           </md-card>
 
@@ -101,8 +102,12 @@
 <script>
   import { eventBus } from '../main.js';
   import axios from 'axios'
+  import Sair from './Sair'
   
   export default {
+    components: {
+      Sair
+    },
     props: ['user'],
     created() {
       const url_user_league = "http://localhost:3000/league/user/" + this.user.id

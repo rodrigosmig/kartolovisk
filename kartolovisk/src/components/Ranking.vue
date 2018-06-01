@@ -18,7 +18,8 @@
               <md-button><router-link to='/noticias' id="menu">NOTÍCIAS</router-link></md-button>
               <md-button><router-link to='/regras' id="menu">REGRAS</router-link></md-button>
               <md-button><router-link to='/sobre' id="menu">SOBRE</router-link></md-button>
-              <md-button class="md-raised md-accent" ><a id="menu" href="http://localhost:3000/" @click.prevent="logout()">SAIR</a></md-button>
+            <!--  <md-button class="md-raised md-accent" ><a id="menu" href="http://localhost:3000/" @click.prevent="logout()">SAIR</a></md-button> -->
+              <sair></sair>
             </div>
           </md-card>
         </div>
@@ -88,8 +89,12 @@
 <script>
   import { eventBus } from '../main.js';
   import axios from 'axios'
+  import Sair from './Sair'
   
   export default {
+     components: {
+     Sair
+   },
     created() {
         axios
           .get("http://localhost:3000/teams").then(response =>{
@@ -122,3 +127,4 @@
     padding-top: 30px;
   }
 </style>
+
