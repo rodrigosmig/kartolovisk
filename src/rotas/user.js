@@ -1,5 +1,5 @@
 import express from 'express';
-import {User, League} from '../modelos/models'; //./models
+import {User, League, Team} from '../modelos/models'; //./models
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import Sequelize from 'sequelize';
@@ -20,28 +20,63 @@ router.route('/users')
 		nickname
 		email
 		password
+		{ name: '1111', score: 0, user: '', formation: '' }
 	*/
 	.post((req, res)=>{
-
+		
 		const nickname = req.body.nickname;
 		const email =  req.body.email;
-
+		const user_team = req.body.team
+		console.log(user_team)
 		User.findOne({where:{nickname: nickname}, attributes: ['id', ['nickname', 'email']]}).then(user=>{
 			if(user){
-				return res.send({message: 'Esse nick já existe'});
+				return res.status(401).send({
+					error: 'Esse nick já existe'
+				});
 			}else{
 				User.findOne({ where: { email: email }, attributes: ['id', ['nickname', 'email']] }).then(user => {
 					if (user) {
-						return res.json({ message: 'Esse email já existe' });
-					}else{
-						bcrypt.hash(req.body.password, 12).then((senha) => {
-							User.create({ nickname: nickname, 
-								email: email, 
-								password: senha 
-							}).then((user) => {
-								res.json({ message: "Usuário cadastrado"});
-							})
+						return res.status(401).send({ 
+							error: 'Esse email já existe' 
+						});
+					}
+					else {
+						Team.findOne({
+							where: {
+								name: user_team.name
+							}
+						}).then(isExists => {
+							//verifica se o nome do time já está sendo utilizado
+							if(!isExists) {
+								bcrypt.hash(req.body.password, 12).then((senha) => {
+									User.create({ nickname: nickname, 
+										email: email, 
+										password: senha 
+									}).then((user) => {
+										const data = {
+											name: user_team.name, 
+											formationId: '1',
+											score: 0,
+											userId: user.id,
+										};
+										Team.create(data).then((team)=> {
+											res.json({
+												message:'Usuário cadastrado com sucesso!!'
+											});
+										})
+									})
+								})
+								
+												
+							}
+							else {
+								res.status(400).send({
+									error: 'O nome do time já está sendo utilizado.'
+								});
+							}
+						
 						})
+
 					}
 				})
 			}
@@ -56,7 +91,9 @@ router.route('/users/:user_id')
 			if (user) {
 				res.json(user);
 			}else{
-				res.json({message: 'Usuário não existe'});
+				res.status(404).send({
+					error: 'Usuário não existe'
+				});
 			}
 		})
 	})
@@ -92,7 +129,9 @@ router.route('/users/:user_id')
 					res.json({message: 'Usuário deletado'});
 				})
 			} else{
-				res.json({error: 'Usuário não encontrado'});
+				res.status(404).send({
+					error: 'Usuário não encontrado'
+				});
 			}
 		})
 	})
@@ -102,19 +141,19 @@ router.route('/users/name/:user_name')
 
 	.get((req, res)=>{
 
-		const userName = "%" + req.params.user_name + "%"
+		const userName = req.params.user_name
 		
-		User.findAll({
+		User.findOne({
 			where: {
-				nickname: {
-					[Op.like]: userName
-				}
+				nickname: userName
 			}
 		}).then(user => {
-			if(user.length !== 0){
+			if(user){
 				res.json(user)
 			}else{
-				res.json({error: "Usuário não encontrado"})
+				res.status(404).send({
+					error: "Usuário não encontrado"
+				})
 			}
 		})
 	})

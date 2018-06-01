@@ -14,6 +14,7 @@ router.route('/teams')
 	})
 
 	.post((req, res)=>{
+		console.log(req.body.user)
 		Team.findOne({
 			where: {
 				userId: req.body.user,
@@ -41,14 +42,14 @@ router.route('/teams')
 						})
 					}
 					else {
-						res.json({
+						res.status(400).send({
 							error: 'O nome do time já está sendo utilizado.'
 						});
 					}
 				})				
 			}
 			else {
-				res.json({
+				res.status(400).send({
 					error: 'Usuário já possui um time'
 				});
 			}
