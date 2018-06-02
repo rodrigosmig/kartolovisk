@@ -56,8 +56,8 @@
                   </md-card-header-text>
                 </md-card-header>
                 <md-card-actions>
-                  <md-button class="md-raised md-accent" @click="removeLeague(l.id)">Deletar</md-button>
-                  <md-button class="md-raised md-primary" @click="searchTeams(l.id)">Detalhes</md-button>
+                  <md-button class="md-raised md-accent" @click.prevent="removeLeague(l.id)">Deletar</md-button>
+                  <md-button class="md-raised md-primary" @click.prevent="searchTeams(l.id)">Detalhes</md-button>
                 </md-card-actions>
               </md-card>
             </div>
@@ -121,8 +121,10 @@
     components: {
       Sair
     },
-    props: ['user'],
     created() {
+      this.user.id = localStorage.getItem("id")
+      this.user.nickname = localStorage.getItem("username")
+
       const url_user_league = "http://localhost:3000/league/user/" + this.user.id
       axios.get(url_user_league).then(response =>{
           this.user_leagues = response.data
@@ -130,6 +132,10 @@
     },
     data() {
       return {
+        user: {
+          nickname: "",
+          id: ""
+        },
         user_leagues: "",
         league: "",
         new_league_name: "",

@@ -29,6 +29,7 @@
 <script>
 
 import axios from 'axios'
+import store from '../store'
 
 export default {
 
@@ -37,34 +38,26 @@ export default {
             user:{
                 nickname: "",
                 password: "",
-                id:0
             },
-            message: ""
+            message: "",
+            store,
         }
     },
     methods: {
-        login: function(){
-
-            if(this.user.nickname === "" && this.user.password === ""){
+        login: function() {
+            if(this.user.nickname === "" || this.user.password === ""){
                 this.message = "Nickname e senha inválido"    
             }
-
-            axios
-            .post("http://localhost:3000/auth" , this.user).then(response =>{               
-                localStorage.setItem("token", response.data.token)
-                this.message = response.data.message
-                const url_user = "http://localhost:3000/users/name/" + this.user.nickname
-                axios.get(url_user).then(response =>{
-                    this.user = response.data
-                    //envia os dados do usuário pra Home
-                    this.$router.push({name: "Home", params: {user: this.user}})
+            else {
+                axios.post("http://localhost:3000/auth" , this.user).then(response => {               
+                    this.store.username = this.user.nickname
+                    this.store.token = response.data.token
+                    this.$router.push({name: "Home"})
                 })
-                
-              
-            })
-            .catch (e =>{
-                this.message = "nickname ou senha inválido"
-            });
+                .catch (e =>{
+                    this.message = "nickname ou senha inválido"
+                });
+            }            
         }
     }
 }
