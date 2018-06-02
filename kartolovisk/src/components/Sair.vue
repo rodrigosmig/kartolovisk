@@ -11,11 +11,16 @@ import axios from 'axios'
 export default {
     name:'sair',
      data: function() {
-       
+       return {
+         
+       }
     },
     methods:{
        logout: function() {
         localStorage.removeItem("token")
+        localStorage.removeItem("id")
+        localStorage.removeItem("username")
+        localStorage.removeItem("email")
         this.$router.push({name: "Login"})
        }
     }
