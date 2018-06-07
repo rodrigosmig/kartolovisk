@@ -317,7 +317,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
     #goal_keeper_0 {
         margin: 5px 153px;
     }
