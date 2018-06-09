@@ -104,8 +104,13 @@
                     <md-table-cell>{{player.country}}</md-table-cell>
                     <md-table-cell>{{player.position}}</md-table-cell>
                     <md-table-cell>{{player.score}}</md-table-cell>
-                    <md-table-cell>
+                    <md-table-cell v-if="hasPlayer(player) === false">
                       <md-button class="md-fab md-mini md-accent" @click="addPlayer(index)">
+                        <md-icon>add</md-icon>
+                      </md-button>
+                    </md-table-cell>
+                    <md-table-cell v-else>
+                      <md-button class="md-fab md-mini md-accent" @click="addPlayer(index)" disabled>
                         <md-icon>add</md-icon>
                       </md-button>
                     </md-table-cell>
@@ -198,12 +203,10 @@ export default {
     eventBus.$on('message', message => {
       this.notice(message)
     });
-  eventBus.$on('changeScheme', scheme => {
-    this.formation = scheme
-    console.log(this.team_players.length)
-    this.team_players = []
-    console.log(this.team_players.length)
-  })
+    eventBus.$on('changeScheme', scheme => {
+      this.formation = scheme
+      this.team_players = []
+    })
   },
   methods: {
     search: function(position) {
@@ -247,6 +250,14 @@ export default {
     },
     notice: function(message) {
       this.messagem = message
+    },
+    hasPlayer(player) {
+      for(let p of this.team_players) {
+        if(p.id === player.id) {
+            return true
+        }
+      }
+      return false
     }
   }
 }
