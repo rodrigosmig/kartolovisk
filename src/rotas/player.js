@@ -45,8 +45,6 @@ router.route('/players/name/:player_name')
 
 	.get((req,res)=>{
 		const namePlayer = "%" + req.params.player_name + "%";
-		console.log(req.params.name);
-		console.log(req.body.name);
 		Player.findAll({
 			where: {
 				name: {

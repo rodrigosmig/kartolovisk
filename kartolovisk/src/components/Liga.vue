@@ -41,6 +41,7 @@
           <div class="md-layout-item md-size-10">
               <div id="spac">
                 <md-button class="md-raised md-accent" @click="showDialog = true">Criar Liga</md-button>
+                <md-button class="md-raised md-accent" @click="showDialogSearch = true">Pesquisar Liga</md-button>
               </div>
           </div>
 
@@ -96,16 +97,57 @@
       </md-app-content>
     </md-app>
 
+      <!-- Modal para adicionar liga -->
       <md-dialog :md-active.sync="showDialog">
         <md-dialog-title>Nova Liga</md-dialog-title>
 
           <md-dialog-content>
-            <input type="text" v-model="new_league_name" placeholder="Digite o nomce da liga">
+            <input type="text" v-model="new_league_name" placeholder="Digite o nome da liga">
           </md-dialog-content>
 
       <md-dialog-actions>
         <md-button class="md-primary" @click="showDialog = false">Fechar</md-button>
         <md-button class="md-primary" @click="addleague">Salvar</md-button>
+      </md-dialog-actions>
+    </md-dialog>
+
+    <!-- modal para pesquisar liga -->
+    <md-dialog :md-active.sync="showDialogSearch">
+        <md-dialog-title>Pesquisar Liga</md-dialog-title>
+
+          <md-dialog-content>
+            <input type="text" v-model="search_league_name" placeholder="Digite o nome da liga">
+            <md-button class="md-primary" @click="searchLeague">Buscar</md-button>
+
+            <md-table md-card>
+                <md-table-row>
+                  <md-table-head>ID</md-table-head>
+                  <md-table-head>Nome da Liga</md-table-head>
+                  <md-table-head>Times</md-table-head>
+                  <md-table-head>Participar</md-table-head>
+                </md-table-row>
+                <md-table-row v-for="(league, index) in search_leagues" :key="index">
+                  <md-table-cell>{{league.id}}</md-table-cell>
+                  <md-table-cell>{{league.name}}</md-table-cell>
+                  <md-table-cell>0</md-table-cell>
+                  <md-table-cell v-if="hasLeague(league.id) === false">
+                    <md-button class="md-fab md-mini md-accent">
+                        <md-icon>add</md-icon>
+                      </md-button>
+                  </md-table-cell>
+                  <md-table-cell v-else>
+                    <md-button class="md-fab md-mini md-accent" disabled>
+                        <md-icon>add</md-icon>
+                    </md-button>
+                  </md-table-cell>
+                </md-table-row>
+              </md-table>
+
+
+          </md-dialog-content>
+
+      <md-dialog-actions>
+        <md-button class="md-primary" @click="showDialogSearch = false">Fechar</md-button>
       </md-dialog-actions>
     </md-dialog>
 
@@ -128,7 +170,9 @@
       const url_user_league = "http://localhost:3000/league/user/" + this.user.id
       axios.get(url_user_league).then(response =>{
           this.user_leagues = response.data
-      })  
+      }).catch(e => {
+        this.user_leagues = []
+      })
     },
     data() {
       return {
@@ -138,8 +182,11 @@
         },
         user_leagues: "",
         league: "",
+        search_leagues: "",
         new_league_name: "",
+        search_league_name: "",
         showDialog: false,
+        showDialogSearch: false,
         message: "",
       }
     },
@@ -168,7 +215,6 @@
         for(let x in this.user_leagues) {
           if(this.user_leagues[x].id === id) {
             index = x 
-            console.log(this.user_leagues[x].name)
             break
           }
         }
@@ -177,12 +223,26 @@
         }).catch(e => {
           this.message = "Liga não pode ser deletada"
         })
+      },
+      searchLeague: function() {
+        const url_league = "http://localhost:3000/league/name/" + this.search_league_name
+        axios.get(url_league).then(response =>{
+            this.search_leagues = response.data
+        })
+      },
+      hasLeague: function(id) {
+        for(let l of this.user_leagues) {
+          if(l.id === id) {
+            return true
+          }
+        }
+        return false
       }
     },
   }
 </script>
 
-<style>
+<style scoped>
 	.md-app {
     max-height: 100%;
     border: 1px solid rgba(#000,.12);
