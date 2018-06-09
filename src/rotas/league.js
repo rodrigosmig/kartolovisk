@@ -1,7 +1,9 @@
 import express from 'express';
 import { League, Team, User } from '../modelos/models';
+import Sequelize from 'sequelize';
 
 let router = express.Router();
+const Op = Sequelize.Op;
 
 function sortByScore(x,y) {
 	return y.score - x.score; 
@@ -56,6 +58,27 @@ router.route('/league')
         })
 
     })
+
+router.route('/league/name/:legue_name')
+
+	.get((req,res)=>{
+		const nameLeague = "%" + req.params.legue_name + "%";
+		League.findAll({
+			where: {
+				name: {
+					[Op.like]: nameLeague
+				}
+			}
+		}).then(league =>{
+			if(league.length !== 0){
+				res.json(league)
+			}else{
+				res.status(401).send({
+                    error: "Nome não encontrado"
+                });
+			}
+		})
+	})
 
 router.route('/league/:league_id')
 
