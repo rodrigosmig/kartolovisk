@@ -149,7 +149,7 @@ router.route('/league/team/:league_id')
                         });
                     } else {
                         res.json({
-                            message: 'Time adicionado a liga com sucesso'
+                            league
                         });
                     }
                 })
@@ -213,20 +213,29 @@ router.route('/league/list/:id')
 //lista liga de um usuario
 router.route('/league/user/:user_id')
     .get((req, res) => {
-        League.findAll({
-            where: {
-                userId: req.params.user_id
-            }
-        }).then(leagues => {
-            console.log(leagues.length)
-            if(leagues.length !== 0) {
-                res.send(leagues);
-            } else {
-                res.status(404).send({
-                    error: 'Não existe esta liga!'
-                });
-            }
-        })
+        Team.findOne({
+			where: {
+				userId: req.params.user_id
+			}
+		}).then(team => {
+			if(team) {
+				team.getLeagues().then(leagues => {
+					if(leagues.length === 0) {
+						res.status(401).send({
+                            error: "Usuário não está em nenhuma liga."
+                        })
+					}
+					else {
+						res.json(leagues)
+					}				
+				})
+			}
+			else {
+				res.status(404).send({
+					error: "Usuário não possui time cadastrado."
+				})
+			}
+		})
     })
 
 export default router;

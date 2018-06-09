@@ -131,7 +131,7 @@
                   <md-table-cell>{{league.name}}</md-table-cell>
                   <md-table-cell>0</md-table-cell>
                   <md-table-cell v-if="hasLeague(league.id) === false">
-                    <md-button class="md-fab md-mini md-accent">
+                    <md-button class="md-fab md-mini md-accent" @click="addTeam(league.id)">
                         <md-icon>add</md-icon>
                       </md-button>
                   </md-table-cell>
@@ -237,6 +237,16 @@
           }
         }
         return false
+      },
+      addTeam: function(id) {
+        const url_add_team = "http://localhost:3000/league/team/" + id
+        console.log(url_add_team)
+        axios.post(url_add_team, {user: this.user.id}).then(response =>{
+            this.search_league_name = ""
+            this.search_leagues = []
+            this.showDialogSearch = false
+            this.user_leagues.push(response.data.league)
+        })
       }
     },
   }
