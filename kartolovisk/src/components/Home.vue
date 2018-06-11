@@ -206,7 +206,18 @@ export default {
     eventBus.$on('changeScheme', scheme => {
       this.formation = scheme
       this.team_players = []
-    })
+    });
+    eventBus.$on('remove_player', player => {
+      for(let x in this.team_players) {
+        if(this.team_players[x].id === player.id) {
+          this.team_players.splice(x, 1)
+          break
+        }
+      }
+    });
+    eventBus.$on('add_player', player => {
+      this.team_players.push(player)
+    });
   },
   methods: {
     search: function(position) {
