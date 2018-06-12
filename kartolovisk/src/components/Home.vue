@@ -38,8 +38,10 @@
 
           <div class="md-layout-item md-layout md-gutter">
             <div class="md-layout-item">
-              <p>Usuário</p>
+              <p>Time</p>
               <h1>{{ team.name }}</h1>
+              <md-button v-if="change_formation === true" @click="edit_formation" class="md-raised md-accent">Salvar Formação</md-button>
+              
             </div>
             <div class="md-layout-item">
               <p>Escalação</p>
@@ -53,7 +55,6 @@
           <md-divider></md-divider>
 
           <p>{{ messagem }}</p>
-
           <div class="md-layout-item md-layout md-gutter">
 
             <div class="md-layout-item">
@@ -82,7 +83,7 @@
 
                 <div class="md-layout-item">
                   <md-card-content>
-                    <EsquemaTatico></EsquemaTatico>
+                    <EsquemaTatico :formation="formation"></EsquemaTatico>
                   </md-card-content>
                 </div>
               </div>
@@ -110,7 +111,7 @@
                       </md-button>
                     </md-table-cell>
                     <md-table-cell v-else>
-                      <md-button class="md-fab md-mini md-accent" @click="addPlayer(index)" disabled>
+                      <md-button class="md-fab md-mini md-accent" disabled>
                         <md-icon>add</md-icon>
                       </md-button>
                     </md-table-cell>
@@ -162,6 +163,7 @@ export default {
       user_leagues: "",
       authorized:false,
       messagem: "",
+      change_formation: false,
       }     
   },
   created() {
@@ -206,6 +208,7 @@ export default {
     eventBus.$on('changeScheme', scheme => {
       this.formation = scheme
       this.team_players = []
+      this.change_formation = true
     });
     eventBus.$on('remove_player', player => {
       for(let x in this.team_players) {
@@ -214,9 +217,20 @@ export default {
           break
         }
       }
+      console.log(player.id)
+      const url_remove_player = "http://localhost:3000/teams/players/" + this.user.id
+      axios.delete(url_remove_player, {data: {player: player.id}})
+        .catch(error => {
+            console.log("Erro")
+        })
     });
     eventBus.$on('add_player', player => {
       this.team_players.push(player)
+      const url_add_players = "http://localhost:3000/teams/players/" + this.user.id
+      axios.post(url_add_players, {"player": player.id})
+        .catch(error => {
+            console.log("Erro")
+        })
     });
   },
   methods: {
@@ -269,6 +283,20 @@ export default {
         }
       }
       return false
+    },
+    edit_formation: function() {
+      const data = {
+        "formation": this.formation.id,
+      }
+      
+      const url_edit_formation = "http://localhost:3000/teams/" + this.user.id
+      console.log(url_edit_formation, "formation")
+      axios.put(url_edit_formation, data)
+        .catch(error => {
+            console.log("Erro")
+        })
+      this.change_formation = false
+      this.messagem = "Formação alterada com sucesso"
     }
   }
 }

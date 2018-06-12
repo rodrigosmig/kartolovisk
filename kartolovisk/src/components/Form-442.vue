@@ -1,32 +1,52 @@
 <template>
     <div>      
         <div class=position :id="'goal_keeper_' + key" v-for="(player, key) in positions.goalKeeper" :key="player.id">
-            <img src="../assets/camisa.png" @click="showModal(player)" v-if="player.name !== 'nenhum'">
-            <img src="../assets/camisa2.png" v-else>
+            <div v-if="player.name !== 'nenhum'">
+                <img src="../assets/camisa.png" @click="showModal(player)">
+            </div>
+            <div v-else>
+            <img src="../assets/camisa2.png">
+            </div>
             <label>{{player.name}}</label>
         </div>
 
         <div class=position :id="'defender_' + key" v-for="(player, key) in positions.defenders" :key="player.id">
-            <img src="../assets/camisa.png" @click="showModal(player)" v-if="player.name !== 'nenhum'">
-            <img src="../assets/camisa2.png" v-else>
+            <div v-if="player.name !== 'nenhum'">
+                <img src="../assets/camisa.png" @click="showModal(player)">
+            </div>
+            <div v-else>
+            <img src="../assets/camisa2.png">
+            </div>
             <label>{{player.name}}</label>
         </div>
 
         <div class=position :id="'side_backer_' + key" v-for="(player, key) in positions.sideBackers" :key="player.id">
-            <img src="../assets/camisa.png" @click="showModal(player)" v-if="player.name !== 'nenhum'">
-            <img src="../assets/camisa2.png" v-else>
+            <div v-if="player.name !== 'nenhum'">
+                <img src="../assets/camisa.png" @click="showModal(player)">
+            </div>
+            <div v-else>
+            <img src="../assets/camisa2.png">
+            </div>
             <label>{{player.name}}</label>
         </div>
 
         <div class=position :id="'midfielder_' + key" v-for="(player, key) in positions.midfielders" :key="player.id">
-            <img src="../assets/camisa.png" @click="showModal(player)" v-if="player.name !== 'nenhum'">
-            <img src="../assets/camisa2.png" v-else>
+            <div v-if="player.name !== 'nenhum'">
+                <img src="../assets/camisa.png" @click="showModal(player)">
+            </div>
+            <div v-else>
+            <img src="../assets/camisa2.png">
+            </div>
             <label>{{player.name}}</label>
         </div>
 
         <div class=position :id="'forward_' + key" v-for="(player, key) in positions.forwards" :key="player.id">
-            <img src="../assets/camisa.png" @click="showModal(player)" v-if="player.name !== 'nenhum'">
-            <img src="../assets/camisa2.png" v-else>
+            <div v-if="player.name !== 'nenhum'">
+                <img src="../assets/camisa.png" @click="showModal(player)">
+            </div>
+            <div v-else>
+            <img src="../assets/camisa2.png">
+            </div>
             <label>{{player.name}}</label>
         </div>
     </div>
@@ -48,10 +68,13 @@ export default {
             }
             else {
                 this.team_players = response.data
+                for(let p of this.team_players) {
+                    console.log(p.name)
+                }
             }
-
+            console.log(this.team_players.length)
             if(this.team_players.length === 0) {
-                //preencher quando o time não tiver nenum jogador
+                //preencher quando o time não tiver nenhum jogador
                 for(let z = 0; z < 2; z++) {
                     this.positions.defenders.push(
                         {
@@ -200,6 +223,7 @@ export default {
     data() {        
         return {
             player: "",
+            team_players: "",
             positions: {
                 defenders: [],
                 sideBackers: [],

@@ -4,7 +4,7 @@
             <f442 key="4-4-2"></f442>
         </div>
         <div v-else-if="formation.formation === '4-3-3'">
-            <f433 :team_players="players" key="4-3-3"></f433>
+            <f433 key="4-3-3"></f433>
         </div>
         
         <modal></modal> 

@@ -37,7 +37,6 @@ import { eventBus } from '../main.js';
 import axios from 'axios'
 
 export default {
-    props: ['team_players'],
     created() {
         const user_id = localStorage.getItem("id")
 
@@ -71,7 +70,7 @@ export default {
                         }
                     )
                 }
-                for(let m = 0; m < 4; m++) {
+                for(let m = 0; m < 3; m++) {
                     this.positions.midfielders.push(
                         {
                             "id": "nenhum",
@@ -80,7 +79,7 @@ export default {
                         }
                     )
                 }
-                for(let f = 0; f < 2; f++) {
+                for(let f = 0; f < 3; f++) {
                     this.positions.forwards.push(
                         {
                             "id": "nenhum",
@@ -201,6 +200,7 @@ export default {
     data() {        
         return {
             player: "",
+            team_players: "",
             positions: {
                 defenders: [],
                 sideBackers: [],
