@@ -97,13 +97,16 @@
       </md-app-content>
     </md-app>
 
-      <!-- Modal para adicionar liga -->
+       <!-- Modal para adicionar liga -->
       <md-dialog :md-active.sync="showDialog">
-        <md-dialog-title>Nova Liga</md-dialog-title>
+        <md-dialog-title>Criar Nova Liga</md-dialog-title>
 
-          <md-dialog-content>
-            <input type="text" v-model="new_league_name" placeholder="Digite o nome da liga">
-          </md-dialog-content>
+        <md-dialog-content>
+          <md-field>
+            <label>Digite o nome da liga</label>
+            <md-input autofocus v-model="new_league_name"></md-input>
+          </md-field>
+        </md-dialog-content>
 
       <md-dialog-actions>
         <md-button class="md-primary" @click="showDialog = false">Fechar</md-button>
@@ -116,8 +119,11 @@
         <md-dialog-title>Pesquisar Liga</md-dialog-title>
 
           <md-dialog-content>
-            <input type="text" v-model="search_league_name" placeholder="Digite o nome da liga">
-            <md-button class="md-primary" @click="searchLeague">Buscar</md-button>
+            <md-field>
+              <label>Digite o nome da Liga</label>
+              <md-input autofocus v-model="search_league_name"></md-input>
+              <md-button class="md-dense md-primary" @click="searchLeague">Buscar</md-button>
+            </md-field>
 
             <md-table md-card>
                 <md-table-row>
@@ -150,7 +156,6 @@
         <md-button class="md-primary" @click="showDialogSearch = false">Fechar</md-button>
       </md-dialog-actions>
     </md-dialog>
-
   </div>
 </template>
 
