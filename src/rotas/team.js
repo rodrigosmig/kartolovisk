@@ -19,7 +19,6 @@ router.route('/teams')
 	})
 
 	.post((req, res)=>{
-		console.log(req.body.user)
 		Team.findOne({
 			where: {
 				userId: req.body.user,
@@ -97,7 +96,7 @@ router.route('/teams/:user_id')
 	})
 	//altera apenas a formação do time
 	.put((req, res)=>{
-		Team.findById(req.params.team_id).then(team => {
+		Team.findById(req.params.user_id).then(team => {
 			if(team) {
 				team.update({
 					formationId: req.body.formation,
@@ -150,7 +149,7 @@ router.route('/teams/players/:user_id')
 				//procura o time do usuário
 				Team.findOne({
 					where: {
-						userId: req.body.user
+						userId: req.params.user_id
 					}
 				}).then(team => {
 					if(team) {
@@ -194,7 +193,7 @@ router.route('/teams/players/:user_id')
 				//procura o time do usuário
 				Team.findOne({
 					where: {
-						userId: req.body.user
+						userId: req.params.user_id
 					}
 				}).then(team => {
 					if(team) {
@@ -207,7 +206,9 @@ router.route('/teams/players/:user_id')
 								})
 							}
 							else {
-								res.json({error: 'Jogador não está no time'});
+								res.status(404).send({
+									error: 'Jogador não está no time'
+								});
 							}
 						})
 					}
@@ -219,7 +220,7 @@ router.route('/teams/players/:user_id')
 				})
 			}
 			else {
-				res.json({
+				res.status(404).send({
 					error: "Jogador não encontrado."
 				})
 			}			
